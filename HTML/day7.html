@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Belajar HTML - Part 7</title>
+</head>
+<body>
+    <h1>Belajar HTML Part 7: Form</h1>
+
+    <form action="proses.php" method="post">
+    <label for="nama">Nama:</label><br>
+    <input type="text" id="nama" name="nama"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+
+    <label for="alamat">Alamat:</label><br>
+    <textarea id="alamat" name="alamat" rows="4" cols="30"></textarea><br><br>
+
+    <p>Jenis Kelamin:</p>
+    <input type="radio" id="pria" name="gender" value="Pria">
+    <label for="pria">Pria</label>
+    <input type="radio" id="wanita" name="gender" value="Wanita">
+    <label for="wanita">Wanita</label><br><br>
+
+    <p>Hobi:</p>
+    <input type="checkbox" id="musik" name="hobi" value="Musik">
+    <label for="musik">Musik</label>
+    <input type="checkbox" id="olahraga" name="hobi" value="Olahraga">
+    <label for="olahraga">Olahraga</label>
+    <input type="checkbox" id="coding" name="hobi" value="Coding">
+    <label for="coding">Coding</label><br><br>
+
+    <label for="jurusan">Jurusan:</label>
+    <select id="jurusan" name="jurusan">
+        <option value="TI">Teknik Informatika</option>
+        <option value="SI">Sistem Informasi</option>
+        <option value="DKV">Desain Komunikasi Visual</option>
+    </select><br><br>
+
+    <input type="submit" value="Daftar">
+    <input type="reset" value="Reset">
+  </form>
+</body>
+</html>
