@@ -1,0 +1,40 @@
+/* Universal selector (semua elemen) */
+*{
+    font-family: verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling Body */
+body {
+    background-color: #ffffff ;
+    padding: 20px;
+}
+
+/* Selector Tag */
+p {
+    color: #444;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* Selector ID */
+#intro {
+    color: green;
+    font-style: italic;
+    font-size: 18px;
+}
+
+/* Selector Class */
+.highlight {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Grooping Selector */
+h1, h2 {
+    color: darkblue;
+    margin-bottom: 10px;
+}
