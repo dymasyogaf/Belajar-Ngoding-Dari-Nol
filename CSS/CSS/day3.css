@@ -1,0 +1,57 @@
+/* Day 3 - Warna, Backgroun, dan Border */
+
+/* Judul */
+h1 {
+    text-align: center;
+    color: darkred;
+    font-family: Arial, sans-serif;
+}
+
+/* Box Dasar */
+.box1, .box2, .box3, .box4 {
+    padding: 20px;
+    margin: 15px;
+}
+
+/* Background Color */
+.box1 {
+    background-color: lightblue;
+    color: darkblue;
+    border: 2px solid blue;
+}
+
+/* Background image + border */
+.box2 {
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20210430/pngtree-blue-color-rectangle-shape-business-abstract-background-design-image_672225.jpg');
+    background-size: cover;
+    background-position: center;
+    color: black;
+    border: 3px dashed green;
+}
+
+/* Border Radius */
+.box3 {
+    background-color: pink;
+    color: darkred;
+    border: 2px solid red;
+    border-radius: 15px;
+}
+
+/* Background Video */
+.box4 {
+    text-align: center;
+    border: 2px solid red;
+    position: relative;
+    pointer-events: none;
+    color: blue;
+    padding: 100px;
+    width: 560px;
+    height: 315px;
+}
+
+.text1 {
+    position: relative;
+    z-index: 1;
+    font-size: 30px;
+    font-weight: bold;
+}
