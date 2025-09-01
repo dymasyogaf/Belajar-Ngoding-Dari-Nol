@@ -1,13 +1,1947 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar Ngoding</title>
-    <link rel="stylesheet" href="CSS/day1.css">
-</head>
-<body>
-    <h1>Day 1</h1>
-    <p>Belajar ngoding dari nol</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Peta Lokasi Ekspedisi Quran di Indonesia</title>
+    <style>
+      .popup-table {
+        width: 100%;
+        font-size: 9px;
+        overflow-y: auto;
+        border-collapse: collapse;
+      }
+
+      .popup-table th,
+      .popup-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      .popup-table th {
+        background-color: #f0f0f0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map1" style="width: 100%; height: 500px"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      // Inisialisasi peta dengan koordinat pusat Indonesia
+      var map = L.map("map").setView([-2.548926, 118.014863], 5); // Koordinat tengah Indonesia dengan zoom level 5
+
+      // Tambahkan layer tile (peta dasar)
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://ekspedisiquran.com/permintaan-mushaf/">EkspedisiQuran</a> contributors',
+      }).addTo(map);
+
+      // Masukkan Data Terbaru disini
+      const data = {
+        Aceh: [
+          {
+            tanggal: "09/09/2024",
+            namalembaga: "Pesantren Teknologi MSBS",
+            alamat:
+              "Jl. Transmigrasi No.2, Buket Meusara, Kota Jantho, Kab. Aceh Besar, NAD",
+            mushaf: 431,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Pondok Pesantren Darul Ulum",
+            alamat:
+              "Jl. Engkeran Pedesi, Desa Darul Amin, Kec. Lawe Alas, Kab. Aceh Tenggara",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/12/2024",
+            namalembaga: "Pondok Pesantren Darul Ulum",
+            alamat:
+              "Jl. Engkeran Pedesi, Desa Darul Amin, Kec. Lawe Alas, Kab. Aceh Tenggara",
+            mushaf: 421,
+            iqra: 0,
+          },
+        ],
+        "Kab Jambi": [
+          {
+            tanggal: "16/08/2024",
+            namalembaga: "MTSN 2 Kota Jambi",
+            alamat:
+              "Jl. Aditya Warman, RT.18 The Hok, Kec. Jambi Selatan, Kota Jambi",
+            mushaf: 1000,
+            iqra: 0,
+          },
+        ],
+        Lampung: [
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "YAYASAN ULUL ALBAB",
+            alamat: "Lampung",
+            mushaf: 20,
+            iqra: 0,
+          },
+        ],
+        Riau: [
+          {
+            tanggal: "24/08/2024",
+            namalembaga: "Hamalatul Qur'an Pekanbaru",
+            alamat:
+              "Jl. Padat Karya Perumahan Mutiara Palas permai, RT.03/RW.01, Rumbai Bukit, Kec. Rumbai, Kota Pekanbaru, Riau 22315",
+            mushaf: 20,
+            iqra: 0,
+          },
+        ],
+        "Sumatra Selatan": [
+          {
+            tanggal: "24/08/2024",
+            namalembaga: "Kanzul Ilmi Sriwijaya",
+            alamat:
+              "Jl. Raya Prabumulih Baturaja Dusun 1 Desa Karang Agung, Kec. Lubai Ulu, Kab. Muara Enim, Prov. Sumatera Selatan",
+            mushaf: 100,
+            iqra: 0,
+          },
+        ],
+        "Kalimantan Tengah": [
+          {
+            tanggal: "01/07/2024",
+            namalembaga: "RQ. As-Syifa",
+            alamat: "Jl. Pansila RT 15, Pangkalan Bun, Kalimantan Tengah",
+            mushaf: 20,
+            iqra: 0,
+          },
+        ],
+        "Kalimantan Timur": [
+          {
+            tanggal: "04/09/2024",
+            namalembaga:
+              "IKN-Pemerintahan Desa Bukit Raya (1 SMP, 7 TPA, 2 Majelis)",
+            alamat:
+              "Kantor Desa Bukit Raya, Kec. Sepaku, Kabupten Penajam Paser Utara, Kalimantan Timur 76148",
+            mushaf: 421,
+            iqra: 0,
+          },
+          {
+            tanggal: "04/09/2024",
+            namalembaga: "IKN-Narahubung Bhabinkamtibmas Polsek Sepaku (9 TPA)",
+            alamat:
+              "Desa Argo Mulyo dan Sukomulyo, Kec. Sepaku, Kab. Penajam Paser Utara, Kalimantan Timur 76148",
+            mushaf: 400,
+            iqra: 0,
+          },
+          {
+            tanggal: "04/09/2024",
+            namalembaga: "IKN-Nusantara Cabin",
+            alamat:
+              "Bukit Raya, Kec. Sepaku, Kab. Penajam Paser Utara, Kalimantan Timur 76148",
+            mushaf: 35,
+            iqra: 0,
+          },
+          {
+            tanggal: "01/10/2024",
+            namalembaga:
+              "IKN-Narahubung Bhabinkamtibmas Polsek Sepaku (Terusan dari September)",
+            alamat:
+              "Desa Argo Mulyo, Kec. Sepaku, Kab. Penajam Paser Utara, Kalimantan Timur 76148",
+            mushaf: 44,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/10/2024",
+            namalembaga: "IKN-Kantor Kecamatan Sepaku",
+            alamat:
+              "Kantor Kec. Sepaku, Kab. Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 1020,
+            iqra: 0,
+          },
+          {
+            tanggal: "04/11/2024",
+            namalembaga: "IKN-TPA Miftahul Firdaus",
+            alamat:
+              "RT.5 Kel. Pemaluan, Kec. Sepaku, Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/11/2024",
+            namalembaga: "IKN-Kelurahan Maridan (10 lembaga)",
+            alamat:
+              "Jl. Tanjung Harapan RT.5 Kantor Kelurahan Maridan, Kec. Sepaku, Kab. Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 320,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/11/2024",
+            namalembaga: "IKN-Kelurahan Riko (7 lembaga)",
+            alamat:
+              "Jl. Ahmad Yani No.46 Km. 29 RT.2 Kel. Riko, Kec. Penajam, Kab. Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/11/2024",
+            namalembaga: "IKN-Kelurahan Sepan",
+            alamat: "Kalimantan Timur",
+            mushaf: 160,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/11/2024",
+            namalembaga: "IKN-Majelis Taklim (Yasinan warga RT.6)",
+            alamat:
+              "RT.06, Desa Bukit Raya, Kec. Sepaku, Kab. Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/11/2024",
+            namalembaga: "IKN-Kelurahan Sotek",
+            alamat:
+              "Jl. Lawai Baru Sotek, Kec. Penajam, Kab. Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 160,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/11/2024",
+            namalembaga: "IKN-Kelurahan Sungai Merdeka",
+            alamat:
+              "Jl. Soekarno Hatta, Sungai Merdeka, Kec. Samboja, Kab. Kutai Kertanegara, Kalimantan Timur",
+            mushaf: 260,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/11/2024",
+            namalembaga: "IKN-Kelurahan Karya Merdeka (26 lembaga)",
+            alamat:
+              "Jl. Soe-Hatta km 31 RT.09 Kelurahan Karya Merdeka, Kec. Samboja Barat, Kab. Kutai Kartanegara, Kalimantan Timur",
+            mushaf: 260,
+            iqra: 0,
+          },
+          {
+            tanggal: "19/11/2024",
+            namalembaga: "IKN-Narahubung Bhabinkamtibmas Kec. Sepaku (6 TPA)",
+            alamat: "Bukit Raya, Sepaku, Penajam Paser Utara, Kalimantan Timur",
+            mushaf: 500,
+            iqra: 0,
+          },
+        ],
+        "Sulawesi Selatan": [
+          {
+            tanggal: "02/07/2024",
+            namalembaga: "Yayasan Pemburu Amal Sholeh Indonesia",
+            alamat: "Manggala, Kota Makasar, Sulawesi Selatan",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/08/2024",
+            namalembaga: "Rumah Qur'an Azkayr",
+            alamat:
+              "BTN Kariango Residence Blok A1 Kurusumange, Kec. Tanralili, Maros, Sulawesi Selatan",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/09/2024",
+            namalembaga: "TPQ Al-Mutazam A BTP Samanggi",
+            alamat:
+              "Jl. Poros Camba BTP Samanggi Blok A 19 Dusun Samanggi, Desa Samangki, Kec. Simbang, Kab. Maros Sulsel",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/09/2024",
+            namalembaga: "TPA Nur Haqiqi",
+            alamat:
+              "Dusun Marana, Desa Marannu, Kec. Lau, Kab. Maros Sulsel (samping Masjid Babul Iman)",
+            mushaf: 11,
+            iqra: 0,
+          },
+          {
+            tanggal: "04/10/2024",
+            namalembaga: "Rumah Qur'an Imam Syafi'i",
+            alamat:
+              "Perumahan BTN Taniaga Permai Blok B1 No.14 Kel. Taroada, Kec. Turikale, Kab. Maros, Sulsel",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/10/2024",
+            namalembaga: "Rumah Qur'an Azkayr",
+            alamat:
+              "BTN Kariango Residence Blok A1 Kurusumange, Kec. Tanralili, Maros, Sulsel 90553",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/12/2024",
+            namalembaga: "TPQ Nurul Yakin",
+            alamat:
+              "Jl. Garuda Maccopa, Kel. Taroada, Kec. Taroada, Kec. Turikale, Kab. Maros, Sulsel",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "Rumah Qur'an Ar-Rahman",
+            alamat:
+              "Jl. Monginsidi 1, Kel. Bonto Rita, Kec. Bissappu, Kab. Bantaeng, Sulsel",
+            mushaf: 40,
+            iqra: 10,
+          },
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "YAYASAN NISA HAULAL QURAN",
+            alamat: "MAKASSAR",
+            mushaf: 40,
+            iqra: 0,
+          },
+        ],
+        "Jawa Tengah": [
+          {
+            tanggal: "01/04/2024",
+            namalembaga: "Nudial Khoiroh",
+            alamat: "BATANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "02/08/2024",
+            namalembaga: "Majelis Ta'lim An-Nur (Mbak Nudi)",
+            alamat: "Denasri Wetan, Batang, Jawa Tengah",
+            mushaf: 5,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/09/2024",
+            namalembaga: "Rumah Peradaban Indonesia",
+            alamat:
+              "Dk. Tambakboyo Gunung RT.6/RW.2 Ds. Tambakboyo, Kec. Reban, Kab. Batang",
+            mushaf: 32,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/11/2024",
+            namalembaga: "TPQ Ash-Sholih",
+            alamat:
+              "Gondang Barat RT.5/RW.2 Desa Gondang, Kec. Blado, Kab. Batang",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Majelis Hamalatul Qur'an Batang",
+            alamat:
+              "Jl. Brigjend Katamso, Gang Prenjak depan Mushola Al-Ikhlas Batang, Batang Jateng",
+            mushaf: 20,
+            iqra: 0,
+          },
+        ],
+        Cilacap: [
+          {
+            tanggal: "23/01/2024",
+            namalembaga: "GUS ULUN NUHA",
+            alamat: "BMKG CILACAP",
+            mushaf: 189,
+            iqra: 0,
+          },
+          {
+            tanggal: "20/03/2024",
+            namalembaga: "TPQ DARUL ISTIQOMAH ASSULAIMANIAH",
+            alamat:
+              "JL RAYA CIWUNI RT. 001 RW. 002 DESA CIWUNI KECAMATAN KESUGIHAN KABUPATEN CILACAP PROVINSI JAWA TENGAH KODE POS 53274",
+            mushaf: 100,
+            iqra: 0,
+          },
+        ],
+        Demak: [
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "LKSA DARUSSALAM",
+            alamat:
+              "l. Kauman Gg. Baru No.09 59567, Jagalan, Mranggen, Kec. Mranggen, Kabupaten Demak, Jawa Tengah",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/02/2024",
+            namalembaga: "FKDT MADRASAH DINIYAH TARBIYATUL AULAD SRIWULAN",
+            alamat: "DEMAK",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "20/03/2024",
+            namalembaga: "BAITUL ILMI",
+            alamat:
+              "Dl. Balung Kendal RT 4 RW 02 DS. Balerejo kec. Dempet kab. Demak",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "29/03/2024",
+            namalembaga: "TPQ MIFTAHUL THOLAB",
+            alamat: "Wonosalam, Demak",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/07/2024",
+            namalembaga: "Yayasan Pejuang Disabilitas Demak Lestari",
+            alamat: "Bomo Getas, RT.07/RW.02 Kec. Wonosalam Kab. Demak",
+            mushaf: 80,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/07/2024",
+            namalembaga: "Majelis Ta'lim Roudlotul Qur'an",
+            alamat: "Desa Wonosekar RT.03/RW.10 Kec. Karangawen Kab. Demak",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/07/2024",
+            namalembaga: "Majelis Ta'lim Roudlotul Muttaqin",
+            alamat: "Desa Wonosekar RT.02/RW.6 Kec. Karangawen Kab. Demak",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/09/2024",
+            namalembaga: "Majelis Taklim Roudlotul Qur'an (TPQ)",
+            alamat: "Karangawen, Demak",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/09/2024",
+            namalembaga: "Yayasan/Pondok Tahfidz Anak Baitul Hikam",
+            alamat: "Klitih RT.2/RW.4 Karangtengah Demak",
+            mushaf: 58,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/09/2024",
+            namalembaga: "Ponpes As-Sujuudiyyah",
+            alamat: "Jl. Glagahwangi RT.7/RW.3 Tembiring, Bintoro, Demak",
+            mushaf: 57,
+            iqra: 0,
+          },
+          {
+            tanggal: "08/10/2024",
+            namalembaga:
+              "Mushola Baitul Karomah, TPA Tarbiatal Banat, Paguyuban Tanbihun, dan 4 tempat ngaji lainnya (Ust. Masruri, Ust. Makhsun, Ust. Habib, dan Ust. Mustajib)",
+            alamat:
+              "Dukuh Bomo RT.3/RW.1 Desa Getas, Kec. Wonosalam, Kab. Demak",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/10/2024",
+            namalembaga:
+              "Perpustakaan Rumah Baca Bermakna, Mushola Baitul Muttaqin, Mushola Baitul Mustofa, Mushola Baitul Mubarok, dan Mushola Baitul Muhadi",
+            alamat:
+              "Jl. Jati Selatan 34 A, RT.3/RW.2 Desa Jetaksari, Kec. Sayung, Demak",
+            mushaf: 76,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/10/2024",
+            namalembaga: "MI Muhadiyah",
+            alamat:
+              "Jati Selatan, RT.4/RW.2 Desa Jetaksari, Kec. Sayung, Demak",
+            mushaf: 91,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/10/2024",
+            namalembaga: "Majelis Taklim Muhadiyah",
+            alamat:
+              "Jati Selatan, RT.4/RW.2 Desa Jetaksari, Kec. Sayung, Demak",
+            mushaf: 43,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/10/2024",
+            namalembaga: "Madrasah Diniyah Muhadiyah",
+            alamat:
+              "Jati Selatan, RT.4/RW.2 Desa Jetaksari, Kec. Sayung, Demak",
+            mushaf: 78,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/11/2024",
+            namalembaga: "Madin Muhadiyah dan Warga Jetaksari lainnya",
+            alamat:
+              "Jati Selatan, RT.4/RW.2 Desa Jetaksari, Kec. Sayung, Demak",
+            mushaf: 200,
+            iqra: 0,
+          },
+        ],
+        "Kab Jepara": [
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "YAYASAN MANDIRI DARUL QURAN",
+            alamat:
+              "Jl. Jepara - Bangsri No.km.6, Dusun 5, Suwawal, Kec. Mlonggo, Kabupaten Jepara, Jawa Tengah",
+            mushaf: 40,
+            iqra: 0,
+          },
+        ],
+        Semarang: [
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "YAYASAN IMAM SYAFII",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "WAKAF WAHYU ALAM RAHARDJA",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "YAYASAN PONDOK TERAPI",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "29/01/2024",
+            namalembaga: "GIFT UNTUK DONATUR",
+            alamat: "Semarang",
+            mushaf: 298,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/02/2024",
+            namalembaga: "PONPES ULUL ABSHOR",
+            alamat: "BANYUMANIK, SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/02/2024",
+            namalembaga: "RTA GENUK",
+            alamat: "SEMARANG",
+            mushaf: 30,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/02/2024",
+            namalembaga: "RTA P1",
+            alamat: "SEMARANG",
+            mushaf: 52,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/02/2024",
+            namalembaga: "TPQ AR RIFAI",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/02/2024",
+            namalembaga: "SDIT NURUL IMAN",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "01/03/2024",
+            namalembaga: "PAK MIKO",
+            alamat: "SEMARANG",
+            mushaf: 52,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/03/2024",
+            namalembaga: "PAK MIKO",
+            alamat: "SEMARANG",
+            mushaf: 300,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/03/2024",
+            namalembaga: "KARYAWAN",
+            alamat: "SEMARANG",
+            mushaf: 8,
+            iqra: 0,
+          },
+          {
+            tanggal: "20/03/2024",
+            namalembaga: "KARYAWAN",
+            alamat: "SEMARANG",
+            mushaf: 14,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/03/2024",
+            namalembaga: "KAPOLSEK GENUK",
+            alamat: "GENUK, SEMARANG",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/03/2024",
+            namalembaga: "USTADZ NURUDDIN",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/03/2024",
+            namalembaga: "POLSEK GENUK",
+            alamat: "SEMARANG",
+            mushaf: 500,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/03/2024",
+            namalembaga: "RW 4 BANGETAYU KULON",
+            alamat: "SEMARANG",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/03/2024",
+            namalembaga: "RW V PENGGARON LOR",
+            alamat: "SEMARANG",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/03/2024",
+            namalembaga: "DO'A DAN SANTUNAN ANAK YATIM",
+            alamat: "SEMARANG",
+            mushaf: 187,
+            iqra: 0,
+          },
+          {
+            tanggal: "02/04/2024",
+            namalembaga: "POLSEK GENUK",
+            alamat: "SEMARANG",
+            mushaf: 150,
+            iqra: 0,
+          },
+          {
+            tanggal: "20/04/2024",
+            namalembaga: "Alpha Indonesia Jawa Tengah",
+            alamat: "Jalan, RT.02/RW.03, Jabungan, Banyumanik, Semarang",
+            mushaf: 80,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/04/2024",
+            namalembaga: "Rizki",
+            alamat: "SEMARANG",
+            mushaf: 8,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/05/2024",
+            namalembaga: "Wisuda RTA",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 25,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/05/2024",
+            namalembaga: "Mesjid Al- Amien",
+            alamat: "GREHA MUKTI. SEMARANG",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "29/05/2024",
+            namalembaga: "Santri PKBM Alfatihah",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/05/2024",
+            namalembaga: "Al-Qur'an untuk santri hotel",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "01/04/2024",
+            namalembaga: "TPQ Denasi Wetan",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon. Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "02/04/2024",
+            namalembaga: "POLSEK GENUK",
+            alamat: "Polsek Genuk JL. Raya Kaligawe KM.06 SEMARANG",
+            mushaf: 150,
+            iqra: 0,
+          },
+          {
+            tanggal: "10/06/2024",
+            namalembaga: "Santri baru RTA Pamularsh",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "01/07/2024",
+            namalembaga: "KARYAWAN AL-FATIHAH ( AL-QUR'AN CORDOBA)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 24,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/07/2024",
+            namalembaga: "POLSEK GENUK",
+            alamat: "SEMARANG",
+            mushaf: 115,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/07/2024",
+            namalembaga: "TPQ Karli Muttaqin",
+            alamat:
+              "Jl. Amarta II Rt. 3 Rw 2 Kelurahan Canhkiran Kec. Mijen Semarang",
+            mushaf: 30,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/07/2024",
+            namalembaga: "Program SY",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/07/2024",
+            namalembaga: "KAPOLSEK GENUK",
+            alamat: "GENUK, SEMARANG",
+            mushaf: 115,
+            iqra: 0,
+          },
+          {
+            tanggal: "17/07/2024",
+            namalembaga: "RMS Jogja",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kelurahan Bangetayu Kulon Kecematan Genuk Semarang",
+            mushaf: 10,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/07/2024",
+            namalembaga: "TPQ Taman Firdaus",
+            alamat: "Jl. Mustokoweni 71/234 Plombokan-Semarang Utara",
+            mushaf: 25,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/07/2024",
+            namalembaga: "SMA Walisongo Semarang",
+            alamat: "Jl. Kimangun Sarko No. 17 Semarang",
+            mushaf: 150,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/07/2024",
+            namalembaga: "MT. Khodijah",
+            alamat: "Karangbendo Rt.06/Rw. 03 Karangrejo Gajahmungkur Semarang",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/07/2024",
+            namalembaga: "MTS Asy Syarifah/ Yayasan Nurul Wahyu",
+            alamat: "Jl. Jati Ombo Sodong PurwosarI Mijen, Kota Semarang",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/07/2024",
+            namalembaga: "TPQ Al-Istiqomah",
+            alamat:
+              "Borangan Candirejo RT.01/RW.05 Kec. Pringapus Kab. Semarang",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/07/2024",
+            namalembaga: "Majelis Ta'lim Nurul Iman",
+            alamat:
+              "Borangan Candirejo RT.02/RW.05 Kec. Pringapus Kab. Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "31/07/2024",
+            namalembaga: "Majelis Ta'lim Al-Ikhlas",
+            alamat:
+              "Dn, Borangan Ds. Candirejo RT.03/RW.05 Kec. Pringapus Kab. Semarang",
+            mushaf: 30,
+            iqra: 0,
+          },
+          {
+            tanggal: "01/08/2024",
+            namalembaga: "Yayasan Alfatihah. Program Anak Yatim",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 28,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/08/2024",
+            namalembaga: "Santri Alfatihah (Al-qur'an kiriman donatur)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 6,
+            iqra: 0,
+          },
+          {
+            tanggal: "08/08/2024",
+            namalembaga: "Yayasan Ar-Rodiyah (Narahubung Polsek-Ust. Nur)",
+            alamat:
+              "Jl. Sambiroto Raya RT.02/RW.06 Kel. Sambiroto Kec. Tembalang Kota Semarang",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "12/08/2024",
+            namalembaga: "LKSA Al-Mustaghfirin (Narahubung Polwan-Ust. Nur)",
+            alamat:
+              "Gg. Pringgondani II, RT.02/RW.03, Bangetayu Wetan, Kec. Genuk, Semarang",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "01/08/2024",
+            namalembaga: "RTA Alfatihah",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 80,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/08/2023",
+            namalembaga:
+              "Karyawan Alfatihah/CS Chozin&Wulan (Atma dari donatur)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/08/2024",
+            namalembaga: "Karyawan Alfatihah/CS Atin",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/08/2024",
+            namalembaga:
+              "Karyawan Alfatihah/CS Chozin&Wulan (Asy Syifa' & AlMubarok dari donatur)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/08/2024",
+            namalembaga:
+              "Kelompok Pengajian An-Nur (7pcs Alfatihah, sisanya donatur)",
+            alamat: "Wahyu Tumurun RW XXI Tlogosari Kulon, Pedurungan Semarang",
+            mushaf: 123,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/08/2024",
+            namalembaga: "Pak Meicho (Kajian Pejuang Keluarga)",
+            alamat:
+              "Jl. Graha Mukti Raya no.336 Kel. Tlogosari Kulon Kota Semarang",
+            mushaf: 30,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/08/2024",
+            namalembaga: "Kuttab Al-Ikhlas",
+            alamat:
+              "Jl. Karang Panas RT.4/RW.1 Kel. Jatingaleh, Kec. Candisari, Semarang",
+            mushaf: 70,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/08/2024",
+            namalembaga: "TPQ Rohmatul Hadi",
+            alamat:
+              "Kebuntaman RT.1/RW.4 Kel. Kalikayen, Kec. Ungaran Timur, Semarang",
+            mushaf: 30,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/08/2024",
+            namalembaga: "Rumah Muallaf Center Aisyiyah (MCA) Jateng",
+            alamat: "Jl. MT Haryono KP Gandekan No.8 Jagalan, Semarang Tengah",
+            mushaf: 70,
+            iqra: 0,
+          },
+          {
+            tanggal: "29/08/2024",
+            namalembaga: "Tahfidz Qur'an Karakter",
+            alamat:
+              "Jl. Tejokusumo IV No.45, Muktiharjo Kidul, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50197 (130,0 m)",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "04/09/2024",
+            namalembaga: "Karyawan Alfatihah (Uswa dan April)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/09/2024",
+            namalembaga: "Karyawan Alfatihah (Lala)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 1,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/09/2024",
+            namalembaga:
+              "Karyawan dan Santri Alfatihah (Aini, Silfi, Zen, Ayu, Miranda) 3 dari donatur, 2 Alfatihah A6",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 5,
+            iqra: 0,
+          },
+          {
+            tanggal: "22/09/2024",
+            namalembaga: "Rumah Muallaf Kota Semarang",
+            alamat: "Jl. Bukit Dingin C5 No.12 Permata Puri Ngaliyan, Semarang",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/09/2024",
+            namalembaga:
+              "Karyawan Alfatihah (Ayu, Wulan, Husnia, Riska, Laela, Ima, Rama)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 7,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/09/2024",
+            namalembaga: "Muallaf Kita Bersama",
+            alamat: "Jl. Turus Asri No.16 Bulusan Tembalang Semarang",
+            mushaf: 42,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/09/2024",
+            namalembaga: "Karyawan Alfatihah (Afinka dan Ns)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "30/09/2024",
+            namalembaga: "Karyawan Alfatihah (CS)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 1,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/10/2024",
+            namalembaga: "Karyawan Alfatihah (Tim Pendidikan Jamus)",
+            alamat:
+              "Jl. Flamboyan III, RT.3/RW.5, Penggaron Lor, Genuk, Semarang",
+            mushaf: 12,
+            iqra: 0,
+          },
+          {
+            tanggal: "10/10/2024",
+            namalembaga: "Karyawan Alfatihah (Inayah, Sannie, Shelda, Tia)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 4,
+            iqra: 0,
+          },
+          {
+            tanggal: "11/10/2024",
+            namalembaga: "Karyawan Alfatihah (Sabrina, Shofi)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/10/2024",
+            namalembaga: "TPQ Nurul Hidayah",
+            alamat:
+              "Jl. Kelud Utara IV No.4 A, Kel. Petompon, Kec. Gajahmungkur, Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/10/2024",
+            namalembaga: "TPQ At-Taubah",
+            alamat:
+              "Jl. Tamponas Utara III No.29 B RT.1/RW.4, Kel. Petompon, Kec. Gajahmungkur, Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/10/2024",
+            namalembaga: "Karyawan Alfatihah (Atin)",
+            alamat:
+              "Jl. Flamboyan III, RT.3/RW.5, Penggaron Lor, Genuk, Semarang",
+            mushaf: 1,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/10/2024",
+            namalembaga:
+              "TPA Rumah Nur (Narahubung Bhabinamtibmas Bangetayu Kulon)",
+            alamat:
+              "Perumahan Banjardowo Baru, RT.5/RW.10 Kel. Karangroto, Genuk Semarang",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/10/2024",
+            namalembaga:
+              "Karyawan Alfatihah (Tyas, Ria, Media, Latifah, 9 santri hotel)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 13,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/10/2024",
+            namalembaga:
+              "Karyawan Alfatihah (Silfi, Fajria, Amel, Ima, Tintan Ikhwan)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 6,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/11/2024",
+            namalembaga: "Mushola Al-Amin",
+            alamat: "Ketileng Blok O Sendangmulyo, Tembalang Semarang",
+            mushaf: 10,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/11/2024",
+            namalembaga: "Karyawan Alfatihah (Rizki)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 1,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/11/2024",
+            namalembaga: "Karyawan Alfatihah (Rahma, Linda, Rizki)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 3,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Narahubung Bhabin (Masjid Al-Muhajirin)",
+            alamat:
+              "Banjarsari RT.2/RW.8 Kel. Banjardowo, Kec. Genuk, Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Narahubung Bhabin (Masjid Miftahul Huda)",
+            alamat:
+              "Jl. Wahyu Temurun II No.1, Tlogosari Kulon, Kec. Pedurungan, Semarang",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "19/11/2024",
+            namalembaga: "Karyawan Alfatihah (Silfi)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 1,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/11/2024",
+            namalembaga: "Pesantren Karantina Qur'an Pamularsih",
+            alamat: "Jl. Pamularsih Raya No.41B, Salamanmloyo, Kota Semarang",
+            mushaf: 3,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/11/2024",
+            namalembaga: "CFD Simpang Lima",
+            alamat:
+              "Masjid Raya Baiturrahman, Jl. Pandanaran No.126, Pekunden, Kota Semarang",
+            mushaf: 649,
+            iqra: 37,
+          },
+          {
+            tanggal: "29/11/2024",
+            namalembaga: "Karyawan Alfatihah (Ziah, Agis, Rizki)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 3,
+            iqra: 0,
+          },
+          {
+            tanggal: "02/12/2024",
+            namalembaga: "Karyawan Alfatihah (Laula dan Intan)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 2,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/12/2024",
+            namalembaga: "Karyawan Alfatihah (Husnia, Isti', Diah)",
+            alamat:
+              "Jl. Ngablak Indah II No.24 Kel. Bangetayu Kulon, Genuk Semarang",
+            mushaf: 3,
+            iqra: 0,
+          },
+          {
+            tanggal: "08/12/2024",
+            namalembaga: "PTQ Lansia Gedawang (6 lembaga)",
+            alamat: "Jl. Villa Madani Gedawang, Banyumanik, Kota Semarang",
+            mushaf: 210,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "Masjid Baitus Salam",
+            alamat: "Jl. Widuri IV RW.V Kel. Bangetayu Kulon, Genuk, Semarang",
+            mushaf: 9,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "Masjid Nurul Huda",
+            alamat: "Jl. Rejosari 4 Genuksari RT.7/RW.4, Genuk, Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "Santri Hotel Karantina Qur'an",
+            alamat: "Jl. Lemah Abang No.7 Pakopen, Bandungan, Kab. Semarang",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "29/04/2024",
+            namalembaga: "Karyoto",
+            alamat:
+              "Jl. Tlogo Timur Raya. No 7A Palebon, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50246",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "03/07/2024",
+            namalembaga: "Pengajian Miftahul Hidayah",
+            alamat:
+              "Taman Sekar Jagat NO.23 Tlogosari Kulon, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50196",
+            mushaf: 130,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/07/2024",
+            namalembaga: "Majelis Ta'lim Ainul Hayat",
+            alamat: "Penggaron Rt 01/Rw 01 SEMARANG",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "03/07/2024",
+            namalembaga: "Mesjid Jami Nurul Hidayah",
+            alamat:
+              "Jl. Mlatibaru II No.22 Kec. Semarang Tim., Kota Semarang, Jawa Tengah 50122",
+            mushaf: 45,
+            iqra: 0,
+          },
+          {
+            tanggal: "03/07/2024",
+            namalembaga: "TPQ Majelis Qur'an Radhlotul Mutadi'in",
+            alamat: "Karangroto Genuk, Semarang",
+            mushaf: 55,
+            iqra: 0,
+          },
+          {
+            tanggal: "08/07/2024",
+            namalembaga: "Pesantren Hotel karantina Qur'an",
+            alamat: "Pesantren cabang majapait dan cabang pamularsih, Semarang",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/07/2024",
+            namalembaga: "Kasie Trantib dan Pemerintahan",
+            alamat:
+              "Jl. Banget Prasetya 711 Bangetayu Kulon, Kec. Genuk, Kota Semarang, Jawa Tengah 50115",
+            mushaf: 70,
+            iqra: 0,
+          },
+          {
+            tanggal: "08/12/2024",
+            namalembaga: "Ummatan Washaton",
+            alamat: "Kec. Semarang Tengah, Kota Semarang",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "22/03/2024",
+            namalembaga: "TPQ INSAN KARIM",
+            alamat:
+              "JL NGABLAK KIDUL, MUKTIHARJO KIDUL, KEC PEDURUNGAN SEMARANG",
+            mushaf: 40,
+            iqra: 0,
+          },
+        ],
+        Karanganyar: [
+          {
+            tanggal: "21/07/2024",
+            namalembaga: "Gazebo Al-Qur'an",
+            alamat: "Jl. Karang Kulon, Karangayar, Jateng",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "24/08/2024",
+            namalembaga: "Yayasan Pendidikan Insan Alima Solo",
+            alamat:
+              "Balong, RT 02/15, Balong, Wonorejo, Kec. Gondangrejo, Kabupaten Karanganyar, Jawa Tengah 57188",
+            mushaf: 20,
+            iqra: 0,
+          },
+        ],
+        "Jawa Tengah": [
+          {
+            tanggal: "05/11/2024",
+            namalembaga: "LPQ Miftahul Huda",
+            alamat:
+              "Sentulan RT.15/RW.2 Kaloran, Gemolong, Sragen, Jawa Tengah",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Majlis Ta'lim Haji Ikhsan Kebumen",
+            alamat: "Borangan RT.2/RW.3, Peneket, Ambal, Kebumen, Jawa Tengah",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/12/2024",
+            namalembaga: "SMA Muhammadiyah Purworejo",
+            alamat: "Jl. Ir. H. Juanda Baledono, Purworejo, Jawa Tengah",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "05/12/2024",
+            namalembaga: "SDN Silado",
+            alamat:
+              "Jl. Raya Silado, Ds. Silado RT.3/RW.1, Kec. Sumbang, Kab. Banyumas 53183, Jawa Tengah",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "SMPN 14 Purworejo",
+            alamat:
+              "Jl. Kebumen-Kutoarjo KM.6, Desa Dlangu, Kec. Butuh, Kab. Purworejo 54264, Jawa Tengah",
+            mushaf: 575,
+            iqra: 50,
+          },
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "MI Ma'arif Al-Huda Canggal",
+            alamat: "Canggal, Kledung, Temanggung, Jawa Tengah",
+            mushaf: 230,
+            iqra: 0,
+          },
+        ],
+        Kendal: [
+          {
+            tanggal: "16/01/2024",
+            namalembaga: "YAYASAN PUTRA PUTRI SUNAN ABINAWA",
+            alamat: "KENDAL",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/01/2024",
+            namalembaga: "RUMAH QURAN FOR KIDS",
+            alamat: "DS PURWOREJO, DK LABAN RT 2/1 RINGINARUM, KENDAL, JATENG",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/07/2024",
+            namalembaga: "Rumah Iqro Lansia",
+            alamat: "Dusun Klisat RT 6/3 Desa Cening Singorojo Kendal Jateng",
+            mushaf: 70,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/07/2024",
+            namalembaga:
+              "Yayasan AL FATIHAH KALIWUNGU (ponpes tahfidz anak2 & dewasa)",
+            alamat:
+              "Gg jati mulyo.jl sawah jati.ds plantaran.kec kaliwungu selatan.kab kendal.jawa tengah rt05.rw8",
+            mushaf: 55,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/10/2024",
+            namalembaga: "STTD Rumah Qur'an Salimah",
+            alamat: "Wisma Salimah, Desa Purwosari, Kec. Sukorejo, Kab. Kendal",
+            mushaf: 20,
+            iqra: 0,
+          },
+          {
+            tanggal: "13/07/2024",
+            namalembaga: "takmir masjid roudlotul hikmah",
+            alamat:
+              "jl kyai jawi no 14 dusun krajan rt1 rw1 jawisari limbangan kendal",
+            mushaf: 100,
+            iqra: 0,
+          },
+        ],
+        Tegal: [
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "TPQ Desa Kalisalak",
+            alamat: "Kalisalak RT.1/RW.2 Kec. Margasari, Tegal",
+            mushaf: null,
+            iqra: 100,
+          },
+          {
+            tanggal: "20/12/2024",
+            namalembaga: "TPQ Al Falah",
+            alamat: "Tegal Kuning, Purworejo",
+            mushaf: 60,
+            iqra: 30,
+          },
+        ],
+        Wonogiri: [
+          {
+            tanggal: "16/10/2024",
+            namalembaga: "Masjid dan TPQ Al-Hidayah",
+            alamat:
+              "Joho RT.3/RW.3 Desa Joho, Kec. Purwantoro, Kab. Wonogiri, Jawa Tengah",
+            mushaf: 40,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/10/2024",
+            namalembaga: "Rumah Yatim Mandiri",
+            alamat:
+              "Dsn. Bero RT.1/RW.1 Desa Bero, Kec. Manyaran, Kab. Wonogiri",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "08/12/2024",
+            namalembaga: "Yayasan Manba'ul Hikmah",
+            alamat:
+              "Jl. Raya Solo-Wonogiri KM.25 Kec. Selogiri, Kab. Wonogiri 57652",
+            mushaf: 500,
+            iqra: 0,
+          },
+        ],
+        Wonosobo: [
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "MTs Ma'arif Garung",
+            alamat: "Tegalsari, Garung, Wonosobo",
+            mushaf: 262,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/12/2024",
+            namalembaga: "Pemerintahan Desa Tegalsari",
+            alamat: "Tegalsari RT.5/RW.1, Garung, Wonosobo",
+            mushaf: 210,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Masjid Baitul Qur'an KH. Muntaha Al Hafidz (UNSIQ 2)",
+            alamat: "Jl. KH. Abdurrahman Wahid KM. 5 Wonosobo",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Pondok Pesantren Ma'had Mamba'ul Qur'an",
+            alamat: "Munggang, Kalibeber, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Masjid Al-Furqon (UNSIQ 1)",
+            alamat: "Jl. KH. Hasyim Asyari KM. 3 Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "MI Ma'arif Kebondalem",
+            alamat: "Kebondalem, Sukorejo, Mojotengah, Wonosobo",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "PPTQ Al-Asy'ariyyah 10",
+            alamat: "Kalibeber 01/02 Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Pondok Ilmu Baitul Akhyar",
+            alamat: "Karangluhur, Kalianget RT.6/RW.3 Wonosobo",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "SMP/MTs Wonosobo",
+            alamat: "Karangluhur, Kalianget RT.6/RW.3 Wonosobo",
+            mushaf: 1000,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "SMK Takhassus Al-Qur'an",
+            alamat:
+              "Jl. Jawar No. KM. 1 Jambean, Kalibeber, Mojotengah, Wonosobo",
+            mushaf: 1500,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Guru dan Karyawan SMA TAQ",
+            alamat:
+              "Jl. Jawar No. KM. 1 Jambean, Kalibeber, Mojotengah, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "TPQ Al-Istiqomah",
+            alamat: "Munggang, Kalibeber, Wonosobo",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "15/11/2024",
+            namalembaga: "Al-Asy'ariyyah 5",
+            alamat: "Kalibeber RT.5/RW.11 Wonosobo",
+            mushaf: 180,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/11/2024",
+            namalembaga: "SDN 1 Kembaran",
+            alamat: "Desa Kembaran, Kec. Kalikajar, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/11/2024",
+            namalembaga: "Ponpes Andalusia",
+            alamat: "Kusumabaru, Ngadikusuman, Kertek, Wonosobo",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "16/11/2024",
+            namalembaga: "TPQ Al-Huda",
+            alamat: "Desa Jojogan, Kec. Kejajar, Kab. Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/11/2024",
+            namalembaga: "MI Ma'arif Wonokromo",
+            alamat: "Wonokromo, Mojotengah Wonosobo",
+            mushaf: 225,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/11/2024",
+            namalembaga: "TPQ Al-Muhajirin",
+            alamat: "Kalibeber, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "21/11/2024",
+            namalembaga: "Masjid Raudlatul Muslimin",
+            alamat: "Kebondalem, Sukorejo, Mojotengah, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "22/11/2024",
+            namalembaga: "MI Ma'arif Klesman",
+            alamat: "Klesman, Mojotengah, Wonosobo",
+            mushaf: 750,
+            iqra: 0,
+          },
+          {
+            tanggal: "22/11/2024",
+            namalembaga: "MI Tahfidz Alfa Ali Masykur",
+            alamat: "Bumen RT.2/RW.2 Bumirejo, Mojotengah, Wonosobo",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "22/11/2024",
+            namalembaga: "Organisasi Vespa (IVW)",
+            alamat: "Kalibeber, Wonosobo",
+            mushaf: 200,
+            iqra: 200,
+          },
+          {
+            tanggal: "22/11/2024",
+            namalembaga: "Masjid Baiturrohmah",
+            alamat: "Jambean RT.2/RW.9 Kalibeber, Mojotengah, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/11/2024",
+            namalembaga: "SMP Alfa Ali Masykur",
+            alamat: "Bumen, Bumirejo, Mojotengah, Wonosobo",
+            mushaf: 300,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/11/2024",
+            namalembaga: "Mushola Attaqwa",
+            alamat: "Manggisan Lama RT.2/RW.5 Mudal, Mojotengah, Wonosobo",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/11/2024",
+            namalembaga: "Masjid Baitussomad",
+            alamat: "Manggisan Indah Blok C.11/RT.1/RW.6 Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/11/2024",
+            namalembaga: "MI Ma'arif Manggisan",
+            alamat:
+              "Jl. Syekh Qodbady Manggisan Lama, Mudal, Mojotengah, Wonosobo",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "23/11/2024",
+            namalembaga: "TPQ Al-Islah 2",
+            alamat:
+              "Kalilawang RT.5/RW.3, Sitiharjo Garung, Wonosobo",
+            mushaf: 120,
+            iqra: 160,
+          },
+          {
+            tanggal: "25/11/2024",
+            namalembaga: "MI Ma'arif Kalibeber",
+            alamat: "Kalibeber RT.3/RW.13 Wonosobo",
+            mushaf: 500,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/11/2024",
+            namalembaga: "MI Ma'arif Mojosari",
+            alamat: "Mojosari, Mojotengah, Wonosobo",
+            mushaf: 350,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/11/2024",
+            namalembaga: "MI Ma'arif Sojopuro",
+            alamat: "Jl. Kertosobo KM.07 Sojopuro, Wonosobo",
+            mushaf: 180,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/11/2024",
+            namalembaga: "Madin Hidayatussibyan",
+            alamat: "Sojopuro RT.2/RW.1 Mojotengah, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/11/2024",
+            namalembaga: "Masjid Ulul Albab",
+            alamat: "Candirejo RT.6/RW.2 Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "25/11/2024",
+            namalembaga: "MI Ma'arif Kejiwan",
+            alamat: "Jl. Kyai Wonobodro, Kejiwan, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/11/2024",
+            namalembaga: "MI Ma'arif Kebrengan",
+            alamat: "Kebrengan, Mojotengah, Wonosobo",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "26/11/2024",
+            namalembaga: "MI Ma'arif Slukatan",
+            alamat: "Desa Slukatan, Mojotengah, Wonosobo",
+            mushaf: 100,
+            iqra: 30,
+          },
+          {
+            tanggal: "26/11/2024",
+            namalembaga: "TPQ Roudlotul Huda",
+            alamat: "Bogelan RT.5/RW.3 Sukorejo, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "27/11/2024",
+            namalembaga: "Madin Fatkhul Mannan Arrozi",
+            alamat: "Karangsari RT.6/RW.4 Andongsili, Mojotengah, Wonosobo",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/11/2024",
+            namalembaga: "MI Ma'arif Kliwonan",
+            alamat: "Klesman RT.7/RW.1 Blederan, Mojotengah, Wonosobo",
+            mushaf: 580,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/11/2024",
+            namalembaga: "SMPN 3 Kalikajar",
+            alamat: "Kembaran, Kalikajar, Wonosobo",
+            mushaf: 510,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/11/2024",
+            namalembaga: "Masjid Darul Muttaqin",
+            alamat: "Gondang, Candimulyo, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "28/11/2024",
+            namalembaga: "TPQ Bakhutmah",
+            alamat: "Kalipetung, RT.2/RW.10 Kaliwiro, Wonosobo",
+            mushaf: 100,
+            iqra: 50,
+          },
+          {
+            tanggal: "28/11/2024",
+            namalembaga: "TPQ Auladi Ash Shobri",
+            alamat: "Semayu Jurang, Semayu Selomerto, Wonosobo",
+            mushaf: 105,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Madin Mantaba",
+            alamat: "Selogiri, RT.1/RW.6 Garung Wonosobo",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "TPQ Roudhotul Athfal",
+            alamat: "Garung RT.3/RW.5 Wonosobo",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Madin Hidayatul Mubtadin",
+            alamat: "Mlandi, Garung, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Masjid Rohman Al-Ikhlas",
+            alamat: "Banaran, Kayugiyang, Garung, Wonosobo",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Pemerintahan Desa Siwuran",
+            alamat: "Mayasari, Siwuran, Garung, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Pemerintahan Desa Kuripan",
+            alamat: "Kuripan RT.2/RW.2 Garung, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "PAC GP Ansor Garung",
+            alamat: "Boralan, Garung, Wonosobo",
+            mushaf: 467,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Pemerintahan Desa Jengkol",
+            alamat: "Kalikalang RT.5/RW.2 Jengkol, Garung, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Madin Nur Hidayah",
+            alamat: "Menjer, Garung, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Madin An Nida",
+            alamat: "Sirangkel, Mlandi, Garung, Wonosobo",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "MI MK An Nur",
+            alamat: "Garung, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Masjid Nurul Huda",
+            alamat: "Laranganlor RT.4/RW.3 Garung, Wonosobo",
+            mushaf: 200,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "SMP Ma'arif Mlandi",
+            alamat: "Jl. Rakai Pikatan KM.4 Mlandi, Garung, Wonosobo",
+            mushaf: 417,
+            iqra: 0,
+          },
+          {
+            tanggal: "06/12/2024",
+            namalembaga: "Madin Nurul Huda",
+            alamat: "Tedunan RT.2/RW.6 Mlandi, Garung, Wonosobo",
+            mushaf: 50,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/12/2024",
+            namalembaga: "Pemerintahan Desa Lengkong",
+            alamat: "Lengkong RT.3/RW.2 Garung, Wonosobo",
+            mushaf: 205,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/12/2024",
+            namalembaga: "Pemerintahan Desa Gemblengan",
+            alamat: "Gemblengan, Garung, Wonosobo",
+            mushaf: 215,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/12/2024",
+            namalembaga: "MI Ma'arif Gesing",
+            alamat: "Gesing, Garung, Wonosobo",
+            mushaf: 50,
+            iqra: 50,
+          },
+          {
+            tanggal: "07/12/2024",
+            namalembaga: "TPQ Al Barokah",
+            alamat: "Sendangsari. RT.1/RW.8 Garung Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+          {
+            tanggal: "07/12/2024",
+            namalembaga: "Pemerintahan Desa Sitiharjo",
+            alamat: "Sitiharjo RT.5/RW.3 Garung, Wonosobo",
+            mushaf: 210,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "Pondok Pesantren Al-Mutazam",
+            alamat: "Kinandungan, Garung, Wonosobo",
+            mushaf: 150,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "Yayasan Al-Qur'an Al-Hidayah",
+            alamat: "Kebondalem, Garung Wonosobo",
+            mushaf: 120,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "Pondok Pesantren Al-Hikmah",
+            alamat: "Banyusumang, Wonosobo",
+            mushaf: 180,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "TPQ Al-Mujahidin",
+            alamat: "Jelok, Garung, Wonosobo",
+            mushaf: 60,
+            iqra: 0,
+          },
+          {
+            tanggal: "09/12/2024",
+            namalembaga: "MI Ma'arif Menden",
+            alamat: "Menden, Garung, Wonosobo",
+            mushaf: 70,
+            iqra: 0,
+          },
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "MI Ma'arif Grenggeng",
+            alamat: "Grenggeng, Garung, Wonosobo",
+            mushaf: 90,
+            iqra: 0,
+          },
+          {
+            tanggal: "12/12/2024",
+            namalembaga: "TPQ An-Nur",
+            alamat: "An-Nur, Garung, Wonosobo",
+            mushaf: 100,
+            iqra: 0,
+          },
+        ],
+      };
+
+      // Masukkan Koordinat provinsi Untuk Data diatas
+      const provinsiKoordinat = {
+        Aceh: [4.606253, 96.840225],
+        "Kab Jambi": [-1.615582, 103.613986],
+        Lampung: [-4.621914, 105.390457],
+        Riau: [0.561985, 101.579921],
+        "Sumatra Selatan": [-3.184157, 103.918761],
+        "Kalimantan Tengah": [-1.752857, 113.364878],
+        "Kalimantan Timur": [0.48785, 116.393389],
+        "Sulawesi Selatan": [-3.715823, 119.957282],
+        "Jawa Tengah": [-7.163326, 110.134738],
+        Cilacap: [-7.698876, 109.023385],
+        Demak: [-6.892561, 110.637876],
+        "Kab Jepara": [-6.582489, 110.679973],
+        Semarang: [-6.985863, 110.409905],
+        Karanganyar: [-7.610066, 110.985182],
+        "Jawa Tengah": [-7.164077, 110.139375],
+        Kendal: [-6.932491, 110.20281],
+        Tegal: [-6.88034, 109.125675],
+        Wonogiri: [-7.799347, 110.938023],
+        Wonosobo: [-7.369053, 109.898217],
+      };
+
+      // Fungsi untuk menambahkan pin/marker pada peta dari data JSON
+      function addMarkersFromJSON(data) {
+        Object.keys(data).forEach(function (provinsi) {
+          var marker = L.marker(provinsiKoordinat[provinsi]).addTo(map);
+          var popupContent = `
+          <h2>${provinsi}</h2>
+          <div style="overflow-y: auto; max-height: 250px;">
+            <table class="popup-table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Nama Lembaga</th>
+                  <th>Alamat</th>
+                  <th>Mushaf</th>
+                  <th>Iqra</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+          data[provinsi].forEach(function (location) {
+            popupContent += `
+            <tr>
+              <td>${location.tanggal}</td>
+              <td>${location.namalembaga}</td>
+              <td>${location.alamat}</td>
+              <td>${location.mushaf}</td>
+              <td>${location.iqra}</td>
+            </tr>
+          `;
+          });
+          popupContent += `
+              </tbody>
+            </table>
+          </div>
+        `;
+          marker.bindPopup(popupContent);
+        });
+      }
+
+      // Panggil fungsi untuk menambahkan marker ke peta
+      addMarkersFromJSON(data);
+    </script>
+  </body>
 </html>
