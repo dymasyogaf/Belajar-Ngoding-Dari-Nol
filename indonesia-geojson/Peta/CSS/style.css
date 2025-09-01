@@ -1,0 +1,63 @@
+.Judul {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    font-weight: 700;
+    color: #111827; /* abu-abu gelap */
+    margin-bottom: 10px;
+}
+
+/* Container utama */
+#map-container {
+  border: 3px solid #f97316; /* warna oranye */
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+/* Peta */
+#map {
+  width: 100%;
+  height: 500px; /* bisa disesuaikan */
+  border-radius: 8px;
+}
+
+/* Info box di atas peta */
+#map-info {
+  background: #f0f9ff;
+  border-left: 5px solid #3b82f6; /* biru */
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Legend (keterangan warna) */
+.legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #fff;
+  border-top: 3px solid #f97316;
+  border-radius: 0 0 12px 12px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 4px 8px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 3px;
+}
