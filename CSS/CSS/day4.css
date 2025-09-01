@@ -1,0 +1,40 @@
+/* Day 4 - Font, Text, dan Styling text */
+
+/* Font Family */
+.serif {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+}
+
+.sans-serif {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+.monospace {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+}
+
+
+/* Text Alignment */
+.teks-center {
+    text-align: center;
+}
+
+.teks-right {
+    text-align: right;
+}
+
+.teks-justify {
+    text-align: justify;
+}
+
+/* Text Styling */
+.styled-text {
+    color: darkred;
+    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
