@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalStore - Toko Affiliate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configure Tailwind to enable dark mode
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .product-card { transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-4px); }
+        .admin-panel { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-primary:hover { background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%); }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .dark .glass-effect { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .dark .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2); }
+
+        /* Subtle animations */
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .gentle-float { animation: gentle-float 4s ease-in-out infinite; }
+
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s ease;
+        }
+
+        /* Clean scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 3px; }
+
+        /* Navigation styling */
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+        }
+        .nav-link:hover {
+            background: rgba(59, 130, 246, 0.1) !important;
+        }
+        .dark .nav-link:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+        }
+
+        /* Better readability */
+        .text-readable { color: #374151; }
+        .dark .text-readable { color: #d1d5db; }
+        .text-readable-light { color: #6b7280; }
+        .dark .text-readable-light { color: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Digital<span class="text-blue-600 dark:text-blue-400">Store</span>
+                    </h1>
+                </div>
+
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="/" onclick="showHome()" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Home
+                    </a>
+                    <a href="/store?filter=adventure" onclick="filterProducts('adventure')" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Adventure
+                    </a>
+                    <a href="/store?filter=hiburan" onclick="filterProducts('hiburan')" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Hiburan
+                    </a>
+                    <a href="/store?filter=ebook" onclick="filterProducts('ebook')" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Ebook
+                    </a>
+                    <a href="/store?filter=all" onclick="showAllProducts()" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Semua
+                    </a>
+                </nav>
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                        <svg id="themeIcon" class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <% if (isAdmin) { %>
+                        <a href="/admin" class="btn-primary text-white px-4 py-2 rounded-lg font-medium transition-all">
+                            Admin Panel
+                        </a>
+                        <form action="/auth/logout" method="POST" style="display: inline;">
+                            <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-all">
+                                Logout
+                            </button>
+                        </form>
+                    <% } else { %>
+                        <a href="/auth/login" class="btn-primary text-white px-4 py-2 rounded-lg font-medium transition-all">
+                            Admin Login
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="heroSection" class="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 dark:from-gray-800 dark:via-gray-900 dark:to-black text-white py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="gentle-float mb-8">
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-white text-sm font-medium">Toko Digital Terpercaya</span>
+                </div>
+            </div>
+
+            <h1 class="text-4xl md:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Digital</span>
+                <span class="bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">Store</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Platform terbaik untuk produk digital berkualitas tinggi.
+                Dari course, template, hingga tools untuk creator modern.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 mb-10">
+                <div class="glass-effect rounded-xl px-6 py-3 flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-white font-medium">Adventure</span>
+                </div>
+                <div class="glass-effect rounded-xl px-6 py-3 flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-white font-medium">Hiburan</span>
+                </div>
+                <div class="glass-effect rounded-xl px-6 py-3 flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-white font-medium">Ebook</span>
+                </div>
+            </div>
+
+            <p class="text-blue-100 text-lg">
+                ✨ Kualitas Premium • 🚀 Akses Instan • 💯 Garansi Kepuasan
+            </p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-20 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="categoryHeader" class="text-center mb-16">
+                <div class="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-full px-4 py-2 mb-6">
+                    <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    <span id="categoryBadge" class="text-blue-700 dark:text-blue-400 text-sm font-medium">
+                        <%= currentFilter === 'all' ? 'Semua Produk' :
+                           currentFilter === 'home' ? 'Beranda' :
+                           currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1) %>
+                    </span>
+                </div>
+                <h2 id="categoryTitle" class="text-3xl md:text-5xl font-bold text-readable mb-6">
+                    <%= currentFilter === 'all' ? 'Koleksi Produk Digital Lengkap' :
+                       currentFilter === 'home' ? 'Selamat Datang di DigitalStore' :
+                       `Produk ${currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1)}` %>
+                </h2>
+                <p id="categoryDescription" class="text-lg text-readable-light max-w-2xl mx-auto leading-relaxed">
+                    <%= currentFilter === 'all' ? 'Jelajahi semua produk digital berkualitas tinggi yang tersedia di toko kami' :
+                       currentFilter === 'home' ? 'Platform terbaik untuk produk digital berkualitas tinggi' :
+                       `Koleksi khusus produk ${currentFilter} berkualitas tinggi` %>
+                </p>
+            </div>
+
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be loaded here -->
+            </div>
+
+            <div id="emptyState" class="text-center py-20 hidden">
+                <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-12 max-w-2xl mx-auto soft-shadow">
+                    <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-readable mb-4">
+                        Belum Ada Produk
+                    </h3>
+                    <p class="text-readable-light mb-8 leading-relaxed">
+                        Belum ada produk dalam kategori ini.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16 border-t border-gray-700 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">DigitalStore</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md leading-relaxed">
+                        Platform terpercaya untuk produk digital berkualitas tinggi.
+                        Membantu creator dan entrepreneur membangun bisnis digital yang sukses.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-300 hover:text-white transition-colors">Beranda</a></li>
+                        <li><a href="/store?filter=all" class="text-gray-300 hover:text-white transition-colors">Produk</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Kontak</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-white">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Kebijakan</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privasi</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 dark:border-gray-800 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-gray-300 text-sm mb-4 md:mb-0">
+                        © 2024 DigitalStore. Dibuat dengan ❤️ untuk kesuksesan bisnis digital Anda.
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-green-400">Sistem Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme management
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').innerHTML = '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').innerHTML = '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').innerHTML = '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').innerHTML = '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load products
+        async function loadProducts(filter = '<%= currentFilter %>') {
+            try {
+                const response = await fetch(`/products/api${filter !== 'all' ? `?filter=${filter}` : ''}`);
+                const products = await response.json();
+
+                const productsGrid = document.getElementById('productsGrid');
+                const emptyState = document.getElementById('emptyState');
+
+                if (products.length === 0) {
+                    productsGrid.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+
+                emptyState.classList.add('hidden');
+                productsGrid.innerHTML = products.map(product => `
+                    <div class="product-card bg-white dark:bg-gray-800 rounded-2xl soft-shadow border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg">
+                        <div class="relative">
+                            <img src="${product.image}" alt="${product.name}"
+                                 class="w-full h-64 object-cover"
+                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDQwMCAyNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjU2IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNzUgMTEwSDIyNVYxNDZIMTc1VjExMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHA+CjwvcGF0aD4KPHBhdGggZD0iTTE4NSAxMjBIMjE1VjEzNkgxODVWMTIwWiIgZmlsbD0iI0Y5RkFGQiIvPgo8L3N2Zz4K'; this.alt='Gambar tidak dapat dimuat';">
+                            <div class="absolute top-4 right-4 flex space-x-2">
+                                ${product.category ? `<div class="bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 px-3 py-1 rounded-full">
+                                    <span class="text-blue-700 dark:text-blue-400 text-xs font-medium">${product.category.toUpperCase()}</span>
+                                </div>` : ''}
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-3">
+                                <h3 class="text-xl font-bold text-readable mb-2">${product.name}</h3>
+                            </div>
+                            <div class="mb-4">
+                                <p class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">${product.price}</p>
+                            </div>
+
+                            <p class="text-readable-light mb-6 leading-relaxed">${product.description}</p>
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                    <span class="text-xs text-readable-light">${new Date(product.created_at).toLocaleDateString('id-ID')}</span>
+                                </div>
+                                <a href="${product.affiliate_link}" target="_blank" rel="noopener noreferrer"
+                                   class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-lg transform hover:scale-105 flex items-center space-x-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                    </svg>
+                                    <span>Beli Sekarang</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        // Navigation functions
+        function showHome() {
+            window.location.href = '/';
+        }
+
+        function filterProducts(category) {
+            window.location.href = `/store?filter=${category}`;
+        }
+
+        function showAllProducts() {
+            window.location.href = '/store?filter=all';
+        }
+
+        // Event listeners
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            loadProducts();
+        });
+    </script>
+</body>
+</html>

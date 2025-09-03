@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= isEdit ? 'Edit Produk' : 'Tambah Produk Baru' %> - DigitalStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .dark .glass-effect { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .dark .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2); }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-primary:hover { background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%); }
+        .btn-secondary { background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); }
+        .btn-secondary:hover { background: linear-gradient(135deg, #4b5563 0%, #374151 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+                        Digital<span class="text-blue-600 dark:text-blue-400">Store</span> Admin
+                    </h1>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                        Welcome, <span class="font-medium text-gray-900 dark:text-white"><%= username %></span>
+                    </span>
+                    <a href="/admin" class="btn-secondary text-white px-4 py-2 rounded-lg font-medium transition-all">
+                        ← Kembali ke Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white dark:bg-gray-800 rounded-xl soft-shadow border border-gray-200 dark:border-gray-700 p-8">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    <%= isEdit ? 'Edit Produk' : 'Tambah Produk Baru' %>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400">
+                    <%= isEdit ? 'Update informasi produk yang sudah ada' : 'Buat produk baru untuk ditambahkan ke katalog' %>
+                </p>
+            </div>
+
+            <% if (error) { %>
+                <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-red-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                        </svg>
+                        <p class="text-red-700 dark:text-red-400 text-sm font-medium"><%= error %></p>
+                    </div>
+                </div>
+            <% } %>
+
+            <form action="<%= isEdit ? `/admin/products/${product.id}?_method=PUT` : '/admin/products' %>" method="POST" class="space-y-6">
+                <!-- Product Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Nama Produk <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="name" name="name" required
+                           value="<%= product ? product.name : '' %>"
+                           class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                           placeholder="Masukkan nama produk">
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Kategori <span class="text-red-500">*</span>
+                    </label>
+                    <select id="category" name="category" required
+                            class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        <option value="">Pilih kategori</option>
+                        <option value="adventure" <%= product && product.category === 'adventure' ? 'selected' : '' %>>Adventure</option>
+                        <option value="hiburan" <%= product && product.category === 'hiburan' ? 'selected' : '' %>>Hiburan</option>
+                        <option value="ebook" <%= product && product.category === 'ebook' ? 'selected' : '' %>>Ebook</option>
+                    </select>
+                </div>
+
+                <!-- Price -->
+                <div>
+                    <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Harga <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 dark:text-gray-400 font-medium">Rp</span>
+                        </div>
+                        <input type="text" id="price" name="price" required
+                               value="<%= product ? product.price : '' %>"
+                               class="block w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                               placeholder="0">
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Contoh: 299.000 atau 149.000</p>
+                </div>
+
+                <!-- Image URL -->
+                <div>
+                    <label for="image" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        URL Gambar <span class="text-red-500">*</span>
+                    </label>
+                    <input type="url" id="image" name="image" required
+                           value="<%= product ? product.image : '' %>"
+                           class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                           placeholder="https://example.com/image.jpg">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Gunakan URL gambar yang valid (JPG, PNG, WebP)</p>
+                </div>
+
+                <!-- Image Preview -->
+                <div id="imagePreview" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Preview Gambar
+                    </label>
+                    <div class="relative w-full max-w-sm">
+                        <img id="previewImg" src="" alt="Preview" class="w-full h-48 object-cover rounded-lg border border-gray-300 dark:border-gray-600">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-10 transition-all rounded-lg flex items-center justify-center">
+                            <span class="text-white text-sm font-medium opacity-0 hover:opacity-100 transition-opacity">Preview</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Deskripsi <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="description" name="description" rows="4" required
+                              class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-vertical"
+                              placeholder="Jelaskan produk ini secara detail..."><%= product ? product.description : '' %></textarea>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Berikan deskripsi yang menarik dan informatif tentang produk</p>
+                </div>
+
+                <!-- Affiliate Link -->
+                <div>
+                    <label for="affiliate_link" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Link Affiliate <span class="text-red-500">*</span>
+                    </label>
+                    <input type="url" id="affiliate_link" name="affiliate_link" required
+                           value="<%= product ? product.affiliate_link : '' %>"
+                           class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                           placeholder="https://example.com/affiliate-link">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Link affiliate untuk pembelian produk</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <a href="/admin" class="w-full sm:w-auto px-6 py-3 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg font-medium transition-all text-center">
+                        Batal
+                    </a>
+                    <button type="submit" class="w-full sm:w-auto btn-primary text-white px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-lg transform hover:scale-105 flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span><%= isEdit ? 'Update Produk' : 'Simpan Produk' %></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Image preview functionality
+        const imageInput = document.getElementById('image');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+
+        function updateImagePreview() {
+            const url = imageInput.value.trim();
+            if (url) {
+                previewImg.src = url;
+                imagePreview.classList.remove('hidden');
+            } else {
+                imagePreview.classList.add('hidden');
+            }
+        }
+
+        // Update preview on input change
+        imageInput.addEventListener('input', updateImagePreview);
+
+        // Handle image load error
+        previewImg.addEventListener('error', function() {
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0MCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNy41IDEwSDIyLjVWMTQuNUgxNy41VjEwWiIgZmlsbD0iIzlDQTNBRiIvPgo8cGF0aCBkPSJNMTggMTJIMjJWMTZIMThWMjJaIGZpbGw9IiNGOUZBRkIiLz4KPHN2Zz4K';
+            this.alt = 'Gambar tidak dapat dimuat';
+        });
+
+        // Price formatting
+        const priceInput = document.getElementById('price');
+        priceInput.addEventListener('input', function(e) {
+            // Remove non-numeric characters except dots
+            let value = e.target.value.replace(/[^\d.]/g, '');
+
+            // Remove extra dots
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+
+            e.target.value = value;
+        });
+
+        // Initialize image preview on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateImagePreview();
+        });
+    </script>
+</body>
+</html>

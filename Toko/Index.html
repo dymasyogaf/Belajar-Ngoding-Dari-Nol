@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Affiliate - Dashboard Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configure Tailwind to enable dark mode
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .product-card { transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-4px); }
+        .admin-panel { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-primary:hover { background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%); }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .dark .glass-effect { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .dark .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2); }
+        
+        /* Subtle animations */
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .gentle-float { animation: gentle-float 4s ease-in-out infinite; }
+        
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s ease;
+        }
+        
+        /* Clean scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 3px; }
+        
+        /* Navigation styling */
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+        }
+        .nav-link:hover {
+            background: rgba(59, 130, 246, 0.1) !important;
+        }
+        .dark .nav-link:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+        }
+        
+        /* Better readability */
+        .text-readable { color: #374151; }
+        .dark .text-readable { color: #d1d5db; }
+        .text-readable-light { color: #6b7280; }
+        .dark .text-readable-light { color: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        Digital<span class="text-blue-600 dark:text-blue-400">Store</span>
+                    </h1>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="#" onclick="showHome()" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Home
+                    </a>
+                    <a href="#" onclick="filterProducts('adventure')" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Adventure
+                    </a>
+                    <a href="#" onclick="filterProducts('hiburan')" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Hiburan
+                    </a>
+                    <a href="#" onclick="filterProducts('ebook')" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Ebook
+                    </a>
+                    <a href="#" onclick="showAllProducts()" class="nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                        Semua
+                    </a>
+                </nav>
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                        <svg id="themeIcon" class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <button id="toggleView" class="btn-primary text-white px-4 py-2 rounded-lg font-medium transition-all">
+                        Admin Panel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-2xl soft-shadow border border-gray-200 dark:border-gray-700 p-8">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4 gentle-float">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 id="formTitle" class="text-3xl font-bold text-readable mb-2">
+                        Tambah Produk Digital
+                    </h2>
+                    <p id="formSubtitle" class="text-readable-light">Buat produk digital baru untuk toko Anda</p>
+                </div>
+                
+                <form id="productForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-readable mb-2">Nama Produk</label>
+                            <input type="text" id="productName" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-readable rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="Contoh: Ultimate Course Bundle">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-readable mb-2">Kategori</label>
+                            <select id="productCategory" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-readable rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                <option value="">Pilih Kategori</option>
+                                <option value="adventure">Adventure</option>
+                                <option value="hiburan">Hiburan</option>
+                                <option value="ebook">Ebook</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-readable mb-2">Harga</label>
+                            <input type="text" id="productPrice" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-readable rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="Contoh: Rp 299.000">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-readable mb-2">URL Gambar Produk</label>
+                        <input type="url" id="productImage" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-readable rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="https://example.com/gambar-produk.jpg">
+                        <p class="text-sm text-readable-light mt-1">Masukkan URL gambar yang dimulai dengan https://</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-readable mb-2">Deskripsi Produk</label>
+                        <textarea id="productDescription" required rows="4" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-readable rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none" placeholder="Jelaskan keunggulan dan fitur produk digital Anda..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-readable mb-2">Link Affiliate</label>
+                        <input type="url" id="affiliateLink" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-readable rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="https://link-affiliate.com/produk">
+                        <p class="text-sm text-readable-light mt-1">Link tempat customer akan diarahkan untuk membeli</p>
+                    </div>
+
+                    <div class="flex justify-center pt-4 space-x-4">
+                        <button type="submit" id="submitBtn" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold soft-shadow hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center space-x-2">
+                            <svg id="submitIcon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span id="submitText">Tambah Produk</span>
+                        </button>
+                        <button type="button" id="cancelBtn" class="hidden bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-semibold soft-shadow hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Batal</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store View -->
+    <div id="storeView" class="hidden">
+        <!-- Hero Section -->
+        <section id="heroSection" class="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 dark:from-gray-800 dark:via-gray-900 dark:to-black text-white py-24 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <div class="gentle-float mb-8">
+                    <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-white text-sm font-medium">Toko Digital Terpercaya</span>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl md:text-7xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">Digital</span>
+                    <span class="bg-gradient-to-r from-blue-100 to-white bg-clip-text text-transparent">Store</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Platform terbaik untuk produk digital berkualitas tinggi. 
+                    Dari course, template, hingga tools untuk creator modern.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-10">
+                    <div class="glass-effect rounded-xl px-6 py-3 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-white font-medium">Adventure</span>
+                    </div>
+                    <div class="glass-effect rounded-xl px-6 py-3 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-white font-medium">Hiburan</span>
+                    </div>
+                    <div class="glass-effect rounded-xl px-6 py-3 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-white font-medium">Ebook</span>
+                    </div>
+                </div>
+                
+                <p class="text-blue-100 text-lg">
+                    ✨ Kualitas Premium • 🚀 Akses Instan • 💯 Garansi Kepuasan
+                </p>
+            </div>
+        </section>
+
+
+
+        <!-- All Products Section -->
+        <section class="py-20 bg-white dark:bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="categoryHeader" class="text-center mb-16">
+                    <div class="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-full px-4 py-2 mb-6">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                        <span id="categoryBadge" class="text-blue-700 dark:text-blue-400 text-sm font-medium">Semua Produk</span>
+                    </div>
+                    <h2 id="categoryTitle" class="text-3xl md:text-5xl font-bold text-readable mb-6">
+                        Koleksi Produk Digital Lengkap
+                    </h2>
+                    <p id="categoryDescription" class="text-lg text-readable-light max-w-2xl mx-auto leading-relaxed">
+                        Jelajahi semua produk digital berkualitas tinggi yang tersedia di toko kami
+                    </p>
+                </div>
+                
+                <!-- Category Call-to-Action -->
+                <div id="categoryCallToAction" class="hidden mb-16">
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-8 max-w-4xl mx-auto">
+                        <div class="text-center">
+                            <div id="ctaIcon" class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6 gentle-float">
+                                <!-- Icon will be inserted here -->
+                            </div>
+                            <h3 id="ctaTitle" class="text-2xl md:text-3xl font-bold text-readable mb-4">
+                                <!-- CTA Title will be inserted here -->
+                            </h3>
+                            <p id="ctaMessage" class="text-lg text-readable-light leading-relaxed mb-6">
+                                <!-- CTA Message will be inserted here -->
+                            </p>
+                            <div class="flex flex-wrap justify-center gap-3">
+                                <div id="ctaFeatures" class="flex flex-wrap justify-center gap-3">
+                                    <!-- Features will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Products will be inserted here -->
+                </div>
+                
+                <div id="emptyState" class="text-center py-20">
+                    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-12 max-w-2xl mx-auto soft-shadow">
+                        <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-readable mb-4">
+                            Belum Ada Produk Custom
+                        </h3>
+                        <p class="text-readable-light mb-8 leading-relaxed">
+                            Anda belum menambahkan produk custom. Mulai tambahkan produk digital Anda sendiri untuk melengkapi koleksi toko.
+                        </p>
+                        <button onclick="showAdminPanel()" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold soft-shadow hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 mx-auto">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Tambah Produk Pertama</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 dark:bg-black text-white py-16 border-t border-gray-700 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Brand -->
+                    <div class="md:col-span-2">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold">DigitalStore</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6 max-w-md leading-relaxed">
+                            Platform terpercaya untuk produk digital berkualitas tinggi. 
+                            Membantu creator dan entrepreneur membangun bisnis digital yang sukses.
+                        </p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all hover:scale-110">
+                                <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all hover:scale-110">
+                                <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all hover:scale-110">
+                                <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all hover:scale-110">
+                                <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                                </svg>
+                                <span>Beranda</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM6 9a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Produk</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Tentang Kami</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                                </svg>
+                                <span>Kontak</span>
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 text-white">Support</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>FAQ</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Kebijakan</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Privasi</span>
+                            </a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Syarat & Ketentuan</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-700 dark:border-gray-800 mt-12 pt-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="text-gray-300 text-sm mb-4 md:mb-0">
+                            © 2024 DigitalStore. Dibuat dengan ❤️ untuk kesuksesan bisnis digital Anda.
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-green-400">Sistem Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Data storage
+        let products = JSON.parse(localStorage.getItem('affiliateProducts')) || [];
+        let editingProductId = null;
+        let currentFilter = 'all';
+        
+        // Category content data
+        const categoryContent = {
+            home: {
+                badge: 'Beranda',
+                title: 'Selamat Datang di DigitalStore',
+                description: 'Platform terbaik untuk produk digital berkualitas tinggi',
+                showCTA: false,
+                showHero: true
+            },
+            all: {
+                badge: 'Semua Produk',
+                title: 'Koleksi Produk Digital Lengkap',
+                description: 'Jelajahi semua produk digital berkualitas tinggi yang tersedia di toko kami',
+                showCTA: false,
+                showHero: false
+            },
+            adventure: {
+                badge: 'Adventure',
+                title: 'Produk Digital untuk Petualang Sejati',
+                description: 'Koleksi khusus untuk jiwa petualang yang haus akan pengalaman baru',
+                showCTA: true,
+                showHero: false,
+                cta: {
+                    icon: '<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>',
+                    title: 'Bagi Kamu yang Suka Adventure!',
+                    message: 'Temukan panduan lengkap, tips rahasia, dan tools terbaik untuk petualangan tak terlupakan. Dari hiking ekstrem hingga traveling budget, semua ada di sini!',
+                    features: [
+                        '🏔️ Panduan Hiking Profesional',
+                        '🗺️ Route Planning Tools',
+                        '📸 Photography Tips',
+                        '🎒 Gear Recommendations'
+                    ]
+                }
+            },
+            hiburan: {
+                badge: 'Hiburan',
+                title: 'Produk Digital Entertainment Terbaik',
+                description: 'Koleksi produk digital untuk hiburan dan kreativitas tanpa batas',
+                showCTA: true,
+                showHero: false,
+                cta: {
+                    icon: '<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4z" clip-rule="evenodd"></path></svg>',
+                    title: 'Hiburan Tanpa Batas Menanti!',
+                    message: 'Dapatkan akses ke konten hiburan premium, tools kreatif, dan panduan untuk menciptakan konten viral. Perfect untuk content creator dan entertainment enthusiast!',
+                    features: [
+                        '🎬 Video Editing Templates',
+                        '🎵 Music Production Tools',
+                        '🎨 Creative Design Assets',
+                        '📱 Social Media Templates'
+                    ]
+                }
+            },
+            ebook: {
+                badge: 'Ebook',
+                title: 'Perpustakaan Digital Terlengkap',
+                description: 'Koleksi ebook berkualitas tinggi untuk menambah wawasan dan skill',
+                showCTA: true,
+                showHero: false,
+                cta: {
+                    icon: '<svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path></svg>',
+                    title: 'Upgrade Skill dengan Ebook Premium!',
+                    message: 'Koleksi ebook terlengkap dari para ahli di bidangnya. Mulai dari bisnis, teknologi, hingga pengembangan diri. Investasi terbaik untuk masa depan yang cerah!',
+                    features: [
+                        '📚 Business & Marketing',
+                        '💻 Technology & Programming',
+                        '🧠 Personal Development',
+                        '💰 Financial Planning'
+                    ]
+                }
+            }
+        };
+        
+        // DOM elements
+        const adminPanel = document.getElementById('adminPanel');
+        const storeView = document.getElementById('storeView');
+        const toggleViewBtn = document.getElementById('toggleView');
+        const productForm = document.getElementById('productForm');
+        const productsGrid = document.getElementById('productsGrid');
+        const emptyState = document.getElementById('emptyState');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const formTitle = document.getElementById('formTitle');
+        const formSubtitle = document.getElementById('formSubtitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const submitIcon = document.getElementById('submitIcon');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+
+
+
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            updateCategoryHeader('home'); // Set default to home
+            renderProducts();
+            updateEmptyState();
+            updateActiveNavLink('home'); // Set "Home" as active by default
+        });
+
+        // Theme management
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeIcon.innerHTML = '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>';
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.innerHTML = '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                themeIcon.innerHTML = '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                themeIcon.innerHTML = '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Toggle between admin and store view
+        function showStoreView() {
+            adminPanel.classList.add('hidden');
+            storeView.classList.remove('hidden');
+            toggleViewBtn.textContent = 'Admin Panel';
+            renderProducts();
+            updateEmptyState();
+            resetForm();
+        }
+
+        function showAdminPanel() {
+            adminPanel.classList.remove('hidden');
+            storeView.classList.add('hidden');
+            toggleViewBtn.textContent = 'Lihat Toko';
+        }
+
+        // Event listeners
+        toggleViewBtn.addEventListener('click', function() {
+            if (adminPanel.classList.contains('hidden')) {
+                showAdminPanel();
+            } else {
+                showStoreView();
+            }
+        });
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        cancelBtn.addEventListener('click', function() {
+            resetForm();
+        });
+
+        // Form submission
+        productForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const productData = {
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                price: document.getElementById('productPrice').value,
+                image: document.getElementById('productImage').value,
+                description: document.getElementById('productDescription').value,
+                affiliateLink: document.getElementById('affiliateLink').value
+            };
+
+            if (editingProductId) {
+                // Update existing product
+                const productIndex = products.findIndex(p => p.id === editingProductId);
+                if (productIndex !== -1) {
+                    products[productIndex] = {
+                        ...products[productIndex],
+                        ...productData
+                    };
+                    showNotification('✅ Produk berhasil diperbarui!', 'success');
+                }
+            } else {
+                // Add new product
+                const product = {
+                    id: Date.now(),
+                    ...productData,
+                    dateAdded: new Date().toLocaleDateString('id-ID')
+                };
+                products.push(product);
+                showNotification('✅ Produk berhasil ditambahkan!', 'success');
+            }
+
+            localStorage.setItem('affiliateProducts', JSON.stringify(products));
+            
+            // Reset form and update display
+            resetForm();
+            renderProducts();
+            updateEmptyState();
+        });
+
+        // Update category header and CTA
+        function updateCategoryHeader(category) {
+            const content = categoryContent[category];
+            if (!content) return;
+            
+            // Control hero section visibility
+            const heroSection = document.getElementById('heroSection');
+            if (content.showHero) {
+                heroSection.classList.remove('hidden');
+            } else {
+                heroSection.classList.add('hidden');
+            }
+            
+            // Update header elements
+            document.getElementById('categoryBadge').textContent = content.badge;
+            document.getElementById('categoryTitle').textContent = content.title;
+            document.getElementById('categoryDescription').textContent = content.description;
+            
+            // Update CTA section
+            const ctaSection = document.getElementById('categoryCallToAction');
+            if (content.showCTA && content.cta) {
+                // Show and populate CTA
+                ctaSection.classList.remove('hidden');
+                document.getElementById('ctaIcon').innerHTML = content.cta.icon;
+                document.getElementById('ctaTitle').textContent = content.cta.title;
+                document.getElementById('ctaMessage').textContent = content.cta.message;
+                
+                // Update features
+                const featuresContainer = document.getElementById('ctaFeatures');
+                featuresContainer.innerHTML = content.cta.features.map(feature => `
+                    <div class="bg-white/50 dark:bg-gray-800/50 border border-blue-200 dark:border-blue-700 rounded-lg px-4 py-2">
+                        <span class="text-sm font-medium text-readable">${feature}</span>
+                    </div>
+                `).join('');
+            } else {
+                // Hide CTA for categories without CTA
+                ctaSection.classList.add('hidden');
+            }
+        }
+
+        // Filter products by category
+        window.filterProducts = function(category) {
+            currentFilter = category;
+            updateActiveNavLink(category);
+            updateCategoryHeader(category);
+            renderProducts();
+        }
+
+        // Show home page
+        window.showHome = function() {
+            currentFilter = 'home';
+            updateActiveNavLink('home');
+            updateCategoryHeader('home');
+            renderProducts();
+        }
+
+        // Show all products
+        window.showAllProducts = function() {
+            currentFilter = 'all';
+            updateActiveNavLink('all');
+            updateCategoryHeader('all');
+            renderProducts();
+        }
+
+        // Update active navigation link
+        function updateActiveNavLink(activeCategory) {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'dark:text-blue-400', 'bg-blue-50', 'dark:bg-blue-900/20');
+                link.classList.add('text-gray-700', 'dark:text-gray-300');
+            });
+            
+            // Find and highlight active link
+            navLinks.forEach(link => {
+                const linkText = link.textContent.trim().toLowerCase();
+                if ((activeCategory === 'home' && linkText === 'home') ||
+                    (activeCategory === 'all' && linkText === 'semua') || 
+                    (activeCategory === linkText)) {
+                    link.classList.remove('text-gray-700', 'dark:text-gray-300');
+                    link.classList.add('text-blue-600', 'dark:text-blue-400', 'bg-blue-50', 'dark:bg-blue-900/20');
+                }
+            });
+        }
+
+        // Render products
+        function renderProducts() {
+            let filteredProducts = products;
+            
+            // Apply filter
+            if (currentFilter === 'home') {
+                // Show all products on home page
+                filteredProducts = products;
+            } else if (currentFilter !== 'all') {
+                filteredProducts = products.filter(product => 
+                    product.category && product.category.toLowerCase() === currentFilter.toLowerCase()
+                );
+            }
+            
+            if (filteredProducts.length === 0) {
+                if (currentFilter === 'all' || currentFilter === 'home') {
+                    productsGrid.innerHTML = '';
+                } else {
+                    productsGrid.innerHTML = `
+                        <div class="col-span-full text-center py-20">
+                            <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-12 max-w-2xl mx-auto soft-shadow">
+                                <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                    <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold text-readable mb-4">
+                                    Tidak Ada Produk ${currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1)}
+                                </h3>
+                                <p class="text-readable-light mb-8 leading-relaxed">
+                                    Belum ada produk dalam kategori ${currentFilter}. Tambahkan produk baru dengan kategori ini.
+                                </p>
+                                <button onclick="showAdminPanel()" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold soft-shadow hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center space-x-2 mx-auto">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Tambah Produk ${currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1)}</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            productsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card bg-white dark:bg-gray-800 rounded-2xl soft-shadow border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" 
+                             class="w-full h-64 object-cover"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDQwMCAyNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjU2IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNzUgMTEwSDIyNVYxNDZIMTc1VjExMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHA+CjwvcGF0aD4KPHBhdGggZD0iTTE4NSAxMjBIMjE1VjEzNkgxODVWMTIwWiIgZmlsbD0iI0Y5RkFGQiIvPgo8L3N2Zz4K'; this.alt='Gambar tidak dapat dimuat';">
+                        <div class="absolute top-4 right-4 flex space-x-2">
+                            ${product.category ? `<div class="bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 px-3 py-1 rounded-full">
+                                <span class="text-blue-700 dark:text-blue-400 text-xs font-medium">${product.category.toUpperCase()}</span>
+                            </div>` : ''}
+                            <button onclick="editProduct(${product.id})" class="bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 p-2 rounded-lg transition-all hover:scale-110">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="deleteProduct(${product.id})" class="bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 p-2 rounded-lg transition-all hover:scale-110">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="text-xl font-bold text-readable mb-2">${product.name}</h3>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">${product.price}</p>
+                        </div>
+                        
+                        <p class="text-readable-light mb-6 leading-relaxed">${product.description}</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <span class="text-xs text-readable-light">${product.dateAdded}</span>
+                            </div>
+                            <a href="${product.affiliateLink}" target="_blank" rel="noopener noreferrer" 
+                               class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-lg transform hover:scale-105 flex items-center space-x-2">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                </svg>
+                                <span>Beli Sekarang</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Edit product function
+        window.editProduct = function(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                editingProductId = id;
+                
+                // Fill form with product data
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productCategory').value = product.category || '';
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productImage').value = product.image;
+                document.getElementById('productDescription').value = product.description;
+                document.getElementById('affiliateLink').value = product.affiliateLink;
+                
+                // Update form UI
+                formTitle.textContent = 'Edit Produk Digital';
+                formSubtitle.textContent = 'Perbarui informasi produk digital Anda';
+                submitText.textContent = 'Perbarui Produk';
+                submitIcon.innerHTML = '<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>';
+                cancelBtn.classList.remove('hidden');
+                
+                // Show admin panel
+                showAdminPanel();
+            }
+        }
+
+        // Delete product function
+        window.deleteProduct = function(id) {
+            if (confirm('Yakin ingin menghapus produk ini?')) {
+                products = products.filter(product => product.id !== id);
+                localStorage.setItem('affiliateProducts', JSON.stringify(products));
+                renderProducts();
+                updateEmptyState();
+                showNotification('🗑️ Produk berhasil dihapus!', 'success');
+            }
+        }
+
+        // Reset form function
+        function resetForm() {
+            editingProductId = null;
+            productForm.reset();
+            
+            // Reset form UI
+            formTitle.textContent = 'Tambah Produk Digital';
+            formSubtitle.textContent = 'Buat produk digital baru untuk toko Anda';
+            submitText.textContent = 'Tambah Produk';
+            submitIcon.innerHTML = '<path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>';
+            cancelBtn.classList.add('hidden');
+        }
+
+        // Update empty state
+        function updateEmptyState() {
+            if (products.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-lg text-white font-medium transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize view
+        showStoreView();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97937144c2f3f8de',t:'MTc1Njg4MzU4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
