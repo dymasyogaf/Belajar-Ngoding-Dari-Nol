@@ -1,0 +1,92 @@
+/* Day 6 - Layout */
+
+/* Display */
+.display-box {
+    padding: 10px;
+    margin: 5px;
+    background: lightblue;
+    border: 1px solid darkblue;
+}
+
+.inline {
+    display: inline;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+    width:120px;
+}
+
+/* Position */
+.position-wrapper {
+    position: relative;
+    height: 200px;
+    background: #f9f9f9;
+    border: 1px dashed #aaa;
+    margin: 20px 0;
+}
+
+.pos-box {
+    width: 80px;
+    height: 50px;
+    background: lightgreen;
+    margin: 5px;
+    padding: 5px;
+}
+
+.static {
+    position: static;
+}
+
+.relative {
+    position: relative;
+    top: 20px;
+    left: 30px;
+    background: lightcoral;
+}
+
+.absolute {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background: gold;
+}
+
+.fixed {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: violet;
+}
+
+/* Float */
+.float-wrapper {
+    margin: 20px 0;
+}
+
+.float-left {
+    float: left;
+    margin-left: 15px;
+    border: 2px solid #333;
+}
+
+/* Flexbox */
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #ddd;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.flex-item {
+    background: orange;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+}
