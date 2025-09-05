@@ -1,0 +1,41 @@
+/* Day 7 - List & Table Styling */
+
+/* List Styling */
+.styled-list {
+    list-style-type: square;
+    padding-left: 30px;
+    color: darkblue;
+}
+
+.styled-ol {
+    list-style-type: upper-roman;
+    padding-left: 30px;
+    color: darkred;
+}
+
+/* Table Styling */
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+.styled-table th, .styled-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+}
+
+.styled-table thead {
+    background-color: #009879;
+    color: #ffffff;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
