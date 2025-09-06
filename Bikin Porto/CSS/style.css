@@ -364,3 +364,101 @@
             border-radius: 50%;
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
+
+/* Light Theme Styles */
+body.light-theme {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+    color: #1e293b;
+}
+
+body.light-theme .animated-bg {
+    display: none;
+}
+
+body.light-theme .glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .gradient-text {
+    background: linear-gradient(135deg, #1e40af, #7c3aed, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.light-theme .btn-primary {
+    background: linear-gradient(135deg, #1e40af, #7c3aed);
+}
+
+body.light-theme .btn-primary:hover {
+    box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+}
+
+body.light-theme .skill-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .skill-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(30, 64, 175, 0.3);
+}
+
+body.light-theme .project-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .project-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(30, 64, 175, 0.3);
+}
+
+body.light-theme .tech-tag {
+    background: rgba(30, 64, 175, 0.1);
+    border: 1px solid rgba(30, 64, 175, 0.2);
+    color: #1e40af;
+}
+
+body.light-theme .social-icon {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .social-icon:hover {
+    background: rgba(30, 64, 175, 0.1);
+    border-color: rgba(30, 64, 175, 0.3);
+}
+
+body.light-theme .testimonial-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .mobile-menu {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .mobile-menu a:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .counter {
+    color: #1e40af;
+}
+
+body.light-theme .section-divider {
+    background: linear-gradient(90deg, transparent, rgba(30, 64, 175, 0.3), transparent);
+}
+
+body.light-theme .timeline-item::before {
+    background: linear-gradient(180deg, #1e40af, #7c3aed);
+}
+
+body.light-theme .timeline-dot {
+    background: #1e40af;
+    box-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
+}
