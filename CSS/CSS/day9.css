@@ -1,0 +1,42 @@
+/* Day 9 - Navigation - Link Styling */
+
+/* Navbar */
+.navbar {
+    background: #009879;
+    padding: 10px 20px;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul li {
+    margin: 0 15px;
+}
+
+.navbar ul li a:hover {
+    color: yellow;
+    border-bottom: 2px solid yellow;
+}
+
+/* Link styling  */
+.link-section {
+    margin: 30px;
+    font-size: 18px;
+}
+
+.link-section a {
+    color: darkblue;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.link-section a:hover {
+    color: red;
+    text-decoration: underline;
+}
