@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Infinite Tech Stack (Seamless)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* seamless scroll */
+      @keyframes scroll-left {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-33.333%);
+        }
+      }
+      .scroll-left {
+        animation: scroll-left 36s linear infinite;
+      }
+
+      /* pause on hover */
+      .scroll-wrapper:hover .scroll-left {
+        animation-play-state: paused;
+      }
+
+      /* responsive: slower on small screens */
+      @media (max-width: 640px) {
+        .scroll-left {
+          animation-duration: 60s;
+        }
+      }
+
+      /* style logo cards */
+      .logo-card {
+        width: 64px;
+        height: 64px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #eceaed;
+        border-radius: 14px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .logo-card:hover {
+        transform: scale(1.08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-r from-[#170622] to-[#0b1724] min-h-screen flex items-center justify-center"
+  >
+    <section class="w-full max-w-6xl px-6 py-16">
+      <h2 class="text-center text-white text-2xl font-semibold mb-8">
+        My Tech Stack
+      </h2>
+
+      <!-- wrapper -->
+      <div class="scroll-wrapper relative w-full overflow-hidden">
+        <div class="flex scroll-left w-[300%]">
+          <!-- SET A -->
+          <div class="flex items-center space-x-6 min-w-max pr-8">
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                alt="HTML5"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                alt="CSS3"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                alt="JavaScript"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                alt="Next.js"
+                class="w-10 h-10 invert"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://www.svgrepo.com/show/353985/laravel.svg"
+                alt="Laravel"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                alt="Python"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                alt="MySQL"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+                alt="PostgreSQL"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg"
+                alt="WordPress"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.brandfetch.io/idkIhE8Yub/w/32/h/32/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1749941068279"
+                alt="Berdu"
+                class="w-8 h-8"
+              />
+            </div>
+          </div>
+
+          <!-- SET B -->
+          <div class="flex items-center space-x-6 min-w-max px-8">
+            <!-- copy A -->
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                alt="HTML5"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                alt="CSS3"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                alt="JavaScript"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                alt="Next.js"
+                class="w-10 h-10 invert"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://www.svgrepo.com/show/353985/laravel.svg"
+                alt="Laravel"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                alt="Python"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                alt="MySQL"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+                alt="PostgreSQL"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg"
+                alt="WordPress"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.brandfetch.io/idkIhE8Yub/w/32/h/32/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1749941068279"
+                alt="Berdu"
+                class="w-8 h-8"
+              />
+            </div>
+          </div>
+
+          <!-- SET A (lagi biar seamless) -->
+          <div class="flex items-center space-x-6 min-w-max pl-8">
+            <!-- copy A -->
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                alt="HTML5"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                alt="CSS3"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                alt="JavaScript"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                alt="Next.js"
+                class="w-10 h-10 invert"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://www.svgrepo.com/show/353985/laravel.svg"
+                alt="Laravel"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                alt="Python"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                alt="MySQL"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+                alt="PostgreSQL"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg"
+                alt="WordPress"
+                class="w-10 h-10"
+              />
+            </div>
+            <div class="logo-card">
+              <img
+                src="https://cdn.brandfetch.io/idkIhE8Yub/w/32/h/32/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1749941068279"
+                alt="Berdu"
+                class="w-8 h-8"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
