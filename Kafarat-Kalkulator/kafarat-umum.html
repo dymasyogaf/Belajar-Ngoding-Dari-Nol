@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Fidyah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .calculator {
+            text-align: left;
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            margin: auto; /* Tengahkan elemen .calculator */
+        }
+
+        input, button, select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #0071c7;
+            color: white;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        @media (min-width: 600px) {
+            .calculator {
+                max-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+
+    <label style="font-size:18px; font-weight:bold;" for="jenisKafarat">Jenis Kafarat</label>
+
+    <select style="font-size:18px; border: 2px solid #0071c7; border-radius: 5px;" id="jenisKafarat" required onchange="showExplanation()">
+        <option value="" >Pilih Jenis Kafarat Yang Ingin Dibayarkan</option>
+        <option value="sumpah" >Kafarat Sumpah Palsu</option>
+        <option value="ila">Kafarat Ila'</option>
+        <option value="dzihar">Kafarat Dzihar</option>
+        <option value="jima">Kafarat Jima</option>
+        <option value="lainnya">Lainnya</option>
+    </select>
+
+    <p style="font-size:14px; font-weight:bold;" id="explanation"></p>
+
+    <div id="customOption">
+        <label style="font-size:18px; font-weight:bold; text-align: left;" for="jumlahKafarat">Berapa kali anda melanggar kafarat tersebut</label>
+        <input style="font-size:18px; border: 2px solid #0071c7; border-radius: 5px;" type="number" id="jumlahKafarat" placeholder="3" required>
+    </div>
+
+    <button type="button" id="hitungButton" onclick="hitungKafarat()">Hitung Kafarat</button>
+
+    <p style="font-size:18px; font-weight:bold;" id="result"></p>
+
+</div>
+
+<script>
+    function showExplanation() {
+        // Dapatkan elemen dropdown dan penjelasan
+        var dropdown = document.getElementById("jenisKafarat");
+        var explanation = document.getElementById("explanation");
+        var customOption = document.getElementById("customOption");
+        var hitungButton = document.getElementById("hitungButton");
+        var userInput = document.getElementById("jumlahKafarat");
+        var resultElement = document.getElementById("result");
+
+        // Reset penjelasan, opsi kustom, dan hasil
+        explanation.innerHTML = "";
+        customOption.style.display = "block";
+        hitungButton.style.display = "block";
+        userInput.value = ""; // Mengatur ulang nilai input
+        resultElement.innerHTML = ""; // Mengatur ulang nilai hasil
+
+        // Dapatkan nilai terpilih
+        var selectedOption = dropdown.value;
+
+        // Tentukan penjelasan berdasarkan opsi yang dipilih
+        var explanationText = "";
+        switch (selectedOption) {
+            case "sumpah":
+                explanationText = "1 kali melanggar dendanya memberi makan 10 fakir miskin masing-masing 1 mud (Rp. 15,000) x 10 = Rp. 150,000";
+                break;
+            case "ila":
+                explanationText = "1 kali melanggar dendanya memberi makan 10 fakir miskin masing-masing 1 mud (Rp. 15,000) x 10 = Rp. 150,000";
+                break;
+            case "dzihar":
+                explanationText = "Memerdekakan budak atau berpuasa dua bulan berturut-turut atau memberi makan 60 orang fakir miskin masing-masing 1 mud (Rp. 15,000) = Rp. 900,000";
+                break;
+            case "jima":
+                explanationText = "Memerdekakan budak atau berpuasa dua bulan berturut-turut atau memberi makan 60 orang fakir miskin masing-masing 1 mud (Rp. 15,000) = Rp. 900,000";
+                break;
+            case "lainnya":
+                explanationText = "Silahkan hubungi admin.";
+                customOption.style.display = "none"; // Sembunyikan opsi kustom
+                hitungButton.style.display = "none"; // Sembunyikan tombol hitung
+                break;
+            default:
+                explanationText = "";
+        }
+
+        // Tampilkan penjelasan pada elemen
+        explanation.innerHTML = explanationText;
+    }
+
+    function hitungKafarat() {
+        // Dapatkan elemen dropdown, input, dan hasil
+        var dropdown = document.getElementById("jenisKafarat");
+        var userInput = document.getElementById("jumlahKafarat");
+        var resultElement = document.getElementById("result");
+
+        // Periksa apakah opsi dan input telah dipilih/masukkan
+        if (dropdown.value === "") {
+            alert("Silakan pilih jenis kafarat sebelum menghitung jumlah kafaratmu");
+            return;
+        }
+
+        // Jika opsi adalah "lainnya", periksa juga apakah input kustom diisi
+        if (dropdown.value === "lainnya" && userInput.value === "") {
+            alert("Silakan masukkan jumlah kafarat yang telah dilanggar.");
+            return;
+        }
+
+        // Dapatkan nilai terpilih dan input dari pengguna
+        var selectedOption = dropdown.value;
+        var userNumber = parseFloat(userInput.value) || 0;
+
+        // Tentukan angka yang akan dikalikan berdasarkan opsi yang dipilih
+        var multiplicationFactor = 0;
+        switch (selectedOption) {
+            case "sumpah":
+                multiplicationFactor = 150000;
+                break;
+            case "ila":
+                multiplicationFactor = 150000;
+                break;
+            case "dzihar":
+                multiplicationFactor = 900000;
+                break;
+            case "jima":
+                multiplicationFactor = 900000;
+                break;
+            case "lainnya":
+                multiplicationFactor = userNumber;
+                break;
+            default:
+                multiplicationFactor = 0;
+        }
+
+        // Hitung hasil perkalian
+        var result = multiplicationFactor * userNumber;
+
+        // Tampilkan hasil pada elemen hasil dengan format angka
+        resultElement.innerHTML = "Jumlah Kafarat yang harus anda tunaikan: Rp. " + formatNumber(result) + ",-";
+    }
+
+    function formatNumber(number) {
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
+</script>
+
+</body>
+</html>
