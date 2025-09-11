@@ -6,10 +6,11 @@
     <title>Kalkulator Fidyah</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Ganti font ke Port Lligat Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Port+Lligat+Sans&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Port Lligat Sans', sans-serif;
             justify-content: center;
             align-items: center;
             margin: 0;
@@ -52,8 +53,8 @@
     <label style="font-size:18px; font-weight:bold;" for="jenisKafarat">Jenis Kafarat</label>
 
     <select style="font-size:18px; border: 2px solid #0071c7; border-radius: 5px;" id="jenisKafarat" required onchange="showExplanation()">
-        <option value="" >Pilih Jenis Kafarat Yang Ingin Dibayarkan</option>
-        <option value="sumpah" >Kafarat Sumpah Palsu</option>
+        <option value="">Pilih Jenis Kafarat Yang Ingin Dibayarkan</option>
+        <option value="sumpah">Kafarat Sumpah Palsu</option>
         <option value="ila">Kafarat Ila'</option>
         <option value="dzihar">Kafarat Dzihar</option>
         <option value="jima">Kafarat Jima</option>
@@ -75,7 +76,6 @@
 
 <script>
     function showExplanation() {
-        // Dapatkan elemen dropdown dan penjelasan
         var dropdown = document.getElementById("jenisKafarat");
         var explanation = document.getElementById("explanation");
         var customOption = document.getElementById("customOption");
@@ -83,18 +83,15 @@
         var userInput = document.getElementById("jumlahKafarat");
         var resultElement = document.getElementById("result");
 
-        // Reset penjelasan, opsi kustom, dan hasil
         explanation.innerHTML = "";
         customOption.style.display = "block";
         hitungButton.style.display = "block";
-        userInput.value = ""; // Mengatur ulang nilai input
-        resultElement.innerHTML = ""; // Mengatur ulang nilai hasil
+        userInput.value = "";
+        resultElement.innerHTML = "";
 
-        // Dapatkan nilai terpilih
         var selectedOption = dropdown.value;
-
-        // Tentukan penjelasan berdasarkan opsi yang dipilih
         var explanationText = "";
+
         switch (selectedOption) {
             case "sumpah":
                 explanationText = "1 kali melanggar dendanya memberi makan 10 fakir miskin masing-masing 1 mud (Rp. 15,000) x 10 = Rp. 150,000";
@@ -110,40 +107,34 @@
                 break;
             case "lainnya":
                 explanationText = "Silahkan hubungi admin.";
-                customOption.style.display = "none"; // Sembunyikan opsi kustom
-                hitungButton.style.display = "none"; // Sembunyikan tombol hitung
+                customOption.style.display = "none";
+                hitungButton.style.display = "none";
                 break;
             default:
                 explanationText = "";
         }
 
-        // Tampilkan penjelasan pada elemen
         explanation.innerHTML = explanationText;
     }
 
     function hitungKafarat() {
-        // Dapatkan elemen dropdown, input, dan hasil
         var dropdown = document.getElementById("jenisKafarat");
         var userInput = document.getElementById("jumlahKafarat");
         var resultElement = document.getElementById("result");
 
-        // Periksa apakah opsi dan input telah dipilih/masukkan
         if (dropdown.value === "") {
             alert("Silakan pilih jenis kafarat sebelum menghitung jumlah kafaratmu");
             return;
         }
 
-        // Jika opsi adalah "lainnya", periksa juga apakah input kustom diisi
         if (dropdown.value === "lainnya" && userInput.value === "") {
             alert("Silakan masukkan jumlah kafarat yang telah dilanggar.");
             return;
         }
 
-        // Dapatkan nilai terpilih dan input dari pengguna
         var selectedOption = dropdown.value;
         var userNumber = parseFloat(userInput.value) || 0;
 
-        // Tentukan angka yang akan dikalikan berdasarkan opsi yang dipilih
         var multiplicationFactor = 0;
         switch (selectedOption) {
             case "sumpah":
@@ -165,10 +156,7 @@
                 multiplicationFactor = 0;
         }
 
-        // Hitung hasil perkalian
         var result = multiplicationFactor * userNumber;
-
-        // Tampilkan hasil pada elemen hasil dengan format angka
         resultElement.innerHTML = "Jumlah Kafarat yang harus anda tunaikan: Rp. " + formatNumber(result) + ",-";
     }
 
