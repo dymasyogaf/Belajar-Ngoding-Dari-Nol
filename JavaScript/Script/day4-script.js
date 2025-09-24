@@ -3,7 +3,7 @@
 let hasil = "";
 
 // 1. For Loop (ulang dari 1 - 5)
-for (let i = 1; i <= 5; i++) {
+for (let i = 1; i <= 100; i++) {
     hasil += `For Loop ke-${i} <br>`;
 }
 

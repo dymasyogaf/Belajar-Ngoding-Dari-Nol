@@ -1,0 +1,169 @@
+<style>
+  .ws-all { max-width:720px; margin:0 auto; }
+  .ws-block { text-align:center; }
+  .ws-main {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#00008B;
+    color:#fff;
+    text-decoration:none;
+    padding:15px 20px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    border:none;
+    transition: transform .22s ease, box-shadow .22s ease, background-color .15s ease;
+    box-shadow:0 4px 8px rgba(0,0,0,0.18);
+    width:100%;
+    max-width:500px;
+    margin:8px auto;
+  }
+  .ws-main:hover,
+  .ws-main:focus {
+    background:#1565c0;
+    transform:translateY(-3px);
+    box-shadow:0 10px 16px rgba(0,0,0,0.22);
+    outline: none;
+  }
+  .ws-list { width:100%; max-width:500px; margin:0 auto; }
+  .ws-sub-wrap {
+    max-height:0;
+    overflow:hidden;
+    margin:0 auto;
+    transition: max-height .35s ease, margin .2s ease;
+  }
+  .ws-sub {
+    display:block;
+    background:#1976d2;
+    color:#fff;
+    text-decoration:none;
+    padding:14px 20px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    box-shadow:0 4px 6px rgba(0,0,0,0.12);
+    margin:0;
+    transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ws-sub-wrap.show { margin:6px auto; }
+  .ws-sub:hover,
+  .ws-sub:focus,
+  .ws-sub:active,
+  .ws-sub.touch-active {
+    background:#155fa3;
+    transform:translateY(-3px);
+    box-shadow:0 8px 12px rgba(0,0,0,0.2);
+    outline:none;
+  }
+  @media (max-width:600px){
+    .ws-main, .ws-sub-wrap { max-width:95%; }
+    .ws-main, .ws-sub {
+      font-size:14px;
+      padding:12px 16px;
+    }
+  }
+</style>
+
+<div class="ws-all">
+
+  <!-- BLOCK 1: WAKAF SUMUR SANTRI -->
+  <div class="ws-block" style="margin:6px 20px;">
+    <button class="ws-main" aria-controls="listSantri" aria-expanded="false">
+      WAKAF SUMUR SANTRI
+    </button>
+    <div id="listSantri" class="ws-list" aria-hidden="true">
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/gerakanwakafsumur">Gerakan Wakaf Sumur</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="http://wakafsumur.com/wakafairbersih">Wakaf Air Bersih</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-santri-penghafal-quran">Sumur Santri Penghafal Quran</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/pahala-jariyah">Pahala Jariyah Abadi</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-santri-penghafal-quran-yt">Sumur Santri Penghafal Quran</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-santri-pahala-jariyah-yt">Sumur Santri Pahala Jariyah</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/santri-hadiah-rmdhyt-AR">Hadiah untuk Santri</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-santri-pahala-jariyah-yt">Pahala Jariyah dari Santri</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-santri-air-bersih-yt">Air Bersih untuk Santri</a></div>
+    </div>
+  </div>
+
+  <!-- BLOCK 2: WAKAF SUMUR PESANTREN -->
+  <div class="ws-block" style="margin:6px 20px;">
+    <button class="ws-main" aria-controls="listPesantren" aria-expanded="false">
+      WAKAF SUMUR PESANTREN
+    </button>
+    <div id="listPesantren" class="ws-list" aria-hidden="true">
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumurpesantren">Wakaf Sumur Pesantren</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/wakafsumurpesantren">Wakaf Sumur Pesantren Nusantara</a></div>
+    </div>
+  </div>
+
+  <!-- BLOCK 3: WAKAF SUMUR CINTA ORANG TUA -->
+  <div class="ws-block" style="margin:6px 20px 10px;">
+    <button class="ws-main" aria-controls="listOrtu" aria-expanded="false">
+      WAKAF SUMUR CINTA ORANG TUA
+    </button>
+    <div id="listOrtu" class="ws-list" aria-hidden="true">
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumurorangtua">Sumur untuk Orang Tua</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-orangtua-pahalajariyah-yt-nh">Pahala Jariyah untuk Orang Tua</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-orangtua-hadiahterbaik-yt">Hadiah Terbaik untuk Orang Tua</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-orangtua-pesantrennusantara-yt-AR">Sumur Orang Tua di Pesantren Nusantara</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-orangtua-ibu">Wakaf Sumur untuk Ibu</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/sumur-orangtua-krisisairbersih-yt">Atasi Krisis Air Bersih</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/wasiat-rezeki-ramadhan-nh">Cinta Orang Tua, Rezeki Mengalir</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/wasiat-pahalajariyah-rmdhyt">Hadiah Abadi untuk Orang Tua</a></div>
+      <div class="ws-sub-wrap"><a class="ws-sub" href="https://wakafsumur.com/wasiat-hadiah-rmdhyt-ss">Hadiah Penuh Berkah untuk Orang Tua</a></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  function closeWrappers(wrappers) {
+    wrappers.slice().reverse().forEach((w, i) => {
+      setTimeout(() => {
+        w.style.maxHeight = '0px';
+        setTimeout(()=> w.classList.remove('show'), 250);
+      }, i * 50);
+    });
+  }
+  function openWrappers(wrappers) {
+    wrappers.forEach((w, i) => {
+      setTimeout(() => {
+        w.classList.add('show');
+        const h = w.scrollHeight;
+        w.style.maxHeight = (h + 12) + 'px';
+      }, i * 70);
+    });
+  }
+  const mains = Array.from(document.querySelectorAll('.ws-main'));
+  mains.forEach(btn => {
+    const list = btn.parentElement.querySelector('.ws-list');
+    const wrappers = Array.from(list.querySelectorAll('.ws-sub-wrap'));
+    wrappers.forEach(w => { w.style.maxHeight = '0px'; });
+    btn.addEventListener('click', function(){
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.ws-list').forEach(otherList => {
+        if (otherList === list) return;
+        otherList.setAttribute('aria-hidden', 'true');
+        const otherWrappers = Array.from(otherList.querySelectorAll('.ws-sub-wrap'));
+        closeWrappers(otherWrappers);
+        const otherBtn = otherList.parentElement.querySelector('.ws-main');
+        if (otherBtn) otherBtn.setAttribute('aria-expanded','false');
+      });
+      if (!isOpen) {
+        list.setAttribute('aria-hidden','false');
+        btn.setAttribute('aria-expanded','true');
+        openWrappers(wrappers);
+        setTimeout(()=> btn.scrollIntoView({ behavior:'smooth', block:'center' }), 300);
+      } else {
+        list.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        closeWrappers(wrappers);
+      }
+    });
+  });
+})();
+</script>
