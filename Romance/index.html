@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Quest: Epic Edition 💖🎮</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecaca 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle-heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff6b6b;
+            animation: float-heart 4s infinite ease-in-out;
+        }
+
+        @keyframes float-heart {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        /* Progress & Stats */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 10px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .timer {
+            font-size: 1.1rem;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        /* Quest Area */
+        .quest-area {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .quest-area.active {
+            transform: scale(1);
+        }
+
+        .quest-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+            text-align: center;
+        }
+
+        .quest-story {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #555;
+        }
+
+        /* Multiple Choice */
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .choice-btn {
+            padding: 1rem;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .choice-btn.romantic { background: linear-gradient(45deg, #ff6b6b, #ff8e8e); }
+
+        /* Input */
+        .input-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
+        }
+
+        /* Timer Visual */
+        .timer-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd700);
+            width: 100%;
+            transition: width 0.1s linear;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            text-align: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Reward Popup */
+        .reward {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            max-width: 400px;
+        }
+
+        .reward.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .reward-title {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .reward-quote {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .close-reward {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* Celebration */
+        .celebration {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border-radius: 25px;
+            color: white;
+        }
+
+        .ending-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .ending-score {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Overlay for popup */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title { font-size: 2rem; }
+            .choices { grid-template-columns: 1fr; }
+            .quest-area { padding: 1.5rem; }
+        }
+
+        /* Shake animation for fun */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Love Quest: Epic Edition</h1>
+            <p class="score">Score: <span id="score">0</span> 💖 | Level: <span id="level">1</span>/5</p>
+        </div>
+
+        <div class="stats-bar">
+            <div>Progress: <div class="progress-fill" id="progress"></div></div>
+            <div class="timer" id="timer">Time: Unlimited</div>
+            <div>Path: <span id="path">Neutral</span></div>
+        </div>
+
+        <!-- Quest 1: Multiple Choice -->
+        <div class="quest-area active" id="quest1">
+            <h2 class="quest-title">Level 1: The Spark 🔥</h2>
+            <p class="quest-story">Kita lagi di pesta pertama kita. Gue lagi nervous banget. Lo pilih apa yang lo lakuin buat bikin gue nyaman?</p>
+            <div class="choices">
+                <button class="choice-btn" onclick="chooseAnswer(1, 'romantic', 20)">A) Kasih senyum manis & bilang "Lo keliatan keren malam ini" 💕</button>
+                <button class="choice-btn" onclick="chooseAnswer(1, 'funny', 15)">B) Lempar joke garing: "Eh, lo tau gak kalo gue alergi sama orang cantik?" 😂</button>
+                <button class="choice-btn romantic" onclick="chooseAnswer(1, 'romantic', 25)">C) Ajak dansa pelan sambil bisik "Gue seneng banget ketemu lo" ✨</button>
+                <button class="choice-btn" onclick="chooseAnswer(1, 'adventurous', 18)">D) Tantang: "Siapa yang bisa minum lebih banyak jus?" 🥤</button>
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="nextLevel(1)">Skip (No points 😏)</button>
+            </div>
+        </div>
+
+        <!-- Quest 2: Timer Input -->
+        <div class="quest-area" id="quest2">
+            <h2 class="quest-title">Level 2: Date Night Challenge ⏱️</h2>
+            <p class="quest-story">Date kita lagi seru, tapi tiba-tiba hujan deras! Lo punya 30 detik buat bilang rencana darurat romantis. Quick!</p>
+            <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
+            <div class="input-section">
+                <textarea class="answer-input" placeholder="Rencana darurat lo? (Misal: Peluk di bawah payung & cerita mimpi)" rows="3" id="answer2"></textarea>
+            </div>
+            <div class="action-buttons">
+                <button class="btn" id="submit2" onclick="submitTimedAnswer(2)">Submit Before Time Runs Out! (30s)</button>
+            </div>
+        </div>
+
+        <!-- Quest 3: Memory Match Mini-Game -->
+        <div class="quest-area" id="quest3">
+            <h2 class="quest-title">Level 3: Memory Lane Puzzle 🧩</h2>
+            <p class="quest-story">Match momen kita yang bener! Pilih pasangan yang pas buat dapet points.</p>
+            <div class="choices" id="memory-game">
+                <!-- Generated by JS -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="generateMemoryGame()">Start Matching!</button>
+                <button class="btn" id="submit3" onclick="submitMemory(3)" style="display:none;">Done Matching!</button>
+            </div>
+        </div>
+
+        <!-- Quest 4: Prediction -->
+        <div class="quest-area" id="quest4">
+            <h2 class="quest-title">Level 4: Future Quest 🔮</h2>
+            <p class="quest-story">Prediksi: 10 tahun lagi, kita lagi apa? Jawab dengan detail biar romantis!</p>
+            <div class="input-section">
+                <textarea class="answer-input" placeholder="Misal: Travel ke Paris, punya anjing lucu, & tetep saling pegang tangan" rows="4" id="answer4"></textarea>
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="nextLevel(4)">Predict & Proceed!</button>
+            </div>
+        </div>
+
+        <!-- Quest 5: Final Boss -->
+        <div class="quest-area" id="quest5">
+            <h2 class="quest-title">Level 5: Heart Boss 💔➡️💖</h2>
+            <p class="quest-story">Boss bilang: "Lo gak pantas sama dia!" Balas dengan 1 kalimat super romantis buat "defeat" dia.</p>
+            <div class="input-section">
+                <textarea class="answer-input" placeholder="Kalimat killer lo?" rows="2" id="answer5"></textarea>
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="nextLevel(5)">Defeat the Boss!</button>
+            </div>
+        </div>
+
+        <!-- Celebration -->
+        <div class="celebration" id="ending" style="display:none;">
+            <h2 class="ending-title">🎉 QUEST MASTERED!</h2>
+            <p class="ending-score">Final Score: <span id="final-score">0</span>/150 💖</p>
+            <p id="ending-message">Your love story is epic! Based on your path...</p>
+            <button class="btn" onclick="restartGame()">Play Again? 😘</button>
+        </div>
+    </div>
+
+    <!-- Reward Template -->
+    <div class="reward" id="reward">
+        <h3 class="reward-title">Level Up Reward! 🎁</h3>
+        <p class="reward-quote" id="reward-quote"></p>
+        <button class="close-reward" onclick="closeReward()">Continue Quest</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentLevel = 1;
+        let gamePath = 'neutral'; // romantic, funny, adventurous
+        let timerInterval;
+        let timeLeft = 30;
+        let memoryMatches = 0;
+        const totalLevels = 5;
+        const maxScore = 150;
+
+        // Update UI functions
+        function update

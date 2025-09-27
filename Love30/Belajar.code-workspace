@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../Users/ThinkPad/qurban-alfatihah"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Belajar",
+		"mobile-preview.url": "http://127.0.0.1:5500/Love30/index.html"
+	}
+}
