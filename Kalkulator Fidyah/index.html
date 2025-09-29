@@ -1,0 +1,156 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Fidyah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .calculator {
+            text-align: left;
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        input, button, select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #ff6600; /* oranye default */
+            color: white;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 20px;
+            box-shadow: 5px 5px 0px #666; /* bayangan abu-abu */
+            transition: all 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #02947b; /* hijau saat hover */
+            box-shadow: 8px 8px 0px #444; /* bayangan lebih tebal */
+            transform: translateY(-2px); /* tombol sedikit naik */
+        }
+
+        @media (min-width: 600px) {
+            .calculator {
+                max-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+
+    <label style="font-size:18px; font-weight:bold;" for="alasanFidyah">Alasan Membayar Fidyah</label>
+    <select style="font-size:18px; border: 2px solid #02947b; border-radius: 0px;" id="alasanFidyah" onchange="showExplanation()">
+        <option value="">Pilih Alasan Membayar Fidyah</option>
+        <option value="sakit">Orang yang Sakit Parah</option>
+        <option value="tua">Orang Tua Renta</option>
+        <option value="hamil">Ibu Hamil & Menyusui</option>
+        <option value="qadha">Orang yang Meninggalkan Qadha Puasa</option>
+    </select>
+
+    <p style="font-size:14px; font-weight:bold;" id="explanation"></p>
+
+    <div id="customOption">
+        <label style="font-size:18px; font-weight:bold;" for="jumlahHari">Berapa hari tidak berpuasa?</label>
+        <input style="font-size:18px; border: 2px solid #02947b; border-radius: 0px;" type="number" id="jumlahHari" placeholder="misal: 5" required>
+    </div>
+
+    <button type="button" id="hitungButton" onclick="hitungFidyah()">Saya Mau Fidyah!</button>
+
+    <p style="font-size:16px;" id="keterangan"></p>
+    <p style="font-size:18px; font-weight:bold;" id="result"></p>
+
+</div>
+
+<script>
+    function showExplanation() {
+        var dropdown = document.getElementById("alasanFidyah");
+        var explanation = document.getElementById("explanation");
+        var customOption = document.getElementById("customOption");
+        var hitungButton = document.getElementById("hitungButton");
+        var userInput = document.getElementById("jumlahHari");
+        var resultElement = document.getElementById("result");
+        var keteranganElement = document.getElementById("keterangan");
+
+        explanation.innerHTML = "";
+        keteranganElement.innerHTML = "";
+        customOption.style.display = "block";
+        hitungButton.style.display = "block";
+        userInput.value = "";
+        resultElement.innerHTML = "";
+
+        var selectedOption = dropdown.value;
+
+        var explanationText = "";
+        switch (selectedOption) {
+            case "sakit":
+                explanationText = "Fidyah bagi orang sakit parah yang tidak ada harapan sembuh.";
+                break;
+            case "tua":
+                explanationText = "Fidyah bagi orang tua renta yang tidak mampu lagi berpuasa.";
+                break;
+            case "hamil":
+                explanationText = "Ibu hamil & menyusui yang khawatir terhadap diri atau bayinya.";
+                break;
+            case "qadha":
+                explanationText = "Orang yang meninggalkan qadha puasa hingga masuk Ramadhan berikutnya.";
+                break;
+            default:
+                explanationText = "";
+        }
+
+        explanation.innerHTML = explanationText;
+        keteranganElement.innerHTML = "➡️ 1 hari = 3 kali makan fakir miskin (Rp 45.000).<br>➡️ Rumus: (Jumlah hari) × (Rp 45.000) = Total fidyah.";
+    }
+
+    function hitungFidyah() {
+        var dropdown = document.getElementById("alasanFidyah");
+        var userInput = document.getElementById("jumlahHari");
+        var resultElement = document.getElementById("result");
+
+        if (dropdown.value === "") {
+            alert("Silakan pilih alasan membayar fidyah terlebih dahulu");
+            return;
+        }
+
+        if (userInput.value === "") {
+            alert("Silakan masukkan jumlah hari tidak berpuasa");
+            return;
+        }
+
+        var jumlahHari = parseFloat(userInput.value) || 0;
+        var biayaSehari = 45000; // 3x makan @Rp15.000
+        var total = jumlahHari * biayaSehari;
+
+        resultElement.innerHTML = "Jumlah Fidyah yang harus dibayarkan: Rp. " + formatNumber(total) + ",-";
+    }
+
+    function formatNumber(number) {
+        return new Intl.NumberFormat('id-ID').format(number);
+    }
+</script>
+
+</body>
+</html>
+```
