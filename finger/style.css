@@ -1,0 +1,139 @@
+body {
+    /* Layout: Memusatkan konten di tengah layar */
+    display: flex;
+    flex-direction: column; /* Mengatur item secara vertikal */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    
+    /* Efek visual */
+    perspective: 1000px; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Penting untuk menghindari scrollbar saat animasi scale */
+}
+
+/* ------------------------------------------- */
+/* GAYA TOMBOL & ANIMASI HILANG */
+/* ------------------------------------------- */
+
+#startButton {
+    padding: 15px 30px; 
+    margin-bottom: 30px;
+    font-size: 22px; 
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #e74c3c; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.5s ease;
+    z-index: 10; 
+}
+
+#startButton:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px); /* Efek terangkat saat hover */
+}
+
+/* MENGHILANGKAN KOTAK FOKUS (OUTLINE) SAAT DIPENCET */
+#startButton:focus,
+#startButton:active {
+    outline: none; 
+    box-shadow: none; 
+    transform: none;
+}
+
+/* Animasi Fade Out untuk Tombol (Diterapkan oleh JS) */
+.button-fade-out {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.8); /* Memudar sambil bergerak ke atas dan mengecil */
+    pointer-events: none; /* Mencegah tombol diinteraksi saat memudar */
+}
+
+/* ------------------------------------------- */
+/* PENCEGAHAN DOWNLOAD & FADE-IN AWAL GAMBAR */
+/* ------------------------------------------- */
+
+/* Kelas untuk menyembunyikan gambar sepenuhnya pada awalnya */
+.initial-hide {
+    visibility: hidden;
+    opacity: 0; 
+    transition: opacity 0.5s ease; /* Transisi untuk munculnya kontainer gambar */
+}
+
+/* Ketika kontainer gambar siap tampil (setelah tombol hilang) */
+.hand-gesture-ready {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Mencegah pemilihan dan seret gambar pada elemen */
+#hand-gesture, .image {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* ------------------------------------------- */
+/* ANIMASI GAMBAR (#hand-gesture & .image) */
+/* ------------------------------------------- */
+
+#hand-gesture {
+    /* Kontainer utama. Digunakan untuk transisi box-shadow (ilusi lukisan) */
+    position: relative;
+    cursor: pointer;
+    overflow: hidden; 
+    
+    width: 500px; 
+    height: 600px;
+    box-shadow: 0 0 0 rgba(0,0,0,0); 
+    transition: box-shadow 1.8s ease-out; /* Durasi shadow lebih panjang */
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    
+    /* Kurva animasi 'springy' (pantulan) untuk zoom-in */
+    transition: transform 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                opacity 1.2s ease-out;
+}
+
+/* ------------------------------------------- */
+/* STATE ANIMASI: .hidden (State Awal Lukisan) */
+/* ------------------------------------------- */
+
+/* Gambar mulai dari sangat kecil, miring, dan tidak terlihat */
+.hidden .image {
+    opacity: 0;
+    transform: scale(0.01) rotate3d(1, 1, 0, 180deg); 
+}
+
+/* Efek "Melukis Kertas" (Bayangan Kasar) */
+.hidden#hand-gesture {
+    box-shadow: 
+        20px 20px 0px 8px rgba(0, 0, 0, 0.8), 
+        -20px -20px 0px 8px rgba(0, 0, 0, 0.6), 
+        10px -10px 0px 5px rgba(0,0,0,0.5); 
+}
+
+/* ------------------------------------------- */
+/* STATE ANIMASI: .shown (State Akhir Lukisan) */
+/* ------------------------------------------- */
+
+/* Gambar tampil penuh dan lurus */
+.shown .image {
+    opacity: 1;
+    transform: scale(1) rotate3d(0, 0, 0, 0deg); 
+}
+
+/* Bayangan Kotak menghilang */
+.shown#hand-gesture {
+    box-shadow: none; 
+}
