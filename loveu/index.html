@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Barcode Success</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #6dd5fa, #2980b9);
+      padding: 40px;
+      margin: 0;
+      color: white;
+    }
+
+    #judul {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px 20px;
+      border-radius: 12px;
+      display: inline-block;
+      line-height: 1.5;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      padding: 14px 26px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ffcc00;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background-color: #ffd633;
+      transform: scale(1.05);
+    }
+
+    .gambar {
+      margin-top: 30px;
+      max-width: 90%;
+      height: auto;
+      opacity: 0;
+      transform: scale(0.2);
+      transition: all 0.8s ease;
+      border-radius: 15px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .gambar.muncul {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .love-text {
+      margin-top: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #ffebee;
+      background: rgba(0,0,0,0.25);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 12px;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.8s ease;
+    }
+
+    .love-text.muncul {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+  <h2 id="judul">🎉 Selamat Anda telah berhasil masuk menggunakan scan barcode 🎉</h2>
+  <br>
+  <button id="tombol" onclick="tampilkanGambar()">Pencet Tombolnya</button>
+
+  <div>
+    <img id="gambar" class="gambar" 
+      src="https://ih1.redbubble.net/image.386572357.0690/farp,small,wall_texture,product,750x1000.u1.jpg" 
+      alt="Ilustrasi sukses login">
+  </div>
+
+  <h2 id="love" class="love-text">❤️ Fuck You ❤️</h2>
+
+  <script>
+    function tampilkanGambar() {
+      // Hilangkan tombol & judul
+      document.getElementById("tombol").style.display = "none";
+      document.getElementById("judul").style.display = "none";
+
+      // Munculkan gambar
+      const gambar = document.getElementById("gambar");
+      gambar.classList.add("muncul");
+
+      // Setelah sedikit delay, munculkan teks "Love You"
+      setTimeout(() => {
+        document.getElementById("love").classList.add("muncul");
+      }, 800); 
+    }
+  </script>
+</body>
+</html>
