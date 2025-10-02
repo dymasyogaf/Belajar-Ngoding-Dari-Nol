@@ -99,6 +99,9 @@
 
   <h2 id="love" class="love-text">❤️ Fuck You ❤️</h2>
 
+  <!-- Audio -->
+  <audio id="musik" src="kaget.mp3"></audio>
+
   <script>
     function tampilkanGambar() {
       // Hilangkan tombol & judul
@@ -108,6 +111,10 @@
       // Munculkan gambar
       const gambar = document.getElementById("gambar");
       gambar.classList.add("muncul");
+
+      // Play musik
+      const musik = document.getElementById("musik");
+      musik.play();
 
       // Setelah sedikit delay, munculkan teks "Love You"
       setTimeout(() => {
