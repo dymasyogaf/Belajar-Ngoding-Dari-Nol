@@ -97,7 +97,7 @@
       alt="Ilustrasi sukses login">
   </div>
 
-  <h2 id="love" class="love-text">❤️ Fuck You ❤️</h2>
+  <h2 id="love" class="love-text">❤️ Love You ❤️</h2>
 
   <!-- Audio -->
   <audio id="musik" src="kaget.mp3"></audio>
@@ -112,8 +112,9 @@
       const gambar = document.getElementById("gambar");
       gambar.classList.add("muncul");
 
-      // Play musik
+      // Play musik dengan volume full
       const musik = document.getElementById("musik");
+      musik.volume = 1.0;   // auto full volume
       musik.play();
 
       // Setelah sedikit delay, munculkan teks "Love You"

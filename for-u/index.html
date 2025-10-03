@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Euy</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+
+<script>
+  // === Scene, Camera, Renderer ===
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 2, 12);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  document.body.appendChild(renderer.domElement);
+
+  // === Controls ===
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.minDistance = 4;
+  controls.maxDistance = 20;
+
+  // === Lights ===
+  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+  const pointLight = new THREE.PointLight(0xffffff, 1.5);
+  pointLight.position.set(10, 10, 10);
+  scene.add(pointLight);
+
+  // === Responsive text size & camera ===
+  function getTextSize() {
+    if (window.innerWidth < 480) return 0.5;   // HP kecil
+    if (window.innerWidth < 900) return 0.8;   // tablet
+    return 1.2; // desktop
+  }
+  function adjustCamera() {
+    if (window.innerWidth < 480) {
+      camera.position.set(0, 1.5, 8);
+    } else if (window.innerWidth < 900) {
+      camera.position.set(0, 2, 10);
+    } else {
+      camera.position.set(0, 2, 12);
+    }
+  }
+
+  // === Text + Button ===
+  const loader = new THREE.FontLoader();
+  let textMesh, buttonGroup, buttonBox, buttonText;
+
+  function createTextAndButton() {
+    if (textMesh) scene.remove(textMesh);
+    if (buttonGroup) scene.remove(buttonGroup);
+
+    loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function(font) {
+      // Main Text
+      const textGeo = new THREE.TextGeometry("Hai Dugong!", {
+        font: font,
+        size: getTextSize(),
+        height: 0.3,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.03,
+        bevelSize: 0.02,
+        bevelSegments: 3
+      });
+      textGeo.center();
+
+      const textMat = new THREE.MeshStandardMaterial({
+        color: 0x00ffff,
+        emissive: 0x00ffff,
+        emissiveIntensity: 0.6,
+        metalness: 0.5,
+        roughness: 0.2
+      });
+
+      textMesh = new THREE.Mesh(textGeo, textMat);
+      scene.add(textMesh);
+
+      // === BUTTON (Background + Text) ===
+      buttonGroup = new THREE.Group();
+
+      // Background box
+      const boxGeo = new THREE.BoxGeometry(4, 1, 0.3);
+      const boxMat = new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        emissive: 0x550000,
+        emissiveIntensity: 0.3,
+        metalness: 0.5,
+        roughness: 0.4
+      });
+      buttonBox = new THREE.Mesh(boxGeo, boxMat);
+      buttonGroup.add(buttonBox);
+
+      // Button text
+      const buttonGeo = new THREE.TextGeometry("Pencet sini", {
+        font: font,
+        size: getTextSize() * 0.4,
+        height: 0.15,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.02,
+        bevelSize: 0.01,
+        bevelSegments: 2
+      });
+      buttonGeo.center();
+
+      const buttonMat = new THREE.MeshStandardMaterial({
+        color: 0xff3366,
+        emissive: 0xaa0033,
+        emissiveIntensity: 0.6,
+        metalness: 0.4,
+        roughness: 0.3
+      });
+
+      buttonText = new THREE.Mesh(buttonGeo, buttonMat);
+      buttonText.position.z = 0.2; // biar nongol dikit di atas box
+      buttonGroup.add(buttonText);
+
+      // posisi tombol
+      buttonGroup.position.y = -1.8;
+      scene.add(buttonGroup);
+    });
+  }
+  createTextAndButton();
+
+  // === Background stars ===
+  function addStar() {
+    const geometry = new THREE.SphereGeometry(0.05, 8, 8);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const star = new THREE.Mesh(geometry, material);
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+    star.position.set(x, y, z);
+    scene.add(star);
+  }
+  Array(400).fill().forEach(addStar);
+
+  // === Heart 3D geometry ===
+  function createHeart(size) {
+    const shape = new THREE.Shape();
+    shape.moveTo(0, 0);
+    shape.bezierCurveTo(0, 0, -0.5, -0.5, -1, 0);
+    shape.bezierCurveTo(-1.4, 0.5, -0.5, 1.2, 0, 1.5);
+    shape.bezierCurveTo(0.5, 1.2, 1.4, 0.5, 1, 0);
+    shape.bezierCurveTo(0.5, -0.5, 0, 0, 0, 0);
+
+    const extrude = new THREE.ExtrudeGeometry(shape, { depth: 0.3, bevelEnabled: false });
+    const mat = new THREE.MeshStandardMaterial({ color: 0xff3366 });
+    const heart = new THREE.Mesh(extrude, mat);
+    heart.scale.set(size, size, size);
+    heart.rotation.x = Math.PI;
+    return heart;
+  }
+
+  // === Generate floating hearts ===
+  let hearts = [];
+  function createHearts() {
+    hearts.forEach(h => scene.remove(h));
+    hearts = [];
+
+    const total = window.innerWidth < 500 ? 60 : 120;
+    for (let i = 0; i < total; i++) {
+      const size = THREE.MathUtils.randFloat(0.1, 0.5);
+      const heart = createHeart(size);
+      heart.position.set(
+        THREE.MathUtils.randFloatSpread(25),
+        THREE.MathUtils.randFloatSpread(20),
+        THREE.MathUtils.randFloatSpread(25)
+      );
+      scene.add(heart);
+      hearts.push(heart);
+    }
+  }
+  createHearts();
+
+  // === Hover & Click effect with Raycaster ===
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  const buttonGeo = "https://dyogaf.com"; // <<=== GANTI link kamu di sini
+
+  window.addEventListener("mousemove", (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  window.addEventListener("mousedown", (event) => {
+    // update posisi mouse
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects([buttonBox, buttonText]);
+
+    if (intersects.length > 0) {
+      window.open(targetLink, "_blank");
+    }
+  });
+
+  // === Animate ===
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+
+    // Floating hearts
+    hearts.forEach(h => {
+      h.rotation.y += 0.01;
+      h.rotation.x += 0.005;
+      h.position.y += 0.01 * (0.5 + h.scale.x);
+      if (h.position.y > 15) h.position.y = -15;
+    });
+
+    // Hover detection
+    if (buttonGroup) {
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects([buttonBox, buttonText]);
+      if (intersects.length > 0) {
+        buttonBox.material.color.set(0x444444);
+        buttonText.material.color.set(0xff6699);
+      } else {
+        buttonBox.material.color.set(0x222222);
+        buttonText.material.color.set(0xff3366);
+      }
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // === Resize handler ===
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    adjustCamera();
+    createTextAndButton();
+    createHearts();
+  });
+
+  adjustCamera(); // panggil pertama kali
+</script>
+</body>
+</html>
