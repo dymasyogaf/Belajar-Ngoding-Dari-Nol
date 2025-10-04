@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portofolio Dymas Yoga: Pengembang Full Stack yang membangun solusi digital aman, skalabel, dan inovatif dengan teknologi modern.">
+    <meta name="author" content="Dymas Yoga">
     <title>Dymas Yoga - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -25,7 +27,7 @@
         <div class="glass rounded-2xl px-4 md:px-6 py-3 flex items-center justify-between">
         <a href="#" class="flex items-center gap-3 no-underline">
             <span class="inline-flex h-9 w-9 rounded-xl items-center justify-center" style="background:linear-gradient(135deg,var(--pri),var(--acc)); color:#061229; font-weight:800;">D</span>
-            <span class="font-semibold tracking-tight">Dyogaf.com</span>
+            <span class="font-semibold tracking-tight">Dymas Yoga</span>
         </a>
         <div class="hidden md:flex items-center gap-2">
             <a href="#about" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Tentang</a>
@@ -33,7 +35,7 @@
             <a href="#skills" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Keahlian</a>
             <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Kontak</a>
         </div>
-        <button id="themeBtn" class="btn px-4 py-2 rounded-xl text-sm">
+        <button id="themeBtn" class="btn px-4 py-2 rounded-xl text-sm" aria-label="Ubah tema">
             <i class="fas fa-moon"></i>
         </button>
     </div>
@@ -52,20 +54,20 @@
                 Dymas Yoga
             </h1>
             <p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-4 text-gray-300 font-light">
-                Full Stack Developer
+                Pengembang Full Stack
             </p>
             <p class="text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-12 text-gray-400 max-w-5xl mx-auto leading-relaxed">
-                Crafting secure, scalable, and innovative digital solutions with modern technologies
+                Membangun solusi digital yang aman, skalabel, dan inovatif dengan teknologi modern
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="btn-primary px-8 py-4 rounded-xl font-medium text-white" onclick="scrollToSection('projects')">
+                <button class="btn-primary px-8 py-4 rounded-xl font-medium text-white" onclick="scrollToSection('projects')" aria-label="Lihat Proyek Unggulan">
                     <i class="fas fa-rocket mr-2"></i>
-                    View My Work
+                    Lihat Karya
                 </button>
-                <button class="glass px-8 py-4 rounded-xl font-medium text-blue-400 hover-lift" onclick="scrollToSection('contact')">
+                <button class="glass px-8 py-4 rounded-xl font-medium text-blue-400 hover-lift" onclick="scrollToSection('contact')" aria-label="Buka bagian Kontak">
                     <i class="fas fa-envelope mr-2"></i>
-                    Get In Touch
+                    Hubungi Saya
                 </button>
             </div>
         </div>
@@ -77,19 +79,19 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
                 <div class="text-center fade-in p-4 sm:p-6">
                     <div class="counter text-3xl sm:text-4xl lg:text-5xl" data-target="50">0</div>
-                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Projects Completed</p>
+                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Proyek Selesai</p>
                 </div>
                 <div class="text-center fade-in p-4 sm:p-6">
                     <div class="counter text-3xl sm:text-4xl lg:text-5xl" data-target="5">0</div>
-                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Years Experience</p>
+                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Tahun Pengalaman</p>
                 </div>
                 <div class="text-center fade-in p-4 sm:p-6">
                     <div class="counter text-3xl sm:text-4xl lg:text-5xl" data-target="30">0</div>
-                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Happy Clients</p>
+                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Klien Puas</p>
                 </div>
                 <div class="text-center fade-in p-4 sm:p-6">
                     <div class="counter text-3xl sm:text-4xl lg:text-5xl" data-target="15">0</div>
-                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Technologies</p>
+                    <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-2">Teknologi Dikuasai</p>
                 </div>
             </div>
         </div>
@@ -99,10 +101,10 @@
     <section id="about" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl font-bold mb-4 gradient-text">About Me</h2>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Tentang Saya</h2>
                 <div class="section-divider w-24 mx-auto mb-6"></div>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                    Passionate developer with expertise in modern web technologies and cybersecurity
+                    Developer yang antusias dengan keahlian di teknologi web modern dan keamanan siber
                 </p>
             </div>
             
@@ -112,7 +114,7 @@
                         <div class="w-12 h-12 glass rounded-lg flex items-center justify-center mr-4">
                             <i class="fas fa-user-astronaut text-blue-400"></i>
                         </div>
-                        <h3 class="text-2xl font-semibold text-white">Profile</h3>
+                        <h3 class="text-2xl font-semibold text-white">Profil</h3>
                     </div>
                     
                     <p class="text-gray-300 mb-8 leading-relaxed">
@@ -125,61 +127,61 @@
                         <div>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
-                                <span class="text-sm text-gray-400">Location</span>
+                                <span class="text-sm text-gray-400">Lokasi</span>
                             </div>
                             <p class="text-white font-medium">Jakarta, Indonesia</p>
                         </div>
                         <div>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-calendar-alt text-blue-400 mr-2"></i>
-                                <span class="text-sm text-gray-400">Experience</span>
+                                <span class="text-sm text-gray-400">Pengalaman</span>
                             </div>
-                            <p class="text-white font-medium">5+ Years</p>
+                            <p class="text-white font-medium">5+ Tahun</p>
                         </div>
                         <div>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-graduation-cap text-blue-400 mr-2"></i>
-                                <span class="text-sm text-gray-400">Education</span>
+                                <span class="text-sm text-gray-400">Pendidikan</span>
                             </div>
-                            <p class="text-white font-medium">Computer Science</p>
+                            <p class="text-white font-medium">Ilmu Komputer</p>
                         </div>
                         <div>
                             <div class="flex items-center mb-2">
                                 <i class="fas fa-circle text-green-400 mr-2"></i>
                                 <span class="text-sm text-gray-400">Status</span>
                             </div>
-                            <p class="text-white font-medium">Available</p>
+                            <p class="text-white font-medium">Tersedia</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="space-y-6 fade-in">
-                    <h3 class="text-2xl font-semibold text-white mb-6">Experience Timeline</h3>
+                    <h3 class="text-2xl font-semibold text-white mb-6">Linimasa Pengalaman</h3>
                     
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="glass p-6 rounded-xl">
-                            <h4 class="font-semibold text-white mb-2">Senior Full Stack Developer</h4>
-                            <p class="text-blue-400 text-sm mb-2">TechCorp Indonesia • 2022 - Present</p>
-                            <p class="text-gray-400 text-sm">Leading development of enterprise applications using React, Node.js, and cloud technologies.</p>
+                            <h4 class="font-semibold text-white mb-2">Pengembang Full Stack Senior</h4>
+                            <p class="text-blue-400 text-sm mb-2">TechCorp Indonesia • 2022 - Sekarang</p>
+                            <p class="text-gray-400 text-sm">Memimpin pengembangan aplikasi enterprise menggunakan React, Node.js, dan teknologi cloud.</p>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="glass p-6 rounded-xl">
-                            <h4 class="font-semibold text-white mb-2">Cybersecurity Consultant</h4>
+                            <h4 class="font-semibold text-white mb-2">Konsultan Keamanan Siber</h4>
                             <p class="text-blue-400 text-sm mb-2">SecureNet Solutions • 2020 - 2022</p>
-                            <p class="text-gray-400 text-sm">Conducted security audits and penetration testing for various clients.</p>
+                            <p class="text-gray-400 text-sm">Melakukan audit keamanan dan pengujian penetrasi untuk berbagai klien.</p>
                         </div>
                     </div>
                     
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="glass p-6 rounded-xl">
-                            <h4 class="font-semibold text-white mb-2">Frontend Developer</h4>
+                            <h4 class="font-semibold text-white mb-2">Pengembang Frontend</h4>
                             <p class="text-blue-400 text-sm mb-2">StartupXYZ • 2019 - 2020</p>
-                            <p class="text-gray-400 text-sm">Developed responsive web applications and mobile-first interfaces.</p>
+                            <p class="text-gray-400 text-sm">Mengembangkan aplikasi web responsif dan antarmuka mobile-first.</p>
                         </div>
                     </div>
                 </div>
@@ -191,11 +193,15 @@
     <section id="skills" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-20">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl font-bold mb-4 gradient-text">Technical Skills</h2>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Keahlian</h2>
                 <div class="section-divider w-24 mx-auto mb-6"></div>
                 <p class="text-gray-400 text-lg">
-                    Technologies and tools I work with
+                    Teknologi dan alat yang saya gunakan
                 </p>
+            </div>
+
+            <div class="fade-in mb-6">
+                <h3 class="group-title text-2xl font-semibold text-white">Keahlian Code</h3>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-8">
@@ -311,6 +317,36 @@
                     <span class="text-blue-400 text-sm mono">87%</span>
                 </div>
             </div>
+
+            <div class="mt-12">
+                <h3 class="group-title text-2xl font-semibold text-white mb-6 fade-in">Keahlian No-Code</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+                    <!-- Berdu -->
+                    <div class="skill-card p-6 rounded-2xl text-center fade-in">
+                        <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-cubes text-3xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Berdu</h3>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
+                            <div class="skill-progress h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                        <span class="text-blue-400 text-sm mono">90%</span>
+                    </div>
+
+                    <!-- WordPress -->
+                    <div class="skill-card p-6 rounded-2xl text-center fade-in">
+                        <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fab fa-wordpress text-3xl text-blue-400"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">WordPress</h3>
+                        <div class="w-full bg-gray-700 rounded-full h-2 mb-2">
+                            <div class="skill-progress h-2 rounded-full" style="width: 88%"></div>
+                        </div>
+                        <span class="text-blue-400 text-sm mono">88%</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -318,10 +354,10 @@
     <section id="services" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl font-bold mb-4 gradient-text">Services</h2>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Layanan</h2>
                 <div class="section-divider w-24 mx-auto mb-6"></div>
                 <p class="text-gray-400 text-lg">
-                    What I can do for you
+                    Apa yang dapat saya lakukan untuk Anda
                 </p>
             </div>
             
@@ -330,13 +366,13 @@
                     <div class="w-16 h-16 mx-auto mb-6 glass rounded-full flex items-center justify-center">
                         <i class="fas fa-laptop-code text-2xl text-blue-400"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Web Development</h3>
-                    <p class="text-gray-400 mb-6">Modern, responsive websites and web applications using latest technologies.</p>
+                    <h3 class="text-xl font-semibold text-white mb-4">Pengembangan Web</h3>
+                    <p class="text-gray-400 mb-6">Website dan aplikasi web modern yang responsif dengan teknologi terbaru.</p>
                     <ul class="text-sm text-gray-300 space-y-2">
-                        <li>• Frontend Development</li>
-                        <li>• Backend Development</li>
-                        <li>• API Integration</li>
-                        <li>• Database Design</li>
+                        <li>• Pengembangan Frontend</li>
+                        <li>• Pengembangan Backend</li>
+                        <li>• Integrasi API</li>
+                        <li>• Desain Basis Data</li>
                     </ul>
                 </div>
                 
@@ -344,13 +380,13 @@
                     <div class="w-16 h-16 mx-auto mb-6 glass rounded-full flex items-center justify-center">
                         <i class="fas fa-shield-alt text-2xl text-green-400"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Cybersecurity</h3>
-                    <p class="text-gray-400 mb-6">Comprehensive security solutions to protect your digital assets.</p>
+                    <h3 class="text-xl font-semibold text-white mb-4">Keamanan Siber</h3>
+                    <p class="text-gray-400 mb-6">Solusi keamanan komprehensif untuk melindungi aset digital Anda.</p>
                     <ul class="text-sm text-gray-300 space-y-2">
-                        <li>• Security Audits</li>
-                        <li>• Penetration Testing</li>
-                        <li>• Vulnerability Assessment</li>
-                        <li>• Security Consulting</li>
+                        <li>• Audit Keamanan</li>
+                        <li>• Pengujian Penetrasi</li>
+                        <li>• Penilaian Kerentanan</li>
+                        <li>• Konsultasi Keamanan</li>
                     </ul>
                 </div>
                 
@@ -358,13 +394,13 @@
                     <div class="w-16 h-16 mx-auto mb-6 glass rounded-full flex items-center justify-center">
                         <i class="fas fa-brain text-2xl text-purple-400"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-4">AI Solutions</h3>
-                    <p class="text-gray-400 mb-6">Intelligent automation and machine learning implementations.</p>
+                    <h3 class="text-xl font-semibold text-white mb-4">Solusi AI</h3>
+                    <p class="text-gray-400 mb-6">Otomatisasi cerdas dan implementasi machine learning.</p>
                     <ul class="text-sm text-gray-300 space-y-2">
-                        <li>• Machine Learning Models</li>
-                        <li>• Data Analysis</li>
-                        <li>• Process Automation</li>
-                        <li>• AI Integration</li>
+                        <li>• Model Machine Learning</li>
+                        <li>• Analisis Data</li>
+                        <li>• Otomatisasi Proses</li>
+                        <li>• Integrasi AI</li>
                     </ul>
                 </div>
             </div>
@@ -375,10 +411,10 @@
     <section id="projects" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-20">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl font-bold mb-4 gradient-text">Featured Projects</h2>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Proyek Unggulan</h2>
                 <div class="section-divider w-24 mx-auto mb-6"></div>
                 <p class="text-gray-400 text-lg">
-                    Some of my recent work and achievements
+                    Beberapa karya dan pencapaian terbaru saya
                 </p>
             </div>
             
@@ -390,7 +426,7 @@
                     
                     <h3 class="text-xl font-semibold mb-3 text-white">CyberShield Pro</h3>
                     <p class="text-gray-400 mb-4 text-sm leading-relaxed">
-                        Advanced cybersecurity platform with AI-powered threat detection and real-time monitoring capabilities.
+                        Platform keamanan siber canggih dengan deteksi ancaman berbasis AI dan pemantauan waktu nyata.
                     </p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
@@ -403,10 +439,11 @@
                     <div class="flex gap-3">
                         <button class="btn-primary flex-1 py-2 text-sm rounded-lg font-medium" onclick="openProject('cybershield')">
                             <i class="fas fa-external-link-alt mr-2"></i>
-                            View Project
+                            Lihat Proyek
                         </button>
-                        <button class="glass p-2 rounded-lg hover-lift" onclick="openGithub('cybershield')">
-                            <i class="fab fa-github text-gray-400"></i>
+                        <button class="glass p-2 rounded-lg hover-lift" onclick="openGithub('cybershield')" aria-label="Buka repo GitHub CyberShield Pro" title="Repo GitHub">
+                            <i class="fab fa-github text-gray-400" aria-hidden="true"></i>
+                            <span class="sr-only">Repo GitHub</span>
                         </button>
                     </div>
                 </div>
@@ -418,7 +455,7 @@
                     
                     <h3 class="text-xl font-semibold mb-3 text-white">NeuroTrade AI</h3>
                     <p class="text-gray-400 mb-4 text-sm leading-relaxed">
-                        Intelligent trading platform using machine learning for cryptocurrency market analysis and automated trading.
+                        Platform trading cerdas yang menggunakan machine learning untuk analisis pasar kripto dan perdagangan otomatis.
                     </p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
@@ -431,10 +468,11 @@
                     <div class="flex gap-3">
                         <button class="btn-primary flex-1 py-2 text-sm rounded-lg font-medium" onclick="openProject('neurotrade')">
                             <i class="fas fa-external-link-alt mr-2"></i>
-                            View Project
+                            Lihat Proyek
                         </button>
-                        <button class="glass p-2 rounded-lg hover-lift" onclick="openGithub('neurotrade')">
-                            <i class="fab fa-github text-gray-400"></i>
+                        <button class="glass p-2 rounded-lg hover-lift" onclick="openGithub('neurotrade')" aria-label="Buka repo GitHub NeuroTrade AI" title="Repo GitHub">
+                            <i class="fab fa-github text-gray-400" aria-hidden="true"></i>
+                            <span class="sr-only">Repo GitHub</span>
                         </button>
                     </div>
                 </div>
@@ -446,7 +484,7 @@
                     
                     <h3 class="text-xl font-semibold mb-3 text-white">MetaSpace Hub</h3>
                     <p class="text-gray-400 mb-4 text-sm leading-relaxed">
-                        Virtual reality collaboration platform for remote teams with blockchain integration and 3D environments.
+                        Platform kolaborasi realitas virtual untuk tim jarak jauh dengan integrasi blockchain dan lingkungan 3D.
                     </p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
@@ -459,10 +497,11 @@
                     <div class="flex gap-3">
                         <button class="btn-primary flex-1 py-2 text-sm rounded-lg font-medium" onclick="openProject('metaspace')">
                             <i class="fas fa-external-link-alt mr-2"></i>
-                            View Project
+                            Lihat Proyek
                         </button>
-                        <button class="glass p-2 rounded-lg hover-lift" onclick="openGithub('metaspace')">
-                            <i class="fab fa-github text-gray-400"></i>
+                        <button class="glass p-2 rounded-lg hover-lift" onclick="openGithub('metaspace')" aria-label="Buka repo GitHub MetaSpace Hub" title="Repo GitHub">
+                            <i class="fab fa-github text-gray-400" aria-hidden="true"></i>
+                            <span class="sr-only">Repo GitHub</span>
                         </button>
                     </div>
                 </div>
@@ -474,10 +513,10 @@
     <section class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl font-bold mb-4 gradient-text">Client Testimonials</h2>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Testimoni Klien</h2>
                 <div class="section-divider w-24 mx-auto mb-6"></div>
                 <p class="text-gray-400 text-lg">
-                    What clients say about my work
+                    Apa kata klien tentang pekerjaan saya
                 </p>
             </div>
             
@@ -493,7 +532,7 @@
                         </div>
                     </div>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        "Dymas Yoga an exceptional web application that exceeded our expectations. His attention to security and performance is outstanding."
+                        "Dymas Yoga membangun aplikasi web yang luar biasa dan melebihi ekspektasi kami. Perhatiannya terhadap keamanan dan performa sangat mengesankan."
                     </p>
                     <div class="flex text-yellow-400 mt-4">
                         <i class="fas fa-star"></i>
@@ -515,7 +554,7 @@
                         </div>
                     </div>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        "Dymas Yoga was thorough and professional. He identified critical vulnerabilities we missed."
+                        "Dymas Yoga sangat teliti dan profesional. Ia mengidentifikasi kerentanan kritis yang kami lewatkan."
                     </p>
                     <div class="flex text-yellow-400 mt-4">
                         <i class="fas fa-star"></i>
@@ -537,7 +576,7 @@
                         </div>
                     </div>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        "Working with Dymas Yoga our AI project was amazing. His technical expertise and problem-solving skills are top-notch."
+                        "Bekerja dengan Dymas Yoga pada proyek AI kami sangat mengesankan. Keahlian teknis dan kemampuan problem-solvingnya luar biasa."
                     </p>
                     <div class="flex text-yellow-400 mt-4">
                         <i class="fas fa-star"></i>
@@ -555,10 +594,10 @@
     <section id="contact" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-20">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-4xl font-bold mb-4 gradient-text">Get In Touch</h2>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Hubungi Saya</h2>
                 <div class="section-divider w-24 mx-auto mb-6"></div>
                 <p class="text-gray-400 text-lg">
-                    Let's discuss your next project
+                    Mari diskusikan proyek Anda berikutnya
                 </p>
             </div>
             
@@ -566,7 +605,7 @@
                 <div class="glass p-8 rounded-2xl hover-lift fade-in">
                     <h3 class="text-2xl font-semibold mb-6 text-white flex items-center">
                         <i class="fas fa-address-card text-blue-400 mr-3"></i>
-                        Contact Information
+                        Informasi Kontak
                     </h3>
                     
                     <div class="space-y-6">
@@ -574,14 +613,14 @@
                             <i class="fas fa-envelope text-blue-400 mr-4 text-xl"></i>
                             <div>
                                 <p class="text-sm text-gray-400">Email</p>
-                                <p class="text-white font-medium">Dymas Yoga@email.com</p>
+                                <p class="text-white font-medium">halo@dymasyoga.com</p>
                             </div>
                         </div>
                         
                         <div class="flex items-center p-4 glass rounded-xl">
                             <i class="fas fa-phone text-green-400 mr-4 text-xl"></i>
                             <div>
-                                <p class="text-sm text-gray-400">Phone</p>
+                                <p class="text-sm text-gray-400">WhatsApp</p>
                                 <p class="text-white font-medium">+62 812-3456-7890</p>
                             </div>
                         </div>
@@ -589,14 +628,14 @@
                         <div class="flex items-center p-4 glass rounded-xl">
                             <i class="fas fa-map-marker-alt text-purple-400 mr-4 text-xl"></i>
                             <div>
-                                <p class="text-sm text-gray-400">Location</p>
+                                <p class="text-sm text-gray-400">Lokasi</p>
                                 <p class="text-white font-medium">Jakarta, Indonesia</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="mt-8">
-                        <h4 class="text-lg font-semibold mb-4 text-white">Follow Me</h4>
+                        <h4 class="text-lg font-semibold mb-4 text-white">Ikuti Saya</h4>
                         <div class="flex gap-4">
                             <button class="social-icon p-3 rounded-xl" onclick="openSocial('github')">
                                 <i class="fab fa-github text-xl"></i>
@@ -617,33 +656,33 @@
                 <div class="glass p-8 rounded-2xl hover-lift fade-in">
                     <h3 class="text-2xl font-semibold mb-6 text-white flex items-center">
                         <i class="fas fa-paper-plane text-purple-400 mr-3"></i>
-                        Send Message
+                        Kirim Pesan
                     </h3>
                     
                     <form class="space-y-6" onsubmit="sendMessage(event)">
                         <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-2">Name</label>
-                            <input type="text" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" placeholder="Your full name" required>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Nama Lengkap</label>
+                            <input type="text" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" placeholder="Nama lengkap Anda" required>
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                            <input type="email" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" placeholder="your.email@example.com" required>
+                            <input type="email" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" placeholder="email.anda@contoh.com" required>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-2">Subject</label>
-                            <input type="text" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" placeholder="Project discussion" required>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Subjek</label>
+                            <input type="text" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" placeholder="Diskusi proyek" required>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                            <textarea rows="4" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all resize-none" placeholder="Tell me about your project..." required></textarea>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Pesan</label>
+                            <textarea rows="4" class="w-full p-4 glass rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all resize-none" placeholder="Ceritakan tentang proyek Anda..." required></textarea>
                         </div>
                         
                         <button type="submit" class="btn-primary w-full py-4 rounded-xl font-medium text-white">
                             <i class="fas fa-paper-plane mr-2"></i>
-                            Send Message
+                            Kirim Pesan
                         </button>
                     </form>
                 </div>
@@ -655,11 +694,11 @@
     <footer class="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 border-t border-white border-opacity-10">
         <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 text-center">
             <p class="text-gray-400 text-sm">
-                © 2024 Dymas Yoga. Crafted with <i class="fas fa-heart text-red-400 mx-1"></i> using modern web technologies.
+                © 2024 Dymas Yoga. Dibuat dengan <i class="fas fa-heart text-red-400 mx-1"></i> menggunakan teknologi web modern.
             </p>
         </div>
     </footer>
 
     <script src="script.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'973297d62787df20',t:'MTc1NTg2ODA0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>

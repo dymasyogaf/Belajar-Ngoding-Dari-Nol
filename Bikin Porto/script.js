@@ -73,8 +73,8 @@ function openGithub(projectName) {
 // Social media functions
 function openSocial(platform) {
     const urls = {
-        github: 'https://github.com',
-        linkedin: 'https://linkedin.com',
+        github: 'https://github.com/dymasyoga',
+        linkedin: 'https://linkedin.com/in/dymasyoga',
         twitter: 'https://twitter.com',
         instagram: 'https://instagram.com'
     };
@@ -89,7 +89,7 @@ function sendMessage(event) {
     const button = event.target.querySelector('button[type="submit"]');
     const originalText = button.innerHTML;
 
-    button.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+    button.innerHTML = '<i class="fas fa-check mr-2"></i>Pesan Terkirim!';
     button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
 
     setTimeout(() => {
