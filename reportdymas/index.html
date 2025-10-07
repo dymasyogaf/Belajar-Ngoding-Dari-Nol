@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Bulanan Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .slide-enter {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen text-white font-sans">
+    <!-- Header -->
+    <header class="bg-black/20 backdrop-blur-sm border-b border-white/10 p-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    💻 Laporan Jobdesk - Dymas Yoga Febratama
+                </h1>
+                <p class="text-gray-300 mt-1">Web Developer (LP/Web) - September 2025</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <select id="monthSelect" class="bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white">
+                    <option value="juli">Juli 2025</option>
+                    <option value="agustus">Agustus 2025</option>
+                    <option value="september" selected>September 2025</option>
+                    <option value="oktober">Oktober 2025</option>
+                </select>
+                <button id="presentBtn" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    🎯 Mode Presentasi
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-6">
+        <!-- Overview Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="metric-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-300 text-sm font-medium">Total Tugas</h3>
+                    <span class="text-2xl">📋</span>
+                </div>
+                <div class="text-3xl font-bold text-green-400 mb-2">295</div>
+                <div class="text-sm text-gray-400">Tugas terselesaikan</div>
+            </div>
+
+            <div class="metric-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-300 text-sm font-medium">Landing Page</h3>
+                    <span class="text-2xl">🌐</span>
+                </div>
+                <div class="text-3xl font-bold text-blue-400 mb-2">50+</div>
+                <div class="text-sm text-gray-400">LP aktif dikelola</div>
+            </div>
+
+            <div class="metric-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-300 text-sm font-medium">Domain Aktif</h3>
+                    <span class="text-2xl">🔗</span>
+                </div>
+                <div class="text-3xl font-bold text-purple-400 mb-2">10+</div>
+                <div class="text-sm text-gray-400">IP diaktivasi di Berdu</div>
+            </div>
+
+            <div class="metric-card bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-300 text-sm font-medium">Migrasi</h3>
+                    <span class="text-2xl">🔄</span>
+                </div>
+                <div class="text-3xl font-bold text-yellow-400 mb-2">5</div>
+                <div class="text-sm text-gray-400">Website berhasil migrasi</div>
+            </div>
+        </section>
+
+        <!-- Project Progress -->
+        <section class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                💻 Jobdesk Area - Rincian Kegiatan
+            </h2>
+            <div class="space-y-6">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold">Membuat Website All Program</span>
+                        <span class="text-sm text-gray-300">100%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="progress-bar bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Website utama: wakafsumur.com, sedekahnasibaitullah.com, bayarfidyah.com, kariralfatihah.com, doayatim.com</p>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold">Membuat Landing Page All Program</span>
+                        <span class="text-sm text-gray-300">100%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="progress-bar bg-gradient-to-r from-purple-400 to-pink-500 h-3 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">50+ LP baru untuk wakaf sumur, kafarat, fidyah, sedekah baitullah dengan form & konfirmasi otomatis</p>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold">Update & Revisi Tampilan Website</span>
+                        <span class="text-sm text-gray-300">95%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="progress-bar bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full" style="width: 95%"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Update tampilan homepage & footer, revisi LP berdasarkan feedback tim, konsistensi branding</p>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold">Migrasi & Optimasi Speed Website</span>
+                        <span class="text-sm text-gray-300">90%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="progress-bar bg-gradient-to-r from-blue-400 to-cyan-500 h-3 rounded-full" style="width: 90%"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Migrasi LP antar-domain, kompresi gambar, minifikasi CSS/JS, optimasi kecepatan loading</p>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold">FPP & LPJ + Konten Web Dev</span>
+                        <span class="text-sm text-gray-300">100%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="progress-bar bg-gradient-to-r from-indigo-400 to-purple-500 h-3 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Administrasi domain renewal, hosting Berdu, lisensi plugin, pembuatan konten SEO-friendly</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technologies & Achievements -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Kendala -->
+            <section class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    ⚠️ Kendala yang Dihadapi
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3 p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                        <span class="text-2xl">🌐</span>
+                        <div>
+                            <div class="font-semibold">Gangguan IP & DNS</div>
+                            <div class="text-sm text-gray-400">Terjadi gangguan IP dan DNS saat aktivasi domain di Berdu</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                        <span class="text-2xl">🔄</span>
+                        <div>
+                            <div class="font-semibold">Proses Migrasi Lama</div>
+                            <div class="text-sm text-gray-400">Migrasi membutuhkan waktu lama karena banyak domain saling terhubung</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                        <span class="text-2xl">🎨</span>
+                        <div>
+                            <div class="font-semibold">Revisi Tampilan Berulang</div>
+                            <div class="text-sm text-gray-400">Revisi tampilan berulang dari tim konten memperpanjang durasi pengerjaan</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inovasi -->
+            <section class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    💡 Inovasi & Perbaikan
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                        <span class="text-2xl">🧩</span>
+                        <div>
+                            <div class="font-semibold">Template LP Modular</div>
+                            <div class="text-sm text-gray-400">Menerapkan template LP modular untuk efisiensi pembuatan LP baru</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                        <span class="text-2xl">🔗</span>
+                        <div>
+                            <div class="font-semibold">Struktur Form Standar</div>
+                            <div class="text-sm text-gray-400">Menyeragamkan struktur form dan konfirmasi di seluruh domain</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                        <span class="text-2xl">⚡</span>
+                        <div>
+                            <div class="font-semibold">Optimasi Otomatis</div>
+                            <div class="text-sm text-gray-400">Melakukan optimasi otomatis agar LP lebih cepat dan ringan</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                        <span class="text-2xl">📊</span>
+                        <div>
+                            <div class="font-semibold">Google Sheet Log</div>
+                            <div class="text-sm text-gray-400">Membuat Google Sheet log untuk mencatat progres pekerjaan harian</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Comparison Section -->
+        <section class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                📊 Perbandingan Kinerja Agustus vs September 2025
+            </h2>
+            
+            <p class="text-gray-300 mb-6">💡 <strong>Klik pada setiap kategori</strong> untuk melihat penjelasan detail perbandingannya</p>
+
+            <!-- Interactive Comparison Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                <!-- Landing Page Card -->
+                <div class="comparison-card bg-white/5 hover:bg-white/10 border border-white/20 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:scale-105" data-category="landing-page">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">📄</div>
+                        <h3 class="font-bold text-lg mb-2">Landing Page</h3>
+                        <div class="space-y-1">
+                            <div class="text-blue-400 font-semibold">Agustus: ~90 LP</div>
+                            <div class="text-green-400 font-semibold">September: 50+ LP</div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-400">Klik untuk detail</div>
+                    </div>
+                </div>
+
+                <!-- Website Card -->
+                <div class="comparison-card bg-white/5 hover:bg-white/10 border border-white/20 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:scale-105" data-category="website">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">💻</div>
+                        <h3 class="font-bold text-lg mb-2">Website</h3>
+                        <div class="space-y-1">
+                            <div class="text-blue-400 font-semibold">Agustus: Banyak Baru</div>
+                            <div class="text-green-400 font-semibold">September: Fokus Utama</div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-400">Klik untuk detail</div>
+                    </div>
+                </div>
+
+                <!-- Update Tampilan Card -->
+                <div class="comparison-card bg-white/5 hover:bg-white/10 border border-white/20 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:scale-105" data-category="update">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🎨</div>
+                        <h3 class="font-bold text-lg mb-2">Update Tampilan</h3>
+                        <div class="space-y-1">
+                            <div class="text-blue-400 font-semibold">Agustus: Tersebar</div>
+                            <div class="text-green-400 font-semibold">September: Terarah</div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-400">Klik untuk detail</div>
+                    </div>
+                </div>
+
+                <!-- Optimasi Card -->
+                <div class="comparison-card bg-white/5 hover:bg-white/10 border border-white/20 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:scale-105" data-category="optimasi">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🚀</div>
+                        <h3 class="font-bold text-lg mb-2">Optimasi</h3>
+                        <div class="space-y-1">
+                            <div class="text-blue-400 font-semibold">Agustus: Dasar</div>
+                            <div class="text-green-400 font-semibold">September: Lanjutan</div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-400">Klik untuk detail</div>
+                    </div>
+                </div>
+
+                <!-- Strategi Card -->
+                <div class="comparison-card bg-white/5 hover:bg-white/10 border border-white/20 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:scale-105" data-category="strategi">
+                    <div class="text-center">
+                        <div class="text-3xl mb-2">🎯</div>
+                        <h3 class="font-bold text-lg mb-2">Strategi</h3>
+                        <div class="space-y-1">
+                            <div class="text-blue-400 font-semibold">Agustus: Kuantitas</div>
+                            <div class="text-green-400 font-semibold">September: Kualitas</div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-400">Klik untuk detail</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explanation Panel -->
+            <div id="explanationPanel" class="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-xl p-6 hidden">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 id="explanationTitle" class="text-2xl font-bold text-purple-300"></h3>
+                    <button id="closeExplanation" class="text-gray-400 hover:text-white text-xl">✕</button>
+                </div>
+                <div id="explanationContent" class="space-y-4"></div>
+            </div>
+
+            <!-- Summary Insight -->
+            <div class="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 p-6 rounded-xl border border-yellow-500/20 mt-6">
+                <h3 class="text-xl font-bold text-yellow-300 mb-3 flex items-center gap-2">
+                    💡 Insight Utama
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-400 mb-2">📈 Evolusi</div>
+                        <p class="text-sm text-gray-300">Dari quantity-driven ke quality-focused development</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-green-400 mb-2">🎯 Fokus</div>
+                        <p class="text-sm text-gray-300">September lebih terfokus pada domain prioritas utama</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-purple-400 mb-2">⚡ Efisiensi</div>
+                        <p class="text-sm text-gray-300">Peningkatan standarisasi dan konsistensi kerja</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Items -->
+        <section class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                📋 Target Bulan Depan (Oktober 2025)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold text-lg mb-3 text-red-400">🔥 Prioritas Utama</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 p-2 bg-red-500/10 rounded-lg">
+                            <span class="w-2 h-2 bg-red-400 rounded-full mt-2"></span>
+                            <div>
+                                <div class="font-medium">Sistem Semi-Otomatis</div>
+                                <div class="text-sm text-gray-400">Membuat sistem semi-otomatis untuk upload LP ke Berdu</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-2 bg-red-500/10 rounded-lg">
+                            <span class="w-2 h-2 bg-red-400 rounded-full mt-2"></span>
+                            <div>
+                                <div class="font-medium">Panduan Maintenance</div>
+                                <div class="text-sm text-gray-400">Menyusun panduan maintenance teknis tiap website</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-3 text-green-400">📈 Optimasi & Pengembangan</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 p-2 bg-green-500/10 rounded-lg">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mt-2"></span>
+                            <div>
+                                <div class="font-medium">Optimasi SEO Dasar</div>
+                                <div class="text-sm text-gray-400">Melanjutkan optimasi SEO di wakafsumur.com & alquransantri.org</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-2 bg-green-500/10 rounded-lg">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mt-2"></span>
+                            <div>
+                                <div class="font-medium">Briefing Tim Mingguan</div>
+                                <div class="text-sm text-gray-400">Melakukan briefing mingguan dengan tim web dev untuk evaluasi</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Presentation Modal -->
+    <div id="presentationModal" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 hidden">
+        <div class="h-full flex flex-col">
+            <!-- Presentation Header -->
+            <div class="bg-black/50 p-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">Mode Presentasi - Laporan Bulanan</h1>
+                <div class="flex items-center gap-4">
+                    <span id="slideCounter" class="text-gray-300">1 / 6</span>
+                    <button id="closePresent" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+
+            <!-- Slide Content -->
+            <div class="flex-1 flex items-center justify-center p-8">
+                <div id="slideContent" class="max-w-4xl w-full text-center slide-enter">
+                    <!-- Slide content will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="bg-black/50 p-4 flex justify-center gap-4">
+                <button id="prevSlide" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                    ← Sebelumnya
+                </button>
+                <button id="nextSlide" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                    Selanjutnya →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Presentation functionality
+        const presentBtn = document.getElementById('presentBtn');
+        const presentationModal = document.getElementById('presentationModal');
+        const closePresent = document.getElementById('closePresent');
+        const slideContent = document.getElementById('slideContent');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevSlide = document.getElementById('prevSlide');
+        const nextSlide = document.getElementById('nextSlide');
+
+        let currentSlide = 0;
+        const slides = [
+            {
+                title: "📊 Laporan Bulanan DYMAS",
+                content: `
+                    <h1 class="text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Laporan Jobdesk Area
+                    </h1>
+                    <p class="text-2xl text-gray-300 mb-4">Dymas Yoga Febratama</p>
+                    <p class="text-xl text-gray-400 mb-8">Web Developer (LP/Web) - September 2025</p>
+                    <div class="text-xl font-semibold text-blue-300">
+                        295 Task Selesai | 10 Jobdesk Area
+                    </div>
+                `
+            },
+            {
+                title: "📈 Ringkasan Pencapaian",
+                content: `
+                    <h2 class="text-4xl font-bold mb-12">Ringkasan Pencapaian September</h2>
+                    <div class="grid grid-cols-2 gap-8 text-left">
+                        <div class="bg-white/10 p-6 rounded-xl">
+                            <div class="text-4xl font-bold text-green-400 mb-2">295</div>
+                            <div class="text-xl">Total Tugas</div>
+                            <div class="text-gray-400">Tugas terselesaikan</div>
+                        </div>
+                        <div class="bg-white/10 p-6 rounded-xl">
+                            <div class="text-4xl font-bold text-blue-400 mb-2">50+</div>
+                            <div class="text-xl">Landing Page</div>
+                            <div class="text-gray-400">LP aktif dikelola</div>
+                        </div>
+                        <div class="bg-white/10 p-6 rounded-xl">
+                            <div class="text-4xl font-bold text-purple-400 mb-2">10+</div>
+                            <div class="text-xl">Domain Aktif</div>
+                            <div class="text-gray-400">IP diaktivasi di Berdu</div>
+                        </div>
+                        <div class="bg-white/10 p-6 rounded-xl">
+                            <div class="text-4xl font-bold text-yellow-400 mb-2">5</div>
+                            <div class="text-xl">Migrasi</div>
+                            <div class="text-gray-400">Website berhasil migrasi</div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "💻 Jobdesk Area",
+                content: `
+                    <h2 class="text-4xl font-bold mb-12">10 Jobdesk Area Utama</h2>
+                    <div class="grid grid-cols-2 gap-6 text-left">
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <div class="text-lg font-semibold text-green-400 mb-2">🧱 Membuat Website All Program</div>
+                            <p class="text-gray-300 text-sm">wakafsumur.com, sedekahnasibaitullah.com, bayarfidyah.com, kariralfatihah.com, doayatim.com</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <div class="text-lg font-semibold text-blue-400 mb-2">📄 Membuat Landing Page All Program</div>
+                            <p class="text-gray-300 text-sm">50+ LP baru untuk wakaf sumur, kafarat, fidyah, sedekah baitullah</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <div class="text-lg font-semibold text-purple-400 mb-2">🎨 Update Tampilan Website</div>
+                            <p class="text-gray-300 text-sm">Homepage, footer, tata letak, warna, CTA untuk UX yang lebih baik</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <div class="text-lg font-semibold text-yellow-400 mb-2">🧭 Update Landing Page</div>
+                            <p class="text-gray-300 text-sm">Menyesuaikan tampilan dan isi LP sesuai campaign baru</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <div class="text-lg font-semibold text-red-400 mb-2">🪛 Revisi Tampilan Web/LP</div>
+                            <p class="text-gray-300 text-sm">Penyesuaian berdasarkan feedback tim dan branding</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <div class="text-lg font-semibold text-cyan-400 mb-2">⚙️ Menambahkan Fitur Web/LP</div>
+                            <p class="text-gray-300 text-sm">Form otomatis, validasi input, sistem konfirmasi donasi</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "⚠️ Kendala & Inovasi",
+                content: `
+                    <h2 class="text-4xl font-bold mb-12">Kendala & Inovasi</h2>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-bold mb-6 text-red-400">⚠️ Kendala</h3>
+                            <div class="space-y-4">
+                                <div class="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                                    <div class="font-semibold text-lg">Gangguan IP & DNS</div>
+                                    <div class="text-gray-400">Terjadi gangguan saat aktivasi domain di Berdu</div>
+                                </div>
+                                <div class="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
+                                    <div class="font-semibold text-lg">Proses Migrasi Lama</div>
+                                    <div class="text-gray-400">Banyak domain saling terhubung</div>
+                                </div>
+                                <div class="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                                    <div class="font-semibold text-lg">Revisi Tampilan Berulang</div>
+                                    <div class="text-gray-400">Revisi dari tim konten memperpanjang durasi</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-2xl font-bold mb-6 text-green-400">💡 Inovasi</h3>
+                            <div class="space-y-4">
+                                <div class="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                                    <div class="font-semibold text-lg">Template LP Modular</div>
+                                    <div class="text-gray-400">Menerapkan template modular untuk efisiensi</div>
+                                </div>
+                                <div class="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                                    <div class="font-semibold text-lg">Struktur Form Standar</div>
+                                    <div class="text-gray-400">Menyeragamkan form dan konfirmasi</div>
+                                </div>
+                                <div class="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                                    <div class="font-semibold text-lg">Google Sheet Log</div>
+                                    <div class="text-gray-400">Mencatat progres pekerjaan harian</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "📊 Perbandingan Agustus vs September",
+                content: `
+                    <h2 class="text-4xl font-bold mb-12">Perbandingan Kinerja</h2>
+                    <div class="grid grid-cols-2 gap-8 text-left">
+                        <div class="bg-blue-500/20 p-6 rounded-xl border border-blue-500/30">
+                            <h3 class="text-2xl font-bold text-blue-300 mb-6">🗓️ Agustus 2025</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Total LP:</span>
+                                    <span class="font-bold text-blue-400">~90 LP</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Fokus:</span>
+                                    <span class="font-bold text-blue-400">Kuantitas & Ekspansi</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Domain:</span>
+                                    <span class="font-bold text-blue-400">Tersebar Banyak</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Strategi:</span>
+                                    <span class="font-bold text-blue-400">Quantity-Driven</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-green-500/20 p-6 rounded-xl border border-green-500/30">
+                            <h3 class="text-2xl font-bold text-green-300 mb-6">🗓️ September 2025</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Total LP:</span>
+                                    <span class="font-bold text-green-400">50+ LP</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Fokus:</span>
+                                    <span class="font-bold text-green-400">Kualitas & Konsolidasi</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Domain:</span>
+                                    <span class="font-bold text-green-400">Terfokus Utama</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Strategi:</span>
+                                    <span class="font-bold text-green-400">Quality-Focused</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-6 rounded-xl border border-purple-500/20">
+                        <h3 class="text-xl font-bold text-purple-300 mb-3">🎯 Kesimpulan</h3>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            Evolusi dari <strong class="text-blue-400">quantity-driven development</strong> ke 
+                            <strong class="text-green-400">quality-focused approach</strong> dengan standarisasi dan efisiensi yang lebih baik.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                title: "📋 Target Oktober 2025",
+                content: `
+                    <h2 class="text-4xl font-bold mb-12">Target Bulan Depan</h2>
+                    <div class="grid grid-cols-2 gap-8 text-left">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 text-red-400">🔥 Prioritas Utama</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3 text-lg bg-red-500/10 p-4 rounded-lg">
+                                    <span class="w-3 h-3 bg-red-400 rounded-full mt-2"></span>
+                                    <div>
+                                        <div class="font-semibold">Sistem Semi-Otomatis</div>
+                                        <div class="text-gray-400">Membuat sistem upload LP ke Berdu</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 text-lg bg-red-500/10 p-4 rounded-lg">
+                                    <span class="w-3 h-3 bg-red-400 rounded-full mt-2"></span>
+                                    <div>
+                                        <div class="font-semibold">Panduan Maintenance</div>
+                                        <div class="text-gray-400">Menyusun panduan teknis tiap website</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6 text-green-400">📈 Pengembangan</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3 text-lg bg-green-500/10 p-4 rounded-lg">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full mt-2"></span>
+                                    <div>
+                                        <div class="font-semibold">Optimasi SEO Dasar</div>
+                                        <div class="text-gray-400">wakafsumur.com & alquransantri.org</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 text-lg bg-green-500/10 p-4 rounded-lg">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full mt-2"></span>
+                                    <div>
+                                        <div class="font-semibold">Evaluasi Tim Mingguan</div>
+                                        <div class="text-gray-400">Briefing developer untuk efisiensi</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12 text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Terima Kasih! 🙏
+                    </div>
+                `
+            }
+        ];
+
+        function updateSlide() {
+            slideContent.innerHTML = slides[currentSlide].content;
+            slideContent.classList.remove('slide-enter');
+            setTimeout(() => slideContent.classList.add('slide-enter'), 10);
+            
+            slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+            
+            prevSlide.disabled = currentSlide === 0;
+            nextSlide.disabled = currentSlide === slides.length - 1;
+        }
+
+        presentBtn.addEventListener('click', () => {
+            presentationModal.classList.remove('hidden');
+            currentSlide = 0;
+            updateSlide();
+        });
+
+        closePresent.addEventListener('click', () => {
+            presentationModal.classList.add('hidden');
+        });
+
+        prevSlide.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        });
+
+        nextSlide.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!presentationModal.classList.contains('hidden')) {
+                if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlide();
+                } else if (e.key === 'Escape') {
+                    presentationModal.classList.add('hidden');
+                }
+            }
+        });
+
+        // Month selector functionality
+        document.getElementById('monthSelect').addEventListener('change', (e) => {
+            // Here you could load different data based on selected month
+            console.log('Selected month:', e.target.value);
+        });
+
+        // Interactive Comparison functionality
+        const comparisonCards = document.querySelectorAll('.comparison-card');
+        const explanationPanel = document.getElementById('explanationPanel');
+        const explanationTitle = document.getElementById('explanationTitle');
+        const explanationContent = document.getElementById('explanationContent');
+        const closeExplanation = document.getElementById('closeExplanation');
+
+        const explanations = {
+            'landing-page': {
+                title: '📄 Perbandingan Landing Page',
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 class="text-xl font-bold text-blue-300 mb-3">🗓️ Agustus 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Jumlah:</strong> Sekitar 90 Landing Page</p>
+                                <p><strong>Fokus:</strong> Campaign Alquran Santri dan Tabungan Wakaf</p>
+                                <p><strong>Karakteristik:</strong> Banyak LP baru untuk berbagai program</p>
+                                <p><strong>Pendekatan:</strong> Ekspansi cepat dengan template dasar</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                            <h4 class="text-xl font-bold text-green-300 mb-3">🗓️ September 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Jumlah:</strong> 50+ Landing Page</p>
+                                <p><strong>Fokus:</strong> Wakaf sumur, kafarat, fidyah, doa anak yatim</p>
+                                <p><strong>Karakteristik:</strong> LP berkualitas dengan form otomatis</p>
+                                <p><strong>Pendekatan:</strong> Kualitas dan optimasi konversi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h4 class="font-bold text-purple-300 mb-2">📊 Analisis:</h4>
+                        <p class="text-gray-300">Meskipun jumlah LP September lebih sedikit, namun kualitas dan fokus pada campaign utama membuat efektivitas lebih tinggi. September menunjukkan pendekatan yang lebih matang dengan standarisasi form dan sistem konfirmasi otomatis.</p>
+                    </div>
+                `
+            },
+            'website': {
+                title: '💻 Perbandingan Pembuatan Website',
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 class="text-xl font-bold text-blue-300 mb-3">🗓️ Agustus 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Website Baru:</strong> alquransantri.org, quranpelosok.com, tabunganwakaf.com</p>
+                                <p><strong>Karakteristik:</strong> Banyak domain baru untuk program berbeda</p>
+                                <p><strong>Fokus:</strong> Ekspansi dan diversifikasi program</p>
+                                <p><strong>Tantangan:</strong> Koordinasi antar domain yang berbeda</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                            <h4 class="text-xl font-bold text-green-300 mb-3">🗓️ September 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Website Utama:</strong> wakafsumur.com, sedekahnasibaitullah.com, bayarfidyah.com</p>
+                                <p><strong>Karakteristik:</strong> Penguatan website prioritas utama</p>
+                                <p><strong>Fokus:</strong> Konsolidasi dan stabilitas</p>
+                                <p><strong>Keunggulan:</strong> Konsistensi branding dan UX</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h4 class="font-bold text-purple-300 mb-2">📊 Analisis:</h4>
+                        <p class="text-gray-300">Agustus fokus pada ekspansi dengan banyak website baru, sedangkan September lebih strategis dengan memperkuat website utama yang sudah ada. Pendekatan September lebih efisien untuk maintenance dan branding jangka panjang.</p>
+                    </div>
+                `
+            },
+            'update': {
+                title: '🎨 Perbandingan Update Tampilan',
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 class="text-xl font-bold text-blue-300 mb-3">🗓️ Agustus 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Scope:</strong> Pembaruan besar di Almadinah Group dan Pantijogja</p>
+                                <p><strong>Karakteristik:</strong> Update tersebar di banyak domain</p>
+                                <p><strong>Pendekatan:</strong> Renovasi menyeluruh per domain</p>
+                                <p><strong>Tantangan:</strong> Koordinasi visual antar domain berbeda</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                            <h4 class="text-xl font-bold text-green-300 mb-3">🗓️ September 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Scope:</strong> wakafsumur.com, bayarkafarat.com, staffpendidikan.com</p>
+                                <p><strong>Karakteristik:</strong> Update terarah pada domain prioritas</p>
+                                <p><strong>Pendekatan:</strong> Standarisasi dan konsistensi visual</p>
+                                <p><strong>Keunggulan:</strong> Tampilan seragam dan lebih ringan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h4 class="font-bold text-purple-300 mb-2">📊 Analisis:</h4>
+                        <p class="text-gray-300">September menunjukkan pendekatan yang lebih fokus dan terarah. Dengan memprioritaskan domain utama, hasil update lebih konsisten dan efektif untuk user experience secara keseluruhan.</p>
+                    </div>
+                `
+            },
+            'optimasi': {
+                title: '🚀 Perbandingan Optimasi Speed',
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 class="text-xl font-bold text-blue-300 mb-3">🗓️ Agustus 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Teknik:</strong> Kompresi gambar dan perbaikan struktur HTML dasar</p>
+                                <p><strong>Level:</strong> Optimasi tingkat dasar</p>
+                                <p><strong>Fokus:</strong> Perbaikan fundamental</p>
+                                <p><strong>Hasil:</strong> Peningkatan loading time awal</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                            <h4 class="text-xl font-bold text-green-300 mb-3">🗓️ September 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Teknik:</strong> Minifikasi CSS/JS dan pembersihan script tidak terpakai</p>
+                                <p><strong>Level:</strong> Optimasi tingkat lanjutan</p>
+                                <p><strong>Fokus:</strong> Efisiensi kode dan performa</p>
+                                <p><strong>Hasil:</strong> Peningkatan signifikan kecepatan loading</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h4 class="font-bold text-purple-300 mb-2">📊 Analisis:</h4>
+                        <p class="text-gray-300">Progres optimasi menunjukkan peningkatan kemampuan teknis. Dari optimasi dasar di Agustus ke teknik lanjutan di September, menghasilkan website yang lebih cepat dan efisien.</p>
+                    </div>
+                `
+            },
+            'strategi': {
+                title: '🎯 Perbandingan Strategi Kerja',
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 class="text-xl font-bold text-blue-300 mb-3">🗓️ Agustus 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Pendekatan:</strong> Quantity-driven development</p>
+                                <p><strong>Fokus:</strong> Membuat sebanyak mungkin LP dan website</p>
+                                <p><strong>Keunggulan:</strong> Ekspansi cepat program baru</p>
+                                <p><strong>Tantangan:</strong> Koordinasi dan maintenance yang kompleks</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                            <h4 class="text-xl font-bold text-green-300 mb-3">🗓️ September 2025</h4>
+                            <div class="space-y-2">
+                                <p><strong>Pendekatan:</strong> Quality-focused development</p>
+                                <p><strong>Fokus:</strong> Kualitas dan standarisasi fitur</p>
+                                <p><strong>Keunggulan:</strong> Konsistensi dan efisiensi tinggi</p>
+                                <p><strong>Hasil:</strong> Website lebih stabil dan mudah maintenance</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h4 class="font-bold text-purple-300 mb-2">📊 Analisis:</h4>
+                        <p class="text-gray-300">Perubahan strategi dari kuantitas ke kualitas menunjukkan kematangan dalam development. September lebih efisien dengan hasil yang lebih sustainable untuk jangka panjang.</p>
+                    </div>
+                `
+            }
+        };
+
+        comparisonCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.dataset.category;
+                const explanation = explanations[category];
+                
+                if (explanation) {
+                    explanationTitle.textContent = explanation.title;
+                    explanationContent.innerHTML = explanation.content;
+                    explanationPanel.classList.remove('hidden');
+                    explanationPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    
+                    // Add active state to clicked card
+                    comparisonCards.forEach(c => c.classList.remove('ring-2', 'ring-purple-400'));
+                    card.classList.add('ring-2', 'ring-purple-400');
+                }
+            });
+        });
+
+        closeExplanation.addEventListener('click', () => {
+            explanationPanel.classList.add('hidden');
+            comparisonCards.forEach(c => c.classList.remove('ring-2', 'ring-purple-400'));
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98ac2e3705de12b0',t:'MTc1OTgyNzMzNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
