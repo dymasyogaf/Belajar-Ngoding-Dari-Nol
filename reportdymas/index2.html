@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Web Development - September 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1e3a8a, #3730a3, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(251, 191, 36, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.5; }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .counter {
+            font-weight: 700;
+            font-size: 2rem;
+            color: #fbbf24;
+        }
+        
+        .timeline-line {
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #3b82f6);
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neonPulse {
+            from { box-shadow: 0 0 5px #3b82f6; }
+            to { box-shadow: 0 0 20px #3b82f6, 0 0 30px #8b5cf6; }
+        }
+        
+        .slide-in-up {
+            animation: slideInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .scale-up {
+            animation: scaleUp 0.6s ease-out forwards;
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        
+        @keyframes scaleUp {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .parallax-bg {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        .sticky-nav {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background: #3b82f6;
+            border-color: #fbbf24;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        }
+        
+        .nav-dot:hover {
+            background: rgba(59, 130, 246, 0.7);
+            transform: scale(1.2);
+        }
+        
+        .scroll-top-btn {
+            position: fixed;
+            right: 2rem;
+            bottom: 8rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            z-index: 1000;
+        }
+        
+        .scroll-top-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-top-btn:hover {
+            background: rgba(59, 130, 246, 1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .section-transition {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .section-transition.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .glow-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-btn:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            width: 0%;
+            transition: width 2s ease-in-out;
+        }
+        
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-icon:hover {
+            transform: rotate(360deg);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .section {
+            min-height: 100vh;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            .parallax-bg {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg text-white">
+    <!-- Particles Background -->
+    <div class="particles fixed inset-0 pointer-events-none" id="particles"></div>
+
+    <!-- Sticky Navigation -->
+    <div class="sticky-nav">
+        <div class="nav-dot active" onclick="scrollToSection('cover')" title="Cover"></div>
+        <div class="nav-dot" onclick="scrollToSection('overview')" title="Overview"></div>
+        <div class="nav-dot" onclick="scrollToSection('highlights')" title="Highlights"></div>
+        <div class="nav-dot" onclick="scrollToSection('programs')" title="Programs"></div>
+        <div class="nav-dot" onclick="scrollToSection('maintenance')" title="Maintenance"></div>
+        <div class="nav-dot" onclick="scrollToSection('migration')" title="Migration"></div>
+        <div class="nav-dot" onclick="scrollToSection('admin')" title="Admin"></div>
+        <div class="nav-dot" onclick="scrollToSection('conclusion')" title="Conclusion"></div>
+        <div class="nav-dot" onclick="scrollToSection('closing')" title="Closing"></div>
+    </div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">🔝</button>
+
+    <!-- 1. Cover Section -->
+    <section id="cover" class="section flex items-center justify-center relative section-transition parallax-bg">
+        <div class="text-center z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 slide-in-up" style="animation-delay: 0.2s;">
+                Laporan Web Development
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-light mb-4 text-yellow-300 slide-in-up" style="animation-delay: 0.4s;">
+                September 2025
+            </h2>
+            <div class="mb-8 slide-in-up" style="animation-delay: 0.6s;">
+                <p class="text-xl font-semibold mb-2">Dymas Yoga Febratama</p>
+                <p class="text-base text-blue-200">Web Developer / LP Specialist – Yayasan Alfatihah</p>
+            </div>
+            <button onclick="scrollToSection('overview')" class="glow-btn bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full text-lg font-semibold scale-up" style="animation-delay: 0.8s;">
+                Mulai Presentasi ↓
+            </button>
+        </div>
+    </section>
+
+    <!-- 2. Overview Section -->
+    <section id="overview" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in">Overview September 2025</h2>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="glass-card rounded-2xl p-6 text-center card-hover">
+                    <div class="text-4xl mb-3">✅</div>
+                    <div class="counter" data-target="295">0</div>
+                    <p class="text-base text-blue-200">Total Jobdesk</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center card-hover">
+                    <div class="text-4xl mb-3">💻</div>
+                    <div class="counter" data-target="30">0</div>
+                    <p class="text-base text-blue-200">Website Dikerjakan</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center card-hover">
+                    <div class="text-4xl mb-3">🧱</div>
+                    <div class="counter" data-target="100">0</div>
+                    <p class="text-base text-blue-200">LP Baru</p>
+                </div>
+                <div class="glass-card rounded-2xl p-6 text-center card-hover">
+                    <div class="text-4xl mb-3">⚙️</div>
+                    <div class="counter" data-target="2">0</div>
+                    <p class="text-base text-blue-200">Migrasi Domain</p>
+                </div>
+            </div>
+
+            <!-- Donut Chart -->
+            <div class="glass-card rounded-2xl p-6 max-w-md mx-auto">
+                <h3 class="text-xl font-semibold text-center mb-4">Pembagian Jobdesk</h3>
+                <div class="relative w-48 h-48 mx-auto">
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#1e3a8a" stroke-width="8"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#3b82f6" stroke-width="8" 
+                                stroke-dasharray="125.6" stroke-dashoffset="62.8" class="transition-all duration-2000"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#8b5cf6" stroke-width="8" 
+                                stroke-dasharray="75.4" stroke-dashoffset="0" class="transition-all duration-2000"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#fbbf24" stroke-width="8" 
+                                stroke-dasharray="37.7" stroke-dashoffset="37.7" class="transition-all duration-2000"/>
+                    </svg>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-6 text-sm">
+                    <div class="flex items-center"><div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>Development 50%</div>
+                    <div class="flex items-center"><div class="w-4 h-4 bg-purple-500 rounded mr-2"></div>Maintenance 30%</div>
+                    <div class="flex items-center"><div class="w-4 h-4 bg-yellow-400 rounded mr-2"></div>Admin 15%</div>
+                    <div class="flex items-center"><div class="w-4 h-4 bg-blue-800 rounded mr-2"></div>Learning 5%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Highlights Section -->
+    <section id="highlights" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in">Pencapaian Utama</h2>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <div class="slider-container overflow-hidden">
+                    <div class="slider flex transition-transform duration-500" id="highlightSlider">
+                        <div class="slide min-w-full">
+                            <div class="glass-card rounded-2xl p-6 mx-4">
+                                <div class="text-4xl text-center mb-4">🔄</div>
+                                <h3 class="text-2xl font-bold text-center mb-3">Migrasi Domain</h3>
+                                <p class="text-base text-center text-blue-200">
+                                    Migrasi penuh sumurorangtua.com → wakafsumur.com dengan zero downtime
+                                </p>
+                            </div>
+                        </div>
+                        <div class="slide min-w-full">
+                            <div class="glass-card rounded-2xl p-6 mx-4">
+                                <div class="text-4xl text-center mb-4">🎨</div>
+                                <h3 class="text-2xl font-bold text-center mb-3">Layout Baru</h3>
+                                <p class="text-base text-center text-blue-200">
+                                    7 layout baru untuk lp.ekspedisiquran.com dengan desain modern
+                                </p>
+                            </div>
+                        </div>
+                        <div class="slide min-w-full">
+                            <div class="glass-card rounded-2xl p-6 mx-4">
+                                <div class="text-4xl text-center mb-4">🚀</div>
+                                <h3 class="text-2xl font-bold text-center mb-3">Seri LP Baru</h3>
+                                <p class="text-base text-center text-blue-200">
+                                    Rilis seri LP fidyah & kafarat dengan konversi tinggi
+                                </p>
+                            </div>
+                        </div>
+                        <div class="slide min-w-full">
+                            <div class="glass-card rounded-2xl p-6 mx-4">
+                                <div class="text-4xl text-center mb-4">🛠️</div>
+                                <h3 class="text-2xl font-bold text-center mb-3">Maintenance</h3>
+                                <p class="text-base text-center text-blue-200">
+                                    Maintenance 30+ website aktif yayasan dengan uptime 99.9%
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Controls -->
+                <div class="flex justify-center mt-8 space-x-4">
+                    <button onclick="previousSlide()" class="glow-btn bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full">←</button>
+                    <button onclick="nextSlide()" class="glow-btn bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full">→</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Website All Program Section -->
+    <section id="programs" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in">Website All Program</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Gerakan Wakaf Sumur -->
+                <div class="glass-card rounded-2xl p-6 card-hover">
+                    <div class="text-4xl text-center mb-4">💧</div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-yellow-300">Gerakan Wakaf Sumur</h3>
+                    <ul class="space-y-2 text-sm text-blue-200">
+                        <li>• wasiat-orang-tua-rezeki-gsn</li>
+                        <li>• wasiat-pahala-jariyah-gsn</li>
+                        <li>• wasiat-hadiah-terbaik-gsn</li>
+                    </ul>
+                </div>
+
+                <!-- Bayar Kafarat -->
+                <div class="glass-card rounded-2xl p-6 card-hover">
+                    <div class="text-4xl text-center mb-4">⚖️</div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-yellow-300">Bayar Kafarat</h3>
+                    <ul class="space-y-2 text-sm text-blue-200">
+                        <li>• kafarat-jima-yt</li>
+                        <li>• kafarat-sumpah-palsu-yt</li>
+                        <li>• bayar-kafarat-online-yt</li>
+                    </ul>
+                </div>
+
+                <!-- Bayar Fidyah -->
+                <div class="glass-card rounded-2xl p-6 card-hover">
+                    <div class="text-4xl text-center mb-4">🤲</div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-yellow-300">Bayar Fidyah</h3>
+                    <ul class="space-y-2 text-sm text-blue-200">
+                        <li>• fidyah-orang-tua-meninggal-fb</li>
+                        <li>• fidyah-ibu-hamil-fb</li>
+                        <li>• fidyah-ibu-menyusui-yt</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Update & Maintenance Section -->
+    <section id="maintenance" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in">Update & Maintenance</h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="relative">
+                    <div class="timeline-line absolute left-8 top-0 w-1 h-full"></div>
+                    
+                    <div class="space-y-12">
+                        <div class="flex items-start">
+                            <div class="rotate-icon bg-blue-600 rounded-full p-3 mr-4 z-10">
+                                <span class="text-lg">⚙️</span>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <h3 class="text-lg font-semibold mb-2">Update Layout & Form</h3>
+                                <p class="text-sm text-blue-200">alquransantri.org - Optimasi UX dan konversi</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="rotate-icon bg-purple-600 rounded-full p-3 mr-4 z-10">
+                                <span class="text-lg">🔧</span>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <h3 class="text-lg font-semibold mb-2">Maintenance Website</h3>
+                                <p class="text-sm text-blue-200">bayarkafarat.com - Update keamanan dan performa</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="rotate-icon bg-yellow-500 rounded-full p-3 mr-4 z-10">
+                                <span class="text-lg">📝</span>
+                            </div>
+                            <div class="glass-card rounded-xl p-4 flex-1">
+                                <h3 class="text-lg font-semibold mb-2">Update Footer</h3>
+                                <p class="text-sm text-blue-200">sumurorangtua.com - Informasi kontak terbaru</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Migration & Domain Section -->
+    <section id="migration" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in">Migrasi & Domain</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="glass-card rounded-2xl p-6 card-hover">
+                    <div class="text-4xl text-center mb-4">🌍</div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-yellow-300">Migrasi Domain</h3>
+                    <div class="text-center">
+                        <p class="text-base mb-2">sumurorangtua.com</p>
+                        <div class="text-2xl text-blue-400 mb-2">↓</div>
+                        <p class="text-base text-green-400">wakafsumur.com</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-6 card-hover">
+                    <div class="text-4xl text-center mb-4">🔄</div>
+                    <h3 class="text-xl font-bold text-center mb-3 text-yellow-300">Domain Renewal</h3>
+                    <ul class="space-y-2 text-sm text-blue-200">
+                        <li>• doabaitullah.com</li>
+                        <li>• smartpesantren.com</li>
+                        <li>• tebarquran.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Administration & Learning Section -->
+    <section id="admin" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 fade-in">Administrasi & Pengembangan Diri</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-300">📋 Administrasi</h3>
+                    <ul class="space-y-3 text-base text-blue-200">
+                        <li>• FPP & LPJ domain management</li>
+                        <li>• Plugin DonasiAja integration</li>
+                        <li>• Moota payment gateway setup</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-300">📚 Learning</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-base mb-2">Manajemen website di cPanel</p>
+                            <div class="bg-gray-700 rounded-full h-3">
+                                <div class="progress-bar bg-blue-500 h-3 rounded-full" data-width="85"></div>
+                            </div>
+                            <p class="text-sm text-blue-300 mt-1">85%</p>
+                        </div>
+                        <div>
+                            <p class="text-base mb-2">Dasar VPS Management</p>
+                            <div class="bg-gray-700 rounded-full h-3">
+                                <div class="progress-bar bg-purple-500 h-3 rounded-full" data-width="70"></div>
+                            </div>
+                            <p class="text-sm text-blue-300 mt-1">70%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Conclusion Section -->
+    <section id="conclusion" class="section flex items-center justify-center py-20 bg-gradient-to-b from-slate-900 to-black section-transition parallax-bg">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 fade-in">Kesimpulan & Target Selanjutnya</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="slide-in-up" style="animation-delay: 0.2s;">
+                    <p class="text-xl mb-3">✅ Semua target September selesai 100%</p>
+                </div>
+                <div class="slide-in-up" style="animation-delay: 0.4s;">
+                    <p class="text-xl mb-3">🎯 Sistem website lebih terpusat & efisien</p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-6 mt-8 slide-in-up" style="animation-delay: 0.6s;">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-300">Target Oktober 2025</h3>
+                    <ul class="space-y-3 text-base text-blue-200">
+                        <li>🚀 Optimasi kecepatan website</li>
+                        <li>📊 Integrasi tracking donasi</li>
+                        <li>🤖 Automasi laporan donasi</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Closing Section -->
+    <section id="closing" class="section flex items-center justify-center py-20 section-transition parallax-bg">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 fade-in">Terima Kasih 🙏</h1>
+            <p class="text-xl text-blue-200 mb-6 fade-in" style="animation-delay: 0.3s;">
+                Dymas Yoga Febratama – Web Developer
+            </p>
+            <button onclick="downloadReport()" class="glow-btn bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-full text-lg font-semibold scale-up" style="animation-delay: 0.6s;">
+                📄 Download PDF Report
+            </button>
+        </div>
+    </section>
+
+    <script>
+
+        
+        // Lightweight parallax effect
+        let parallaxTicking = false;
+        
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-bg');
+            
+            parallaxElements.forEach((element) => {
+                const rate = scrolled * -0.1;
+                element.style.transform = `translate3d(0, ${rate}px, 0)`;
+            });
+            
+            parallaxTicking = false;
+        }
+        
+        function handleScroll() {
+            if (!parallaxTicking) {
+                requestAnimationFrame(updateParallax);
+                parallaxTicking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // Sticky navigation with throttling
+        const navDots = document.querySelectorAll('.nav-dot');
+        const sections = document.querySelectorAll('.section');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        let navTicking = false;
+        
+        function updateActiveNav() {
+            if (!navTicking) {
+                requestAnimationFrame(() => {
+                    const scrollPos = window.scrollY + 100;
+                    
+                    sections.forEach((section, index) => {
+                        const top = section.offsetTop;
+                        const bottom = top + section.offsetHeight;
+                        
+                        if (scrollPos >= top && scrollPos <= bottom) {
+                            navDots.forEach(dot => dot.classList.remove('active'));
+                            if (navDots[index]) {
+                                navDots[index].classList.add('active');
+                            }
+                        }
+                    });
+                    
+                    // Show/hide scroll to top button with smooth transition
+                    if (window.scrollY > 300) {
+                        scrollTopBtn.classList.add('visible');
+                    } else {
+                        scrollTopBtn.classList.remove('visible');
+                    }
+                    
+                    navTicking = false;
+                });
+                navTicking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        
+        function scrollToTop() {
+            const startPosition = window.pageYOffset;
+            const duration = 800;
+            let start = null;
+            
+            function animation(currentTime) {
+                if (start === null) start = currentTime;
+                const timeElapsed = currentTime - start;
+                const run = easeInOutQuad(timeElapsed, startPosition, -startPosition, duration);
+                window.scrollTo(0, run);
+                if (timeElapsed < duration) requestAnimationFrame(animation);
+            }
+            
+            function easeInOutQuad(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+            
+            requestAnimationFrame(animation);
+        }
+        
+        // Section transitions
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        document.querySelectorAll('.section-transition').forEach(section => {
+            sectionObserver.observe(section);
+        });
+        
+        // Create lightweight particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+        
+        // Counter animation
+        function animateCounters() {
+            document.querySelectorAll('.counter').forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target + (target === 30 ? '+' : '');
+                    }
+                };
+                updateCounter();
+            });
+        }
+        
+        // Progress bars animation
+        function animateProgressBars() {
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 500);
+            });
+        }
+        
+        // Slider functionality
+        let currentSlide = 0;
+        const totalSlides = 4;
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+        
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+        
+        function updateSlider() {
+            const slider = document.getElementById('highlightSlider');
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        
+        // Auto-advance slider
+        setInterval(nextSlide, 5000);
+        
+        // Enhanced smooth scroll to section
+        function scrollToSection(sectionId) {
+            const target = document.getElementById(sectionId);
+            const targetPosition = target.offsetTop;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1000; // 1 second
+            let start = null;
+            
+            function animation(currentTime) {
+                if (start === null) start = currentTime;
+                const timeElapsed = currentTime - start;
+                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                window.scrollTo(0, run);
+                if (timeElapsed < duration) requestAnimationFrame(animation);
+            }
+            
+            function easeInOutQuad(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+            
+            requestAnimationFrame(animation);
+        }
+        
+        // Download report function
+        function downloadReport() {
+            alert('Fitur download PDF akan segera tersedia! 📄');
+        }
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'overview') {
+                        setTimeout(animateCounters, 500);
+                    }
+                    if (entry.target.id === 'admin') {
+                        setTimeout(animateProgressBars, 500);
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.fade-in, .slide-in-up, .scale-up').forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animationPlayState = 'running';
+                }, index * 100);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98add9d9850787dd',t:'MTc1OTg0NDg1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
